@@ -1,53 +1,51 @@
 This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: relatorio.aux
-The style file: apalike.bst
-Database file #1: mybib.bib.bib
-Too many commas in name 1 of "MOHAN, N.; UNDELAND, T.M.; Robins, W.P." for entry bb:mohan
-while executing---line 1023 of file apalike.bst
-Too many commas in name 1 of "MOHAN, N.; UNDELAND, T.M.; Robins, W.P." for entry bb:mohan
-while executing---line 1023 of file apalike.bst
-Too many commas in name 1 of "MOHAN, N.; UNDELAND, T.M.; Robins, W.P." for entry bb:mohan
-while executing---line 1098 of file apalike.bst
-You've used 2 entries,
-            1935 wiz_defined-function locations,
-            482 strings with 3911 characters,
-and the built_in function-call counts, 558 in all, are:
-= -- 53
-> -- 14
+The style file: eric.bst
+tec is an illegal style-file command---line 373 of file eric.bst
+ : tec
+ :    
+eho.format.editors is an unknown function---line 573 of file eric.bst
+Database file #1: mybib.bib
+You've used 1 entry,
+            2200 wiz_defined-function locations,
+            510 strings with 4009 characters,
+and the built_in function-call counts, 288 in all, are:
+= -- 27
+> -- 7
 < -- 2
-+ -- 4
-- -- 4
-* -- 34
-:= -- 112
-add.period$ -- 6
-call.type$ -- 2
-change.case$ -- 12
-chr.to.int$ -- 2
-cite$ -- 2
-duplicate$ -- 25
-empty$ -- 42
-format.name$ -- 6
-if$ -- 105
++ -- 2
+- -- 2
+* -- 20
+:= -- 60
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 5
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 13
+empty$ -- 19
+format.name$ -- 3
+if$ -- 51
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 2
-newline$ -- 13
-num.names$ -- 6
-pop$ -- 11
+missing$ -- 0
+newline$ -- 8
+num.names$ -- 3
+pop$ -- 4
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 6
 quote$ -- 0
-skip$ -- 20
+skip$ -- 10
 stack$ -- 0
-substring$ -- 24
-swap$ -- 1
-text.length$ -- 0
+substring$ -- 12
+swap$ -- 2
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 10
+type$ -- 6
 warning$ -- 0
-while$ -- 4
+while$ -- 2
 width$ -- 0
-write$ -- 28
-(There were 3 error messages)
+write$ -- 15
+(There were 2 error messages)

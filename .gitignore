@@ -1,6 +1,22 @@
 # Log files
-*.log
 *.*~
-*.aux
-*.out
 *.pdf
+
+# Latex Files
+*.aux
+*.log
+*.dvi
+*.lof
+*.lot
+*.bit
+*.idx
+*.glo
+*.bbl
+*.bcf
+*.ilg
+*.toc
+*.ind
+*.out
+*.blg
+*.fdb_latexmk
+*.fls
