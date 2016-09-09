@@ -1,6 +1,6 @@
 # Log files
 *.*~
-*.pdf
+*converted-to.*
 
 # Latex Files
 *.aux
