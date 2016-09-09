@@ -62,7 +62,7 @@ Através do Simulink implementamos o retificador monofásico de onda completa de
 	\label{fig:msim}
 \end{figure}
 
-Extraímos dessa simulação as curvas de tensão na fonte (figure \ref{fig:mvs}), tensão na carga (figura \ref{fig:mvr}) e corrente na carga (figura \ref{fig:mir}) para dois períodos da fonte.
+Extraímos dessa simulação as curvas de tensão na fonte (figura \ref{fig:mvs}), tensão na carga (figura \ref{fig:mvr}) e corrente na carga (figura \ref{fig:mir}) para dois períodos da fonte.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/mono_vs}
@@ -180,7 +180,7 @@ Através do Simulink implementamos o retificador trifásico de onda completa det
 	\label{fig:tsim}
 \end{figure}
 
-Extraímos dessa simulação as curvas das tensões de fase na fonte trifásica (figure \ref{fig:tvs}), da tensão na carga (figura \ref{fig:tvr}) e da corrente na carga (figura \ref{fig:tir}) para dois períodos da fonte.
+Extraímos dessa simulação as curvas das tensões de fase na fonte trifásica (figura \ref{fig:tvs}), da tensão na carga (figura \ref{fig:tvr}) e da corrente na carga (figura \ref{fig:tir}) para dois períodos da fonte.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/tri_vs}
@@ -235,9 +235,9 @@ Obtivemos também as curvas de tensão e corrente para cada diodo do arranjo, re
 	\end{figure}
 }
 
-Conforme podemos ver analisando as curvas dos diodos (figuras \ref{fig:td1}, \ref{fig:td2}, \ref{fig:td3}, \ref{fig:td4}, \ref{fig:td5} e \ref{fig:td6}) e a tensão da fonte (figura \ref{fig:mvs}), para uma carga puramente resistiva, quando a tensão da fonte A é a maior e a tensão da fonte C é a menor os diodos 1 e 2 estão conduzindo e os outros bloqueando, uma vez que a tensão da fonte B ultrapassa a de A, os diodos 2 e 3 passam a conduzir, quando a fonte C ultrapassa A por sua vez, temos os diodos 3 e 4 conduzindo e assim sucessivamente.
+Conforme podemos ver analisando as curvas dos diodos (figuras \ref{fig:td1}, \ref{fig:td2}, \ref{fig:td3}, \ref{fig:td4}, \ref{fig:td5} e \ref{fig:td6}) e a tensão da fonte (figura \ref{fig:tvs}), para uma carga puramente resistiva, quando a tensão da fonte A é a maior e a tensão da fonte C é a menor os diodos 1 e 2 estão conduzindo e os outros bloqueando, uma vez que a tensão da fonte B ultrapassa a de A, os diodos 2 e 3 passam a conduzir, quando a fonte C ultrapassa A por sua vez, temos os diodos 3 e 4 conduzindo e assim sucessivamente.
 
-Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:tmean}
+Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:tmean}.
 \begin{equation}
 \overline{Vr} = \frac{3}{\pi} \int_{\frac{\pi}{6}}^{\frac{4\pi}{6}}{Vs(sin(\theta) - sin(\theta - \frac{2\pi}{3}))d\theta} = \frac{3\sqrt{3}Vs}{\pi}
 \label{eq:tmean}
