@@ -22,6 +22,7 @@ title('Tensão na carga')
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
 print('mono_r', '-deps')
+figure,
 plot(fonte.data(:,1), fonte.data(:,2))
 title('Tensão fornecida pela fonte')
 ylabel('Tensão [V]')
