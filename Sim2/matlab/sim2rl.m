@@ -75,7 +75,8 @@ Vl_rms = monofasico.get('Vl_rms').Data(end)
 Ir_mean = monofasico.get('Ir_mean').Data(end)
 Ir_rms = monofasico.get('Ir_rms').Data(end)
 
-
+ret = Vr_mean/Vr_rms*Ir_mean/Ir_rms
+ff = Vr_rms/Vr_mean
 
 
 
@@ -169,3 +170,5 @@ Vl_mean = monofasico.get('Vl_mean').Data(end)
 Vl_rms = monofasico.get('Vl_rms').Data(end)
 Ir_mean = monofasico.get('Ir_mean').Data(end)
 Ir_rms = monofasico.get('Ir_rms').Data(end)
+ret = Vr_mean/Vr_rms*Ir_mean/Ir_rms
+ff = Vr_rms/Vr_mean

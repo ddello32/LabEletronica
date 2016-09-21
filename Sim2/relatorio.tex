@@ -163,6 +163,105 @@ FF = \frac{\overline{Vr}}{Vr_{rms}}
 \begin{equation}
 FF = 1.3347
 \end{equation}
+
+
+\section{Carga RL}
+Conectamos então um indutor em série com o resistor conforme mostrado na figura \ref{fig:rlsim}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/rlsim}
+	\caption{Esquema para simulação do retificador monofásico controlado com carga RL}
+	\label{fig:rlsim}
+\end{figure}
+
+Simulamos o circuito para uma indutância $\L\ =\ 100mH$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rlvr}) e corrente (figura \ref{fig:rlir}) no resistor e de tensão no indutor (figure \ref{fig:rlvl}) para dois períodos da fonte.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rl_vr}
+	\caption{Tensão no resistor para retificador monofásico com carga RL (100mH)}
+	\label{fig:rlvr}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rl_ir}
+	\caption{Corrente no resistor para retificador monofásico com carga RL (100mH)}
+	\label{fig:rlir}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rl_vl}
+	\caption{Tensão no indutor para retificador monofásico com carga RL (100mH)}
+	\label{fig:rlvl}
+\end{figure}
+Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
+\begin{equation}
+\overline{Vr} = 40.3318\ V
+\end{equation}
+\begin{equation}
+\overline{Ir} =  0.8066\ A
+\end{equation}
+\begin{equation}
+Vr_{rms} =  48.1121\ V
+\end{equation}
+\begin{equation}
+Ir_{rms} =   0.9622\ A
+\end{equation}
+
+Calculamos o fator de retificação usando a equação \ref{eq:rf}.
+\begin{equation}
+\sigma = 0.7027
+\end{equation}
+
+Encontramos também o fator de forma usando a equação \ref{eq:ff}.
+\begin{equation}
+FF = 1.1929
+\end{equation}
+
+Simulamos então circuito com uma indutância $\L\ =\ 1H$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rl2vr}) e corrente (figura \ref{fig:rl2ir}) no resistor e de tensão no indutor (figure \ref{fig:rl2vl}) para quinze períodos da fonte.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rl2_vr}
+	\caption{Tensão no resistor para retificador monofásico com carga RL (1H)}
+	\label{fig:rl2vr}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rl2_ir}
+	\caption{Corrente no resistor para retificador monofásico com carga RL (1H)}
+	\label{fig:rl2ir}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rl2_vl}
+	\caption{Tensão no indutor para retificador monofásico com carga RL (1H)}
+	\label{fig:rl2vl}
+\end{figure}
+Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
+\begin{equation}
+\overline{Vr} = 30.1911\ V
+\end{equation}
+\begin{equation}
+\overline{Ir} =  0.6038\ A
+\end{equation}
+\begin{equation}
+Vr_{rms} =  30.4340\ V
+\end{equation}
+\begin{equation}
+Ir_{rms} =    0.6087\ A
+\end{equation}
+
+Calculamos o fator de retificação usando a equação \ref{eq:rf}.
+\begin{equation}
+\sigma =  0.9841
+\end{equation}
+
+Encontramos também o fator de forma usando a equação \ref{eq:ff}.
+\begin{equation}
+FF = 1.0080
+\end{equation}
+
+% TODO - COMENTAR INFLUENCIA DO L
+
 \bibliography{mybib}
 \end{document}
 
