@@ -68,8 +68,8 @@ Vr_rms = monofasico.get('Vr_rms').Data(end)
 Ir_mean = monofasico.get('Ir_mean').Data(end)
 Ir_rms = monofasico.get('Ir_rms').Data(end)
 %% Calculo valores teoricos
-Vr_meant = V_source*2/pi
-Vr_rmst = V_source/sqrt(2)
+Vr_meant = V_source*(1 + cos(alfa/180*pi))/pi
+Vr_rmst = V_source*sqrt(pi + sin(2*alfa/180*pi)/2- alfa/180*pi)/sqrt(2*pi)
 Ir_meant = Vr_meant/R
 Ir_rmst = Vr_rmst/R
 ret = Vr_mean/Vr_rms*Ir_mean/Ir_rms
@@ -89,6 +89,10 @@ vrr_mean = zeros(1, length(x));
 vrr_rms = zeros(1, length(x));
 irr_mean = zeros(1, length(x));
 irr_rms = zeros(1, length(x));
+vrr_meant = zeros(1, length(x));
+vrr_rmst = zeros(1, length(x));
+irr_meant = zeros(1, length(x));
+irr_rmst = zeros(1, length(x));
 for i = 1:length(x)
     alfa = x(i)
     sim('r')
@@ -96,17 +100,23 @@ for i = 1:length(x)
     vrr_rms(i)  = monofasico.get('Vr_rms').Data(end);
     irr_mean(i) = monofasico.get('Ir_mean').Data(end);
     irr_rms(i) = monofasico.get('Ir_rms').Data(end);
+    vrr_meant(i) = V_source*(1 + cos(alfa/180*pi))/pi;
+    vrr_rmst(i) = V_source*sqrt(pi + sin(2*alfa/180*pi)/2- alfa/180*pi)/sqrt(2*pi);
+    irr_meant(i) = vrr_meant(i)/R;
+    irr_rmst(i) = vrr_rmst(i)/R;
 end
 %% Plot
 figure,
-plot(x, vrr_mean, x, vrr_rms)
+plot(x, vrr_mean, x, vrr_meant, x, vrr_rms, x, vrr_rmst)
 title('Load Voltage')
 xlabel('\alpha [\circ]')
 ylabel('Voltage [V]')
-print('r_vrr', '-deps')
+legend('Mean Value', 'Theoritical Mean Value', 'RMS Value', 'Theoretical RMS Value')
+print('r_vrr', '-dpdf')
 figure,
-plot(x, vrr_mean, x, vrr_rms)
+plot(x, irr_mean, x, irr_meant, x, irr_rms, x, irr_rmst)
 title('Load Current')
 xlabel('\alpha [\circ]')
 ylabel('Current [A]')
-print('r_irr', '-deps')
+legend('Mean Value', 'Theoritical Mean Value', 'RMS Value', 'Theoretical RMS Value')
+print('r_irr', '-dpdf')
