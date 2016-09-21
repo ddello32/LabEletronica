@@ -30,7 +30,7 @@ print('rc_vr', '-deps')
 figure,
 monofasico.get('Vc').plot
 title('Vc')
-print('rc_Vc', '-deps')
+print('rc_vc', '-deps')
 figure,
 monofasico.get('Vs').plot
 title('Vs')

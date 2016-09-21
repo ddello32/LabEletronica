@@ -174,7 +174,7 @@ Conectamos então um indutor em série com o resistor conforme mostrado na figur
 	\label{fig:rlsim}
 \end{figure}
 
-Simulamos o circuito para uma indutância $\L\ =\ 100mH$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rlvr}) e corrente (figura \ref{fig:rlir}) no resistor e de tensão no indutor (figure \ref{fig:rlvl}) para dois períodos da fonte.
+Simulamos o circuito para uma indutância $L\ =\ 100mH$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rlvr}) e corrente (figura \ref{fig:rlir}) no resistor e de tensão no indutor (figura \ref{fig:rlvl}) para dois períodos da fonte.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/rl_vr}
@@ -217,7 +217,7 @@ Encontramos também o fator de forma usando a equação \ref{eq:ff}.
 FF = 1.1929
 \end{equation}
 
-Simulamos então circuito com uma indutância $\L\ =\ 1H$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rl2vr}) e corrente (figura \ref{fig:rl2ir}) no resistor e de tensão no indutor (figure \ref{fig:rl2vl}) para quinze períodos da fonte.
+Simulamos então circuito com uma indutância $L\ =\ 1H$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rl2vr}) e corrente (figura \ref{fig:rl2ir}) no resistor e de tensão no indutor (figura \ref{fig:rl2vl}) para quinze períodos da fonte.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/rl2_vr}
@@ -262,6 +262,92 @@ FF = 1.0080
 
 % TODO - COMENTAR INFLUENCIA DO L
 
+
+\section{Carga RC}
+Conectamos então um capacitor em paralelo com o resistor conforme mostrado na figura \ref{fig:rcsim}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/rcsim}
+	\caption{Esquema para simulação do retificador monofásico controlado com carga RC}
+	\label{fig:rcsim}
+\end{figure}
+
+Simulamos o circuito para uma capacitância $C\ =\ 100\mu F$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rcvr}) e corrente (figura \ref{fig:rcir}) no resistor para dois períodos da fonte.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rc_vr}
+	\caption{Tensão no resistor para retificador monofásico com carga RC ($100\mu F$)}
+	\label{fig:rcvr}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rc_ir}
+	\caption{Corrente no resistor para retificador monofásico com carga RC ($100\mu F$)}
+	\label{fig:rcir}
+\end{figure}
+
+Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
+\begin{equation}
+\overline{Vr} = 60.6456\ V
+\end{equation}
+\begin{equation}
+\overline{Ir} = 1.2129\ A
+\end{equation}
+\begin{equation}
+Vr_{rms} = 67.1804\ V
+\end{equation}
+\begin{equation}
+Ir_{rms} = 1.3436\ A
+\end{equation}
+
+Calculamos o fator de retificação usando a equação \ref{eq:rf}.
+\begin{equation}
+\sigma = 0.8149
+\end{equation}
+
+Encontramos também o fator de forma usando a equação \ref{eq:ff}.
+\begin{equation}
+FF = 1.1078
+\end{equation}
+
+Simulamos então circuito com uma capacitância $C\ =\ 1mF$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rc2vr}) e corrente (figura \ref{fig:rc2ir}) no resistor para dois períodos da fonte.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rc2_vr}
+	\caption{Tensão no resistor para retificador monofásico com carga RC ($1mF$)}
+	\label{fig:rc2vr}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/rc2_ir}
+	\caption{Corrente no resistor para retificador monofásico com carga RC ($1mF$)}
+	\label{fig:rc2ir}
+\end{figure}
+Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
+\begin{equation}
+\overline{Vr} = 92.0838\ V
+\end{equation}
+\begin{equation}
+\overline{Ir} = 1.8417\ A
+\end{equation}
+\begin{equation}
+Vr_{rms} = 92.1690\ V
+\end{equation}
+\begin{equation}
+Ir_{rms} = 1.8434\ A
+\end{equation}
+
+Calculamos o fator de retificação usando a equação \ref{eq:rf}.
+\begin{equation}
+\sigma = 0.9982
+\end{equation}
+
+Encontramos também o fator de forma usando a equação \ref{eq:ff}.
+\begin{equation}
+FF = 1.0009
+\end{equation}
+
+% TODO - COMENTAR INFLUENCIA DO C
 \bibliography{mybib}
 \end{document}
 
