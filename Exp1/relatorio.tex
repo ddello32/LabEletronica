@@ -101,6 +101,8 @@ v_{o_{rms}} = 130\ V
 
 Desligamos o circuito e medimos com auxílio do multímetro a resistência da lâmpada, obtendo como resultado $R_1=70.1\ \Omega$.
 
+%TODO: fazer cálculos teóricos para comparar (monofásico)
+
 \section{Retificador trifásico}
 De maneira semelhante ao monofásico, montamos o retificador de onda completa não controlado para fonte trifásica. Adicionando algumas ligações para as duas outras fases e rearranjando a ligação entre os diodos e carga, conseguimos montar o circuito recomendado. Nota-se que a ligação do neutro é utilizada somente para captura de dados no osciloscópio nesta etapa. O esquema elétrico do sistema é detalhado no roteiro.
 
@@ -151,13 +153,27 @@ Fizemos também a verificação de tensão no diodo $D1$ com o osciloscópio, ob
 
 Após o ensaio desligamos o circuito e medimos com auxílio do multímetro a resistência da segunda lâmpada, obtendo como resultado $R_2=56.9\ \Omega$.
 
-
-%TODO: fazer cálculos teóricos para comparar (monofásico/trifásico)
+Podemos calcular a tensão média teórica sobre a carga total através da equação \ref{eq:tmean}.
+\begin{equation}
+	\overline{V_o} = \frac{3}{\pi} \int_{\frac{\pi}{6}}^{\frac{4\pi}{6}}{Vs(sin(\theta) - sin(\theta - \frac{2\pi}{3}))d\theta} = \frac{3\sqrt{3}Vs}{\pi}
+	\label{eq:tmean}
+\end{equation}
+Para calcular o valor efetivo da tensão sobre a carga utilizamos a equação \ref{eq:trms}.
+\begin{equation}
+	V_{o_{rms}} = \sqrt{\frac{3}{\pi} \int_{\frac{\pi}{6}}^{\frac{3\pi}{6}}{Vs^2(sin(\theta) - sin(\theta - \frac{2\pi}{3}))^2 d\theta}} = \sqrt{\frac{3}{2} + \frac{9\sqrt{3}}{4\pi}}Vs
+	\label{eq:trms}
+\end{equation}
+Utilizando os valores da simulação ($Vs\ =\ \frac{330}{\sqrt{3}}\ V$), encontramos as tensões e correntes esperadas:
+\begin{equation}
+	\overline{V_o} = 315.12\ V
+\end{equation}
+\begin{equation}
+	V_{o_{rms}} =  315.40\ V
+\end{equation}
+Conforme podemos ver os valores medidos e esperados diferem levemente, isso acontece devido a uma série de fatores, entre eles a queda de tensão nos diodos, as variações na tensão da fonte e as imprecisões da medida.
 
 %TODO: estimar a queda de tensão nos sobre os diodos
 % Pensei em comparar as tensões da saídas dos diodos com as tensões das saídas da fonte para o caso do monofásico quando tivessem em condução, mas não consegui sair do lugar. 
-
-
 
 \bibliography{mybib}
 \end{document}
