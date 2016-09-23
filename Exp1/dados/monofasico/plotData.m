@@ -9,25 +9,25 @@ plot(carga.data(:,4), carga.data(:,1))
 title('Tensão no diodo D3')
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
-print('mono_d3', '-deps')
+print('mono_d3', '-depsc')
 figure,
 plot(carga.data(:,4), -1*carga.data(:,2))
 title('Tensão no diodo D6')
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
-print('mono_d6', '-deps')
+print('mono_d6', '-depsc')
 figure,
 plot(carga.data(:,4), carga.data(:,3))
 title('Tensão na carga')
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
-print('mono_r', '-deps')
+print('mono_r', '-depsc')
 figure,
 plot(fonte.data(:,1), fonte.data(:,2))
 title('Tensão fornecida pela fonte')
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
-print('mono_s', '-deps')
+print('mono_s', '-depsc')
 %%
 windowSize = 10;
 b = (1/windowSize)*ones(1,windowSize);
@@ -40,13 +40,13 @@ plot(carga.data(:,4), filter(b,a,tensao_deslocada), carga.data(:,4), filter(b,a,
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
 legend('Fonte', 'Carga')
-print('abs', '-dpdf')
+print('abs', '-depsc')
 figure,
 plot(carga.data(:,4), queda_diodo)
 title('Queda de tensão no diodo')
 ylabel('Tensão [V]')
 xlabel('Tempo [s]')
-print('diff', '-dpdf')
+print('diff', '-depsc')
 
 nanmean(queda_diodo)
 !epsfixer.sh
