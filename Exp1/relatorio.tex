@@ -102,6 +102,43 @@ v_{o_{rms}} = 130\ V
 Desligamos o circuito e medimos com auxílio do multímetro a resistência da lâmpada, obtendo como resultado $R_1=70.1\ \Omega$.
 
 %TODO: fazer cálculos teóricos para comparar (monofásico)
+Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:mmean}
+\begin{equation}
+\overline{Vr} = \frac{1}{\pi} \int_{0}^{\pi}{Vs sin(\theta)d\theta} = \frac{2 Vs}{\pi}
+\label{eq:mmean}
+\end{equation}
+Para calcular o valor efetivo da tensão sobre a carga utilizamos a equação \ref{eq:mrms}.
+\begin{equation}
+Vr_{rms} = \sqrt{\frac{1}{\pi} \int_{0}^{\pi}{(Vs sin(\theta))^2 d\theta}} = \frac{Vs}{\sqrt{2}}
+\label{eq:mrms}
+\end{equation}
+Substituindo a tensão da fonte ($Vs\ =\ 190\ V$), encontramos as tensões esperadas:
+\begin{equation}
+\overline{Vr} = 120.9575\ V
+\end{equation}
+\begin{equation}
+Vr_{rms} =  134,3503\ V
+\end{equation}
+Conforme podemos ver os valores medidos e esperados diferem levemente, isso acontece devido a uma série de fatores, entre eles a queda de tensão nos diodos, as variações na tensão da fonte e as imprecisões da medida.
+
+
+Estimamos a queda de tensão nos diodos de duas maneiras: Uma pela análise direta das curvas dos díodos, cuja a tensão quando estão conduzindo assume um valor de aproximadamente $2 V$. A outra maneira consistiu em encontrar a diferença entre o valor absoluto da tensão na fonte e a tensão, para isso tivemos que ajustar os dados medidos para remover a defasagem entre as medidas e filtrar os sinais para remover o ruído da medida, obtendo as curvas das figuras \ref{fig:abs} e \ref{fig:diff}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{dados/monofasico/abs}
+	\caption{Comparação entre valor absoluto da tensão na fonte e na carga}
+	\label{fig:abs}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{dados/monofasico/diff}
+	\caption{Diferença entre valor absoluto da tensão na fonte e na carga}
+	\label{fig:diff}
+\end{figure}
+
+Encontramos o valor médio dessa diferença, que foi de aproximadamente $2.954 V$, valor condizente com as diferenças entre os valores medidos e teóricos.
 
 \section{Retificador trifásico}
 De maneira semelhante ao monofásico, montamos o retificador de onda completa não controlado para fonte trifásica. Adicionando algumas ligações para as duas outras fases e rearranjando a ligação entre os diodos e carga, conseguimos montar o circuito recomendado. Nota-se que a ligação do neutro é utilizada somente para captura de dados no osciloscópio nesta etapa. O esquema elétrico do sistema é detalhado no roteiro.
@@ -163,7 +200,7 @@ Para calcular o valor efetivo da tensão sobre a carga utilizamos a equação \r
 	V_{o_{rms}} = \sqrt{\frac{3}{\pi} \int_{\frac{\pi}{6}}^{\frac{3\pi}{6}}{Vs^2(sin(\theta) - sin(\theta - \frac{2\pi}{3}))^2 d\theta}} = \sqrt{\frac{3}{2} + \frac{9\sqrt{3}}{4\pi}}Vs
 	\label{eq:trms}
 \end{equation}
-Utilizando os valores da simulação ($Vs\ =\ \frac{330}{\sqrt{3}}\ V$), encontramos as tensões e correntes esperadas:
+Utilizando os valores da fonte ($Vs\ =\ \frac{330}{\sqrt{3}}\ V$), encontramos as tensões e correntes esperadas:
 \begin{equation}
 	\overline{V_o} = 315.12\ V
 \end{equation}
@@ -171,10 +208,6 @@ Utilizando os valores da simulação ($Vs\ =\ \frac{330}{\sqrt{3}}\ V$), encontr
 	V_{o_{rms}} =  315.40\ V
 \end{equation}
 Conforme podemos ver os valores medidos e esperados diferem levemente, isso acontece devido a uma série de fatores, entre eles a queda de tensão nos diodos, as variações na tensão da fonte e as imprecisões da medida.
-
-%TODO: estimar a queda de tensão nos sobre os diodos
-% Pensei em comparar as tensões da saídas dos diodos com as tensões das saídas da fonte para o caso do monofásico quando tivessem em condução, mas não consegui sair do lugar. 
-
 \bibliography{mybib}
 \end{document}
 

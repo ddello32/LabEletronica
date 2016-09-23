@@ -171,6 +171,25 @@ FF_t = 1.1107
 FF_m = 1.1160
 \label{eq:mffm}
 \end{equation}
+
+Estimamos a queda de tensão nos diodos de duas maneiras: Uma pela análise direta das curvas dos díodos, cuja a tensão quando estão conduzindo assume um valor de aproximadamente $2 V$. A outra maneira consistiu em encontrar a diferença entre o valor absoluto da tensão na fonte e a tensão, para isso tivemos que ajustar os dados medidos para remover a defasagem entre as medidas e filtrar os sinais para remover o ruído da medida, obtendo as curvas das figuras \ref{fig:abs} e \ref{fig:diff}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{dados/monofasico/abs.pdf}
+	\caption{Comparação entre valor absoluto da tensão na fonte e na carga}
+	\label{fig:abs}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{dados/monofasico/diff.pdf}
+	\caption{Diferença entre valor absoluto da tensão na fonte e na carga}
+	\label{fig:diff}
+\end{figure}
+
+Encontramos o valor médio dessa diferença, que foi de aproximadamente $2.954 V$, valor condizente com as diferenças entre os valores medidos e teóricos.
+
 \section{Retificador trifásico}
 Através do Simulink implementamos o retificador trifásico de onda completa detalhado em \cite{bb:roteirosim1} conforme mostrado na figura \ref{fig:tsim}.
 \begin{figure}[H]
