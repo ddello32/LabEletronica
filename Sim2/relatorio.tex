@@ -260,8 +260,17 @@ Encontramos também o fator de forma usando a equação \ref{eq:ff}.
 FF = 1.0080
 \end{equation}
 
-% TODO - COMENTAR INFLUENCIA DO L
+Podemos ver que ao introduzir uma carga indutiva os tiristores continuam conduzindo mesmo que a tensão sobre eles seja negativa (contanto que a corrente continue positiva). Isso causa uma redução da tensão média na carga e permite que trabalhemos nos 4 quadrantes. Ao mesmo tempo, o indutor, uma vez carregado evita variações bruscas (possivelmente evitando que a corrente chegue a zero) na corrente sobre a carga, aumentando o alisamento (consequentemente melhorando o fator de forma e o de retificação) de maneira proporcional ao valor da indutância.
 
+
+Em ambos os casos nós medimos uma tensão média praticamente nula no indutor. Esse resultado é esperado uma vez que:
+\begin{equation}
+	\overline{Vl} = \frac{1}{T}\int_{0}^{T}Vl dt = \frac{1}{T}\int_{0}^{T}\frac{dI}{dt} dt = \frac{I}{T}\bigg\rvert_0^T
+\end{equation}
+Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
+\begin{equation}
+	\overline{Vl} = 0
+\end{equation}
 
 \section{Carga RC}
 Conectamos então um capacitor em paralelo com o resistor conforme mostrado na figura \ref{fig:rcsim}.
@@ -347,7 +356,8 @@ Encontramos também o fator de forma usando a equação \ref{eq:ff}.
 FF = 1.0009
 \end{equation}
 
-% TODO - COMENTAR INFLUENCIA DO C
+Ao introduzir uma carga capacitiva esta armazenará energia, liberando-a quando a tensão sobre o resistor diminuí. Essa energia liberada causa uma retificação da tensão sobre o resistor, quase que diretamente proporcional à capacitância, de maneira a obter uma curva de tensão quase que linear, com ótimos fatores de forma e de retificação.
+
 \bibliography{mybib}
 \end{document}
 
