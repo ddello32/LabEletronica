@@ -57,67 +57,38 @@
 Implementamos o retificador monofásico totalmente controlado detalhado no roteiro conforme mostrado na figura \ref{fig:resq}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{resq}
+	\includegraphics[width=\linewidth]{dados/resq}
 	\caption{Diagrama para montagem do retificador monofásico de onda completa totalmente controlado}
 	\label{fig:resq}
 \end{figure}
 
-Extraímos a curva de tensão na carga (figura \ref{fig:rvs}), tensão na carga (figura \ref{fig:rvr}) e corrente na carga (figura \ref{fig:rir}) para dois períodos da fonte e com um ângulo de disparo $\alpha\ =\ 60^\circ$.
+Extraímos a curva de tensão na carga (figura \ref{fig:rvo}) e a tensão nos tiristores 3 (figura \ref{fig:rvt3}) e 6 (figura \ref{fig:rvt6}) para um ângulo de disparo $\alpha\ =\ 60^\circ$.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_vs}
-	\caption{Tensão da fonte para retificador monofásico com carga R}
-	\label{fig:rvs}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_vr}
+	\includegraphics[width=0.7\linewidth]{matlab/r_vo}
 	\caption{Tensão na carga para retificador monofásico com carga R}
-	\label{fig:rvr}
+	\label{fig:rvo}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_ir}
-	\caption{Corrente na carga para retificador monofásico com carga R}
-	\label{fig:rir}
+	\includegraphics[width=0.7\linewidth]{matlab/r_vt3}
+	\caption{Tensão no tiristor 3 para retificador monofásico com carga R}
+	\label{fig:rvt3}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/r_vt6}
+	\caption{Tensão no tiristor 6 para retificador monofásico com carga R}
+	\label{fig:rvt6}
 \end{figure}
 
-Medimos as tensões e correntes médias e efetivas na carga, obtendo os seguintes valores:
+Medimos a tensão média e efetiva na carga, obtendo os seguintes valores:
 \begin{equation}
-\overline{Vr} = 46.6080\ V
+\overline{Vo} = 46.6080\ V
 \end{equation}
 \begin{equation}
-\overline{Ir} = 0.9322\ A
+Vo_{rms} =  62.2060\ V
 \end{equation}
-\begin{equation}
-Vr_{rms} =  62.2060\ V
-\end{equation}
-\begin{equation}
-Ir_{rms} =  1.2441\ A
-\end{equation}
-
-Obtivemos também as curvas de tensão e corrente para cada tiristor do arranjo, representadas nas figuras \ref{fig:rt1}, \ref{fig:rt2}, \ref{fig:rt3} e \ref{fig:rt4}
-\foreach \n in {1,...,4}{
-	\begin{figure}[H]
-		\centering
-		\begin{subfigure}[b]{0.4\linewidth}
-			\includegraphics[width=\linewidth]{matlab/r_t\n i}
-			\caption{Corrente no tiristor}
-			\label{fig:rt\n i}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.4\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{matlab/r_t\n v}
-			\caption{Tensão no tiristor}
-			\label{fig:rt\n v}
-		\end{subfigure}
-		\caption{Curvas do tiristor \n\ para retificador monofásico com carga R}
-		\label{fig:rt\n}
-	\end{figure}
-}
-
-Conforme podemos ver analisando as curvas dos diodos (figuras \ref{fig:rt1}, \ref{fig:rt2}, \ref{fig:rt3} e \ref{fig:rt4}) e a tensão da fonte (figura \ref{fig:rvs}), para uma carga puramente resistiva, durante o semi-ciclo positivo da fonte, os tiristores 1 e 2 conduzem se o ângulo de disparo $\alpha$ já foi atingido enquanto 3 e 4 estão bloqueando, dessa forma a tensão sobre a carga é $Vs$. Já no semi-ciclo negativo da fonte, os tiristores 3 e 4 conduzem se o ângulo de disparo $\alpha\ +\ 180^\circ$ já foi atingido enquanto 1 e 2 estão bloqueando, fazendo que a tensão na carga seja de $-Vs$. Dessa forma conseguímos transformar uma tensão senoidal sobre a carga em uma tensão sempre positiva, de maneira que seu valor médio não seja nulo.
-
 
 Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:rmean}
 \begin{equation}
