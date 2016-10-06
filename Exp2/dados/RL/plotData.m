@@ -24,3 +24,9 @@ ylabel('Tensão [V]')
 xlabel('Tempo [s]')
 print('r_vrl', '-depsc')
 !epsfixer.sh
+%% Angulo de extincao
+syms x
+y = 90*pi/180;
+eq = sin(x - 1.0533413557) - sin(y - 1.0533413557)*exp(-(x - y)/tan(1.0533413557));
+S = vpasolve(eq == 0, x, [y, pi + y])
+vpa(S-pi)
