@@ -220,6 +220,20 @@ Vr_{rms} =  30.4340\ V
 \begin{equation}
 Ir_{rms} =    0.6087\ A
 \end{equation}
+Sendo $\beta$ a defasagem introduzida pela carga indutiva:
+\begin{equation}
+	\beta = \arctan{(\frac{L\omega}{R})}
+\end{equation}
+Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:rlmean}
+\begin{equation}
+\overline{Vr} = \frac{1}{\pi} \int_{\alpha}^{\pi + min(\alpha, \beta)}{Vs \sin{(\theta)}d\theta} = \frac{Vs (-\cos{(\pi + min(\alpha, \beta))} + \cos{(\alpha}))}{\pi}
+\label{eq:rlmean}
+\end{equation}
+Para calcular o valor efetivo da tensão sobre a carga utilizamos a equação \ref{eq:rlrms}.
+\begin{equation}
+Vr_{rms} = \sqrt{\frac{1}{\pi} \int_{\alpha}^{\pi + min(\alpha, \beta)}{(Vs \sin(\theta))^2 d\theta}} = \frac{Vs \sqrt{\pi + min(\alpha, \beta) + \frac{sin(2\alpha)}{2} - \frac{sin(2(\pi + min(\alpha, \beta)))}{2} - \alpha }}{\sqrt{2 \pi}} 
+\label{eq:rlrms}
+\end{equation}
 
 Calculamos o fator de retificação usando a equação \ref{eq:rf}.
 \begin{equation}
