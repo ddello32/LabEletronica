@@ -26,7 +26,8 @@ print('r_vrl', '-depsc')
 !epsfixer.sh
 %% Angulo de extincao
 syms x
-y = 90*pi/180;
-eq = sin(x - 1.0533413557) - sin(y - 1.0533413557)*exp(-(x - y)/tan(1.0533413557));
+y = 178*pi/180;
+phi = 0.2825795946;
+eq = sin(x - phi) - sin(y - phi)*exp(-(x - y)/tan(phi));
 S = vpasolve(eq == 0, x, [y, pi + y])
 vpa(S-pi)
