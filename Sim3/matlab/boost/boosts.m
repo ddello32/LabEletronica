@@ -142,10 +142,14 @@ for i = 1:length(x)
     D = x(i)
     sim('boost')
     vrr_mean(i) = results.get('Vr_mean').Data(end);
-    Il_m = results.get('Il_mean').Data(end);
-    Il = max(results.get('Il').Data(300:end));
     Io = results.get('Io').Data(end);
-    vrr_meant(i) = V/(1 - (D/100));
+    Lb = (1 - D/100)^2*D/100*R/f/2;
+    if(L < Lb)
+        K = L*Io*f/V;
+        vrr_meant(i) = V*(1 + (D/100)^2/2/K); 
+    else
+        vrr_meant(i) = V/(1 - (D/100));
+    end
 end
 %% Plot
 figure,
@@ -156,7 +160,6 @@ xlabel('D [%]')
 ylabel('Voltage [V]')
 legend('Mean Value', 'Theoretical Mean Value')
 print('r_vrxd', '-depsc')
-
 %% Para conduçao continua
 D = 80
 Lb = (1 - D/100)^2*D/100*R/f/2

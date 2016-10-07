@@ -77,14 +77,14 @@ Ir_rms = results.get('Ic_rms').Data(end)
 x = 0.1:1:100
 vrr_mean = zeros(1, length(x));
 vrr_meant = zeros(1, length(x));
-vrr_meant2 = zeros(1, length(x));
 for i = 1:length(x)
     D = x(i)
     sim('buck')
     vrr_mean(i) = results.get('Vr_mean').Data(end);
     Il_m = results.get('Il_mean').Data(end);
     Il = max(results.get('Il').Data(300:end));
-    if(Il_m < Il/2)
+    Lb = (1 - D/100)*R/f;
+    if(L < Lb)
         K = L*Il_m*f/V;
         vrr_meant(i) = V*(D/100)^2/((D/100)^2 + 2*K);
     else

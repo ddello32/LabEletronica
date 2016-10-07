@@ -61,7 +61,7 @@ Através do Simulink implementamos o conversor step-down detalhado na figura \re
 	\caption{Esquema para simulação do conversor buck}
 	\label{fig:bsim}
 \end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cicle de 80\% na chave S1.
+Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cycle de 80\% na chave S1.
 Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
 \begin{figure}[H]
 	\centering
@@ -151,7 +151,7 @@ Podemos calcular a tensão média teórica sobre a carga através da equação \
 \label{eq:bumean}
 \end{equation}
 
-Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
+Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/buck/r_vrxd}
@@ -165,7 +165,7 @@ Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabal
 \begin{equation}
 	L_b = \frac{(1 - D)R}{2f_s}
 \end{equation}
-Para um duty-cicle $D$ = $80\%$, temos:
+Para um duty-cycle $D$ = $80\%$, temos:
 \begin{equation}
 	L_b = 400\mu H
 \end{equation}
@@ -263,7 +263,7 @@ Através do Simulink implementamos o conversor step-up detalhado na figura \ref{
 	\caption{Esquema para simulação do conversor boost}
 	\label{fig:bosim}
 \end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $10kHz$ e duty-cicle de 80\% na chave S2.
+Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $10kHz$ e duty-cycle de 80\% na chave S2.
 Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:bor}), no indutor (figura \ref{fig:bol}), no capacitor (figura \ref{fig:boc}), na chave S2 (figura \ref{fig:bos2}) e no diodo D1 (figura \ref{fig:bod1}).
 \begin{figure}[H]
 	\centering
@@ -389,16 +389,58 @@ Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 Vr_{rms} = 29.65\ V
 \end{equation}
 
-Conforme podemos ver analisando as curvas, %TODO
+Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S1 desligar.
 
-Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:bomean}
-%TODO
+Podemos calcular a tensão média teórica sobre a carga através considerando que:
 \begin{equation}
-\overline{Vr} = 
-\label{eq:bomean}
+\int_{0}^{T}Vl dt = \int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
 \end{equation}
+Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
+\begin{equation}
+\overline{Vl} = 0
+\end{equation}
+Para condução contínua, teremos que quando S1 está ligada:
+\begin{equation}
+	Vl = V
+\end{equation}
+E quando está desligada (D2 está conduzindo):
+\begin{equation}
+	Vl = -(Vr - V)
+\end{equation}
+Logo temos:
+\begin{equation}
+	\int_{0}^{T}Vl dt = VDT - (Vr - V)(1 - D)T = 0
+\end{equation}
+\begin{equation}
+\overline{Vr} = \frac{V}{1 - D}
+\end{equation}
+Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S1 está ligada:
+\begin{equation}
+Vl = V
+\end{equation}
+E quando está desligada (D2 está conduzindo) e Il não nula:
+\begin{equation}
+Vl = -(Vr - V)
+\end{equation}
+Quando Il é nula:
+\begin{equation}
+Vl = 0
+\end{equation}
+Logo temos:
+\begin{equation}
+\int_{0}^{T}Vl dt = VDT - (Vr - V)[(1 - D)T - t_x] = 0
+\end{equation}
+Encontramos então:
+\begin{equation}
+\overline{Vr} = 1(1 + \frac{D^2}{2K})
+\end{equation}
+Com K:
+\begin{equation}
+	K = \frac{LI_o}{VT}
+\end{equation}
+Onde $I_o$ é a corrente na saída do conversor.
 
-Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:bovrxd}
+Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:bovrxd}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxd}
@@ -406,13 +448,19 @@ Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão m�
 	\label{fig:bovrxd}
 \end{figure}
 
-Como podemos ver os valores obtidos são %TODO esperados teoricamente, isso se deve às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, entre outros fatores.
+Como podemos ver os valores obtidos diferem dos esperados teoricamente, principalmente para duty-cycles altos, isso se notavelmente aos efeitos parasíticos introduzidos pelos componentes não ideais que evitam que toda a potência fornecida seja transferida ao resistor (Notamos que ao transformar nossas chaves em chaves ideais as duas curvas batem conforme figura \ref{fig:borvxdi}).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxdi}
+	\caption{Tensão média no resistor para conversor boost com compontentes ideais}
+	\label{fig:borvxdi}
+\end{figure}
 
 Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
 \begin{equation}
 L_b = \frac{(1 - D)^2 DR}{2f_s}
 \end{equation}
-Para um duty-cicle $D$ = $80\%$, temos:
+Para um duty-cycle $D$ = $80\%$, temos:
 \begin{equation}
 L_b =  3.2\mu H
 \end{equation}
@@ -490,7 +538,9 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $1.6 \mu H$ e rodamo
 	\label{fig:bod12}
 \end{figure}
 
-%TODO ANALISAR
+Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
+
+%TODO BUCK_BOOST
 %\bibliography{mybib}
 \end{document}
 
