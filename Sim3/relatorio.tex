@@ -1,4 +1,4 @@
-\documentclass{report}
+\documentclass{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -51,312 +51,411 @@
 
 \onehalfspacing
 \section{Objetivos}
-	Essa simulação tem como objetivo o estudo de retificadores controlados. Analisaremos o efeito do ângulo de disparo e de cargas indutivas e capacitivas na saída de um retificador monofásico controlado.
+	Essa simulação tem como objetivo o estudo dos conversores step-down (buck), step-up (boost) e seus modos de condução contínua e descontínua.
 	 
-\section{Carga R}
-Através do Simulink implementamos o retificador monofásico totalmente controlado detalhado em \cite{bb:rsim2} conforme mostrado na figura \ref{fig:rsim}.
+\section{Conversor Buck}
+Através do Simulink implementamos o conversor step-down detalhado na figura \ref{fig:bsim}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{matlab/rsim}
-	\caption{Esquema para simulação do retificador monofásico controlado com carga R}
-	\label{fig:rsim}
+	\includegraphics[width=\linewidth]{matlab/buck/bsim}
+	\caption{Esquema para simulação do conversor buck}
+	\label{fig:bsim}
 \end{figure}
-
-Extraímos dessa simulação as curvas de tensão na fonte (figura \ref{fig:rvs}), tensão na carga (figura \ref{fig:rvr}) e corrente na carga (figura \ref{fig:rir}) para dois períodos da fonte e com um ângulo de disparo $\alpha\ =\ 60^\circ$.
+Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cicle de 80\% na chave S1.
+Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_vs}
-	\caption{Tensão da fonte para retificador monofásico com carga R}
-	\label{fig:rvs}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_vr}
-	\caption{Tensão na carga para retificador monofásico com carga R}
-	\label{fig:rvr}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_ir}
-	\caption{Corrente na carga para retificador monofásico com carga R}
-	\label{fig:rir}
-\end{figure}
-
-Medimos as tensões e correntes médias e efetivas na carga, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 46.6080\ V
-\end{equation}
-\begin{equation}
-\overline{Ir} = 0.9322\ A
-\end{equation}
-\begin{equation}
-Vr_{rms} =  62.2060\ V
-\end{equation}
-\begin{equation}
-Ir_{rms} =  1.2441\ A
-\end{equation}
-
-Obtivemos também as curvas de tensão e corrente para cada tiristor do arranjo, representadas nas figuras \ref{fig:rt1}, \ref{fig:rt2}, \ref{fig:rt3} e \ref{fig:rt4}
-\foreach \n in {1,...,4}{
-	\begin{figure}[H]
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vr}
+		\caption{Tensão no resistor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\begin{subfigure}[b]{0.4\linewidth}
-			\includegraphics[width=\linewidth]{matlab/r_t\n i}
-			\caption{Corrente no tiristor}
-			\label{fig:rt\n i}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.4\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{matlab/r_t\n v}
-			\caption{Tensão no tiristor}
-			\label{fig:rt\n v}
-		\end{subfigure}
-		\caption{Curvas do tiristor \n\ para retificador monofásico com carga R}
-		\label{fig:rt\n}
-	\end{figure}
-}
-
-Conforme podemos ver analisando as curvas dos diodos (figuras \ref{fig:rt1}, \ref{fig:rt2}, \ref{fig:rt3} e \ref{fig:rt4}) e a tensão da fonte (figura \ref{fig:rvs}), para uma carga puramente resistiva, durante o semi-ciclo positivo da fonte, os tiristores 1 e 2 conduzem se o ângulo de disparo $\alpha$ já foi atingido enquanto 3 e 4 estão bloqueando, dessa forma a tensão sobre a carga é $Vs$. Já no semi-ciclo negativo da fonte, os tiristores 3 e 4 conduzem se o ângulo de disparo $\alpha\ +\ 180^\circ$ já foi atingido enquanto 1 e 2 estão bloqueando, fazendo que a tensão na carga seja de $-Vs$. Dessa forma conseguímos transformar uma tensão senoidal sobre a carga em uma tensão sempre positiva, de maneira que seu valor médio não seja nulo.
-
-
-Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:rmean}
-\begin{equation}
-	\overline{Vr} = \frac{1}{\pi} \int_{\alpha}^{\pi}{Vs sin(\theta)d\theta} = \frac{Vs (1 + cos(\alpha))}{\pi}
-	\label{eq:rmean}
-\end{equation}
-Para calcular o valor efetivo da tensão sobre a carga utilizamos a equação \ref{eq:rrms}.
-\begin{equation}
-	Vr_{rms} = \sqrt{\frac{1}{\pi} \int_{\alpha}^{\pi}{(Vs sin(\theta))^2 d\theta}} = \frac{Vs \sqrt{\pi + \frac{sin(2\alpha)}{2}- \alpha }}{\sqrt{2 \pi}} 
-	\label{eq:rrms}
-\end{equation}
-Varrendo o ângulo de disparo $\alpha$ entre $0^\circ$ e $180^\circ$ comparamos os valores teóricos e medidos para a tensão (figura \ref{fig:rvrr}) e corrente (figura \ref{fig:rirr}) sobre a carga
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_vrr}
-	\caption{Tensão na carga média e efetiva em função do ângulo de disparo}
-	\label{fig:rvrr}
+		\includegraphics[width=\linewidth]{matlab/buck/b_ir}
+		\caption{Corrente no resistor}
+	\end{subfigure}
+	\caption{Curvas do resistor para conversor buck}
+	\label{fig:br}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/r_irr}
-	\caption{Corrente na carga média e efetiva em função do ângulo de disparo}
-	\label{fig:rirr}
-\end{figure}
-Como podemos ver os valores obtidos são um pouco menores dos que os esperados teoricamente, isso se deve às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, entre outros fatores.
-
-Calculamos o fator de retificação para um ângulo de disparo $\alpha\ =\ 60^\circ$ usando a equação \ref{eq:rf}.
-\begin{equation}
-	\sigma = \frac{\overline{P}}{P_{rms}} = \frac{\overline{Vr}^2}{Vr_{rms}^2}
-	\label{eq:rf}
-\end{equation}
-
-\begin{equation}
-	\sigma = 0.5614
-\end{equation}
-
-Encontramos por fim o fator de forma para um ângulo de disparo $\alpha\ =\ 60^\circ$ usando a equação \ref{eq:ff}.
-\begin{equation}
-FF = \frac{\overline{Vr}}{Vr_{rms}}
-\label{eq:ff}
-\end{equation}
-
-\begin{equation}
-FF = 1.3347
-\end{equation}
-
-
-\section{Carga RL}
-Conectamos então um indutor em série com o resistor conforme mostrado na figura \ref{fig:rlsim}.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{matlab/rlsim}
-	\caption{Esquema para simulação do retificador monofásico controlado com carga RL}
-	\label{fig:rlsim}
-\end{figure}
-
-Simulamos o circuito para uma indutância $L\ =\ 100mH$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rlvr}) e corrente (figura \ref{fig:rlir}) no resistor e de tensão no indutor (figura \ref{fig:rlvl}) para dois períodos da fonte.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rl_vr}
-	\caption{Tensão no resistor para retificador monofásico com carga RL (100mH)}
-	\label{fig:rlvr}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vl}
+		\caption{Tensão no indutor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_il}
+		\caption{Corrente no indutor}
+	\end{subfigure}
+	\caption{Curvas do indutor para conversor buck}
+	\label{fig:bl}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rl_ir}
-	\caption{Corrente no resistor para retificador monofásico com carga RL (100mH)}
-	\label{fig:rlir}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vc}
+		\caption{Tensão no capacitor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ic}
+		\caption{Corrente no capacitor}
+	\end{subfigure}
+	\caption{Curvas do capacitor para conversor buck}
+	\label{fig:bc}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rl_vl}
-	\caption{Tensão no indutor para retificador monofásico com carga RL (100mH)}
-	\label{fig:rlvl}
-\end{figure}
-Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 40.3318\ V
-\end{equation}
-\begin{equation}
-\overline{Ir} =  0.8066\ A
-\end{equation}
-\begin{equation}
-Vr_{rms} =  48.1121\ V
-\end{equation}
-\begin{equation}
-Ir_{rms} =   0.9622\ A
-\end{equation}
-
-Calculamos o fator de retificação usando a equação \ref{eq:rf}.
-\begin{equation}
-\sigma = 0.7027
-\end{equation}
-
-Encontramos também o fator de forma usando a equação \ref{eq:ff}.
-\begin{equation}
-FF = 1.1929
-\end{equation}
-
-Simulamos então circuito com uma indutância $L\ =\ 1H$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rl2vr}) e corrente (figura \ref{fig:rl2ir}) no resistor e de tensão no indutor (figura \ref{fig:rl2vl}) para quinze períodos da fonte.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rl2_vr}
-	\caption{Tensão no resistor para retificador monofásico com carga RL (1H)}
-	\label{fig:rl2vr}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1v}
+		\caption{Tensão na chave S1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1i}
+		\caption{Corrente na chave S1}
+	\end{subfigure}
+	\caption{Curvas da chave S1 para conversor buck}
+	\label{fig:bs1}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rl2_ir}
-	\caption{Corrente no resistor para retificador monofásico com carga RL (1H)}
-	\label{fig:rl2ir}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2v}
+		\caption{Tensão no diodo D2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2i}
+		\caption{Corrente no diodo D2}
+	\end{subfigure}
+	\caption{Curvas do diodo D2 para conversor buck}
+	\label{fig:bd2}
+\end{figure}
+
+Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
+\begin{equation}
+\overline{Vr} = 9.2111\ V
+\end{equation}
+\begin{equation}
+Vr_{rms} = 9.3240\ V
+\end{equation}
+
+Conforme podemos ver analisando as curvas, %TODO
+
+Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:bumean}
+%TODO
+\begin{equation}
+\overline{Vr} = 
+\label{eq:bumean}
+\end{equation}
+
+Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/buck/r_vrxd}
+	\caption{Tensão média no resistor para conversor buck}
+	\label{fig:buvrxd}
+\end{figure}
+
+Como podemos ver os valores obtidos são %TODO esperados teoricamente, isso se deve às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, entre outros fatores.
+
+Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
+\begin{equation}
+	L_b = \frac{(1 - D)R}{2f_s}
+\end{equation}
+Para um duty-cicle $D$ = $80\%$, temos:
+\begin{equation}
+	L_b = 400\mu H
+\end{equation}
+
+Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:br2}, \ref{fig:bl2}, \ref{fig:bc2}, \ref{fig:bs12}, \ref{fig:bd22}.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vr2}
+		\caption{Tensão no resistor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ir2}
+		\caption{Corrente no resistor}
+	\end{subfigure}
+	\caption{Curvas do resistor para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:br2}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rl2_vl}
-	\caption{Tensão no indutor para retificador monofásico com carga RL (1H)}
-	\label{fig:rl2vl}
-\end{figure}
-Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 30.1911\ V
-\end{equation}
-\begin{equation}
-\overline{Ir} =  0.6038\ A
-\end{equation}
-\begin{equation}
-Vr_{rms} =  30.4340\ V
-\end{equation}
-\begin{equation}
-Ir_{rms} =    0.6087\ A
-\end{equation}
-
-Calculamos o fator de retificação usando a equação \ref{eq:rf}.
-\begin{equation}
-\sigma =  0.9841
-\end{equation}
-
-Encontramos também o fator de forma usando a equação \ref{eq:ff}.
-\begin{equation}
-FF = 1.0080
-\end{equation}
-
-Podemos ver que ao introduzir uma carga indutiva os tiristores continuam conduzindo mesmo que a tensão sobre eles seja negativa (contanto que a corrente continue positiva). Isso causa uma redução da tensão média na carga. Ao mesmo tempo, o indutor, uma vez carregado evita variações bruscas na corrente sobre a carga (possivelmente evitando que ela chegue a zero), aumentando o alisamento (e consequentemente melhorando o fator de forma e o de retificação) de maneira proporcional ao valor da indutância.
-
-Para os dois valores de indutância nós medimos uma tensão média praticamente nula no indutor. Esse resultado é esperado uma vez que:
-\begin{equation}
-	\overline{Vl} = \frac{1}{T}\int_{0}^{T}Vl dt = \frac{1}{T}\int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
-\end{equation}
-Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
-\begin{equation}
-	\overline{Vl} = 0
-\end{equation}
-
-\section{Carga RC}
-Conectamos então um capacitor em paralelo com o resistor conforme mostrado na figura \ref{fig:rcsim}.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{matlab/rcsim}
-	\caption{Esquema para simulação do retificador monofásico controlado com carga RC}
-	\label{fig:rcsim}
-\end{figure}
-
-Simulamos o circuito para uma capacitância $C\ =\ 100\mu F$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rcvr}) e corrente (figura \ref{fig:rcir}) no resistor para dois períodos da fonte.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rc_vr}
-	\caption{Tensão no resistor para retificador monofásico com carga RC ($100\mu F$)}
-	\label{fig:rcvr}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vl2}
+		\caption{Tensão no indutor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_il2}
+		\caption{Corrente no indutor}
+	\end{subfigure}
+	\caption{Curvas do indutor para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bl2}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rc_ir}
-	\caption{Corrente no resistor para retificador monofásico com carga RC ($100\mu F$)}
-	\label{fig:rcir}
-\end{figure}
-
-Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 60.6456\ V
-\end{equation}
-\begin{equation}
-\overline{Ir} = 1.2129\ A
-\end{equation}
-\begin{equation}
-Vr_{rms} = 67.1804\ V
-\end{equation}
-\begin{equation}
-Ir_{rms} = 1.3436\ A
-\end{equation}
-
-Calculamos o fator de retificação usando a equação \ref{eq:rf}.
-\begin{equation}
-\sigma = 0.8149
-\end{equation}
-
-Encontramos também o fator de forma usando a equação \ref{eq:ff}.
-\begin{equation}
-FF = 1.1078
-\end{equation}
-
-Simulamos então circuito com uma capacitância $C\ =\ 1mF$ e um ângulo de disparo $\alpha\ =\ 60^\circ$. Extraímos dessa simulação as curvas de tensão (figura \ref{fig:rc2vr}) e corrente (figura \ref{fig:rc2ir}) no resistor para dois períodos da fonte.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rc2_vr}
-	\caption{Tensão no resistor para retificador monofásico com carga RC ($1mF$)}
-	\label{fig:rc2vr}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vc2}
+		\caption{Tensão no capacitor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ic2}
+		\caption{Corrente no capacitor}
+	\end{subfigure}
+	\caption{Curvas do capacitor para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bc2}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/rc2_ir}
-	\caption{Corrente no resistor para retificador monofásico com carga RC ($1mF$)}
-	\label{fig:rc2ir}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1v2}
+		\caption{Tensão na chave S1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1i2}
+		\caption{Corrente na chave S1}
+	\end{subfigure}
+	\caption{Curvas da chave S1 para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bs12}
 \end{figure}
-Medimos as tensões e correntes médias e efetivas na resistência R, obtendo os seguintes valores:
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2v2}
+		\caption{Tensão no diodo D2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2i2}
+		\caption{Corrente no diodo D2}
+	\end{subfigure}
+	\caption{Curvas do diodo D2 para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bd22}
+\end{figure}
+
+%TODO ANALISAR
+
+Por fim voltamos a nossa indutância original porém retiramos o filtro capacitivo, encontramos então a curva de tensão sobre o resistor apresentada na figura \ref{fig:br3}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/buck/b_vr3}
+	\caption{Tensão no resistor para conversor buck sem filtro capacitivo}
+	\label{fig:br3}
+\end{figure}
+
+%TODO Concluir
+
+\section{Conversor Boost}
+Através do Simulink implementamos o conversor step-up detalhado na figura \ref{fig:bosim}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/boost/bsim}
+	\caption{Esquema para simulação do conversor boost}
+	\label{fig:bosim}
+\end{figure}
+Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cicle de 80\% na chave S1.
+Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vr}
+		\caption{Tensão no resistor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ir}
+		\caption{Corrente no resistor}
+	\end{subfigure}
+	\caption{Curvas do resistor para conversor buck}
+	\label{fig:br}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vl}
+		\caption{Tensão no indutor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_il}
+		\caption{Corrente no indutor}
+	\end{subfigure}
+	\caption{Curvas do indutor para conversor buck}
+	\label{fig:bl}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vc}
+		\caption{Tensão no capacitor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ic}
+		\caption{Corrente no capacitor}
+	\end{subfigure}
+	\caption{Curvas do capacitor para conversor buck}
+	\label{fig:bc}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1v}
+		\caption{Tensão na chave S1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1i}
+		\caption{Corrente na chave S1}
+	\end{subfigure}
+	\caption{Curvas da chave S1 para conversor buck}
+	\label{fig:bs1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2v}
+		\caption{Tensão no diodo D2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2i}
+		\caption{Corrente no diodo D2}
+	\end{subfigure}
+	\caption{Curvas do diodo D2 para conversor buck}
+	\label{fig:bd2}
+\end{figure}
+
+Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 \begin{equation}
-\overline{Vr} = 92.0838\ V
+\overline{Vr} = 9.2111\ V
 \end{equation}
 \begin{equation}
-\overline{Ir} = 1.8417\ A
-\end{equation}
-\begin{equation}
-Vr_{rms} = 92.1690\ V
-\end{equation}
-\begin{equation}
-Ir_{rms} = 1.8434\ A
+Vr_{rms} = 9.3240\ V
 \end{equation}
 
-Calculamos o fator de retificação usando a equação \ref{eq:rf}.
+Conforme podemos ver analisando as curvas, %TODO
+
+Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:bumean}
+%TODO
 \begin{equation}
-\sigma = 0.9982
+\overline{Vr} = 
+\label{eq:bumean}
 \end{equation}
 
-Encontramos também o fator de forma usando a equação \ref{eq:ff}.
+Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/buck/r_vrxd}
+	\caption{Tensão média no resistor para conversor buck}
+	\label{fig:buvrxd}
+\end{figure}
+
+Como podemos ver os valores obtidos são %TODO esperados teoricamente, isso se deve às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, entre outros fatores.
+
+Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
 \begin{equation}
-FF = 1.0009
+L_b = \frac{(1 - D)R}{2f_s}
+\end{equation}
+Para um duty-cicle $D$ = $80\%$, temos:
+\begin{equation}
+L_b = 400\mu H
 \end{equation}
 
-Ao introduzir uma carga capacitiva esta armazenará energia, liberando-a quando a tensão sobre o resistor diminuí. Essa energia liberada causa uma retificação da tensão sobre o resistor, de maneira proporcional à capacitância, obtendo uma curva de tensão quase linear com ótimos fatores de forma e de retificação.
+Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:br2}, \ref{fig:bl2}, \ref{fig:bc2}, \ref{fig:bs12}, \ref{fig:bd22}.
 
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vr2}
+		\caption{Tensão no resistor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ir2}
+		\caption{Corrente no resistor}
+	\end{subfigure}
+	\caption{Curvas do resistor para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:br2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vl2}
+		\caption{Tensão no indutor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_il2}
+		\caption{Corrente no indutor}
+	\end{subfigure}
+	\caption{Curvas do indutor para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bl2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/b_vc2}
+		\caption{Tensão no capacitor}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/b_ic2}
+		\caption{Corrente no capacitor}
+	\end{subfigure}
+	\caption{Curvas do capacitor para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bc2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1v2}
+		\caption{Tensão na chave S1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_s1i2}
+		\caption{Corrente na chave S1}
+	\end{subfigure}
+	\caption{Curvas da chave S1 para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bs12}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2v2}
+		\caption{Tensão no diodo D2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/buck/r_d2i2}
+		\caption{Corrente no diodo D2}
+	\end{subfigure}
+	\caption{Curvas do diodo D2 para conversor buck com indutância \frac{$L_b$}{2}}
+	\label{fig:bd22}
+\end{figure}
+
+%TODO ANALISAR
+
+Por fim voltamos a nossa indutância original porém retiramos o filtro capacitivo, encontramos então a curva de tensão sobre o resistor apresentada na figura \ref{fig:br3}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/buck/b_vr3}
+	\caption{Tensão no resistor para conversor buck sem filtro capacitivo}
+	\label{fig:br3}
+\end{figure}
+
+%TODO Concluir
 \bibliography{mybib}
 \end{document}
 
