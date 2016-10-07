@@ -111,7 +111,7 @@ Varrendo o ângulo de disparo $\alpha$ entre $0^\circ$ e $180^\circ$ comparamos 
 Como podemos ver os valores obtidos diferem pouco dos que os esperados teoricamente, as pequenas variações se devem às imprecisões de medida, à queda de tensão introduzida pelos diodos, aos componentes não ideais, entre outros fatores.
 
 \section{Carga RL}
-Conectamos então um indutor ($L$ = $43.9\ mH$) em série com o resistor mostrado na figura \ref{fig:rsim}. Extraímos as curvas de tensão no resistor (figura \ref{fig:rlvr}) no indutor (figura \ref{fig:rlvl}) e na carga RL como um todo (figura \ref{fig:rlvrl}) para um ângulo de disparo $\alpha\ =\ 60^\circ$.
+Conectamos então um indutor ($L$ = $43.9\ mH$) em série com o resistor mostrado na figura \ref{fig:resq}. Extraímos as curvas de tensão no resistor (figura \ref{fig:rlvr}) no indutor (figura \ref{fig:rlvl}) e na carga RL como um todo (figura \ref{fig:rlvrl}) para um ângulo de disparo $\alpha\ =\ 60^\circ$.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dados/RL/rl_vr}
@@ -165,6 +165,7 @@ i(\pi + \gamma) = 0 = \frac{V_s}{Z}(\sin(\pi + \gamma - \phi)) - \sin(\alpha - \
 Logo:
 \begin{equation}
  0 = \sin(\pi + \gamma - \phi) - \sin(\alpha - \phi)e^{-\frac{\pi + \gamma - \alpha}{\tan(\phi)}}
+ \label{eq:gamma}
 \end{equation}
 Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:rlmean}
 \begin{equation}
@@ -187,7 +188,7 @@ Variamos o ângulo $\alpha$ entre $0$ e $180^\circ$ e comparamos os valores teó
 	\caption{Tensão na carga média e efetiva em função do ângulo de disparo}
 	\label{fig:rlalpha}
 \end{figure}
-Como podemos ver os valores medidos e teóricos pouco se assemelham. Acreditamos que um dos principais fatores causadores dessa discrepância foi a medição da resistência da lâmpada (que apresentou um valor muito menor do que o esperado e estava flutuando significativamente entre cada medida). Ajustamos nossa curva teóricas para uma lâmpada de $57 \Omega$ (valor medido no experimento 1) e obtivemos resultados bem mais próximos (figura \ref{fig:rlalpha57})
+Como podemos ver os valores medidos e teóricos pouco se assemelham. Acreditamos que um dos principais fatores causadores dessa discrepância foi a medição da resistência da lâmpada (que apresentou um valor muito menor do que o esperado e estava flutuando significativamente entre cada medida). Também precisamos levar em consideração o fato que ignoramos a resistência associada com o indutor (que não é necessariamente desprezível). Ajustamos nossa curva teóricas para uma lâmpada de $57 \Omega$ (valor medido no experimento 1) e obtivemos resultados bem mais próximos (figura \ref{fig:rlalpha57})
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dados/RL/rl_alpha57Ohm}
@@ -195,7 +196,29 @@ Como podemos ver os valores medidos e teóricos pouco se assemelham. Acreditamos
 	\label{fig:rlalpha57}
 \end{figure}
 
-%TODO Calculo do angulo de extinção usando formula em cima, encontrar alpha limite, responder d) e e)
+Calculamos o ângulo de extinção $\gamma$ teórico (para cada valor de resistência) para um $\alpha$ = $90^\circ$ resolvendo numericamente a equação \ref{eq:gamma}.
+\begin{equation}
+	\gamma_t = 168.15^\circ
+\end{equation}
+\begin{equation}
+\gamma_{t_{57}} = 50.57^\circ
+\end{equation}
+Podemos também estimar esse valor utilizando a tensão média medida e a equação \ref{eq:rlmean}.
+\begin{equation}
+	\gamma = 66.12^\circ
+\end{equation}
+Como podemos ver esse valor se aproxima muito mais do valor esperado para uma resistência de $57 \Omega$ do que para o valor da resistência medido.
+
+Podemos encontrar o $alpha_c$ para que o circuito opere no limiar entre condução contínua e descontínua utilizando a equação \ref{eq:gamma} com a condição $\gamma = \alpha_c$. Encontramos então (para cada valor de resistência):
+\begin{equation}
+\alpha_ct = 60.35^\circ
+\end{equation}
+\begin{equation}
+\alpha_{ct_{57}} = 16.19^\circ
+\end{equation}
+%TODO FAZER SENTIDO DISSO
+
+%TODO responder d) e e)
 
 \bibliography{mybib}
 \end{document}
