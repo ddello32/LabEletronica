@@ -62,6 +62,7 @@ Através do Simulink implementamos o conversor step-down detalhado na figura \re
 	\label{fig:bsim}
 \end{figure}
 Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cycle de 80\% na chave S1.
+
 Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
 \begin{figure}[H]
 	\centering
@@ -142,14 +143,57 @@ Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 Vr_{rms} = 9.3240\ V
 \end{equation}
 
-Conforme podemos ver analisando as curvas, %TODO
+Conforme podemos ver analisando as curvas, a chave S1 corta a tensão de entrada. Quando esta está ligada, a tensão de alimentação transfere energia para o indutor e para o capacitor. Uma vez que a chave é desligada o diodo D2 passa a conduzir e o indutor transfere esse energia para a carga enquanto capacitor faz o mesmo de maneira a garantir uma corrente quase constante na carga.
 
-Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:bumean}
-%TODO
+
+Podemos calcular a tensão média teórica sobre a carga através considerando que:
 \begin{equation}
-\overline{Vr} = 
-\label{eq:bumean}
+\int_{0}^{T}Vl dt = \int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
 \end{equation}
+Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
+\begin{equation}
+\overline{Vl} = 0
+\end{equation}
+Para condução contínua, teremos que quando S1 está ligada:
+\begin{equation}
+Vl = V - Vr
+\end{equation}
+E quando está desligada (D2 está conduzindo):
+\begin{equation}
+Vl = - Vr
+\end{equation}
+Logo temos:
+\begin{equation}
+\int_{0}^{T}Vl dt = (V-Vr)DT - Vr(1 - D)T = 0
+\end{equation}
+\begin{equation}
+\overline{Vr} = VD
+\end{equation}
+Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S1 está ligada:
+\begin{equation}
+Vl = V - Vr
+\end{equation}
+E quando está desligada (D1 está conduzindo) e Il não nula:
+\begin{equation}
+Vl = Vr
+\end{equation}
+Quando Il é nula:
+\begin{equation}
+Vl = 0
+\end{equation}
+Logo temos:
+\begin{equation}
+\int_{0}^{T}Vl dt = (V - Vr)DT - Vr[(1 - D)T - t_x] = 0
+\end{equation}
+Encontramos então:
+\begin{equation}
+\overline{Vr} = V\frac{D^2}{D^2 + 2K}
+\end{equation}
+Com K:
+\begin{equation}
+K = \frac{LI_o}{VT}
+\end{equation}
+Onde $I_o$ é a corrente na saída do conversor.
 
 Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
 \begin{figure}[H]
@@ -159,7 +203,7 @@ Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão m�
 	\label{fig:buvrxd}
 \end{figure}
 
-Como podemos ver os valores obtidos são %TODO esperados teoricamente, isso se deve às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, entre outros fatores.
+Como podemos ver os valores obtidos são bem próximmos dos esperados teoricamente, as poucas discrepâncias podem ser atribuídas às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, aos componentes não ideais e a diversos outros fatores.
 
 Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
 \begin{equation}
@@ -243,7 +287,7 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamo
 	\label{fig:bd22}
 \end{figure}
 
-%TODO ANALISAR
+Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
 
 Por fim voltamos a nossa indutância original porém retiramos o filtro capacitivo, encontramos então a curva de tensão sobre o resistor apresentada na figura \ref{fig:br3}.
 \begin{figure}[H]
@@ -253,7 +297,7 @@ Por fim voltamos a nossa indutância original porém retiramos o filtro capaciti
 	\label{fig:br3}
 \end{figure}
 
-%TODO Concluir
+Podemos ver que sem o filtro capacitivo as variações de tensão sobre a carga são bem mais drásticas e a resposta do circuito fica mais longe de uma resposta constante.
 
 \section{Conversor Boost}
 Através do Simulink implementamos o conversor step-up detalhado na figura \ref{fig:bosim}.
@@ -389,7 +433,7 @@ Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 Vr_{rms} = 29.65\ V
 \end{equation}
 
-Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S1 desligar.
+Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S2 desligar.
 
 Podemos calcular a tensão média teórica sobre a carga através considerando que:
 \begin{equation}
@@ -399,11 +443,11 @@ Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
 \begin{equation}
 \overline{Vl} = 0
 \end{equation}
-Para condução contínua, teremos que quando S1 está ligada:
+Para condução contínua, teremos que quando S2 está ligada:
 \begin{equation}
 	Vl = V
 \end{equation}
-E quando está desligada (D2 está conduzindo):
+E quando está desligada (D1 está conduzindo):
 \begin{equation}
 	Vl = -(Vr - V)
 \end{equation}
@@ -414,11 +458,11 @@ Logo temos:
 \begin{equation}
 \overline{Vr} = \frac{V}{1 - D}
 \end{equation}
-Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S1 está ligada:
+Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S2 está ligada:
 \begin{equation}
 Vl = V
 \end{equation}
-E quando está desligada (D2 está conduzindo) e Il não nula:
+E quando está desligada (D1 está conduzindo) e Il não nula:
 \begin{equation}
 Vl = -(Vr - V)
 \end{equation}
@@ -432,7 +476,7 @@ Logo temos:
 \end{equation}
 Encontramos então:
 \begin{equation}
-\overline{Vr} = 1(1 + \frac{D^2}{2K})
+\overline{Vr} = V(1 + \frac{D^2}{2K})
 \end{equation}
 Com K:
 \begin{equation}
@@ -448,7 +492,7 @@ Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão m�
 	\label{fig:bovrxd}
 \end{figure}
 
-Como podemos ver os valores obtidos diferem dos esperados teoricamente, principalmente para duty-cycles altos, isso se notavelmente aos efeitos parasíticos introduzidos pelos componentes não ideais que evitam que toda a potência fornecida seja transferida ao resistor (Notamos que ao transformar nossas chaves em chaves ideais as duas curvas batem conforme figura \ref{fig:borvxdi}).
+Como podemos ver os valores obtidos diferem dos esperados teoricamente, principalmente para duty-cycles altos, isso se notavelmente aos efeitos parasíticos introduzidos pelos componentes não ideais que evitam que toda a potência fornecida seja transferida ao resistor (Notamos que ao transformar nossas chaves em chaves ideais as duas curvas se aproximam mais conforme figura \ref{fig:borvxdi}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxdi}
