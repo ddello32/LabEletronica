@@ -218,11 +218,20 @@ Podemos encontrar o $\alpha_c$ para que o circuito opere no limiar entre conduç
 \end{equation}
 %TODO FAZER SENTIDO DISSO
 
-De acordo com a nota de aplicação do AN1048/D da ON Semiconductor, os circuitos "snubber" montado em paralelo com os tiristores como no kit utilizado favorecem o acionamento do tiristor. No caso de subidas íngremes, ele atenua a descontinuidade e diminui a sensibilidade do disparo ao degrau, pois o capacitor absorve parte desta variação brusca. 
+De acordo com a nota de aplicação do AN1048/D da ON Semiconductor \cite{bb:apno}, os circuitos "snubber" montado em paralelo com os tiristores como no kit utilizado favorecem o acionamento do tiristor. No caso de subidas íngremes, ele atenua a descontinuidade e diminui a sensibilidade do disparo ao degrau, pois o capacitor absorve parte desta variação brusca. 
 
 Também possui outra funcionalidade, facilitando o disparo de sistemas com carga indutiva. Neste segundo caso, o capacitor se descarrega com o disparo. Entretanto, existe a recomendação de não utilizar uma carga capacitiva muito alta, pois acaba interferindo no circuito durante o disparo (oscilações provenientes do descarregamento do capacitor ficam significativas).
 
-%TODO responder d) e e)
+O circuito de disparo, baseado no circuíto integrado TCA785, tem seu funcionamento detalhado em \cite{bb:datasheet}. Dada uma tensão de linha de referência, um detector de tensão nula encontra as passagens pelo eixo x e as envia para o registrador de sincronização, que por sua vez controla um gerador de rampa. Quando a tensão do sinal de rampa ultrapassa a voltagem de entrada, um sinal é enviado para a unidade lógica (gerando um pulso em Q1 ou Q2 de maneira alternada). Ajustando a voltagem de entrada podemos então ajustar o ângulo de disparo.
+
+Para cada onda um pulso é gerado na saída Q1 defasado do ângulo de disparo em relação a tensão de linha e em Q2 um pulso é gerado defasado do ângulo de disparo somado de $180^\circ$. A figura \ref{fig:datasheet} ilustra esse funcionamento.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{dados/datasheet}
+	\caption{Esquema de funcionamento do CI TCA785 \cite{bb:datasheet}}
+	\label{fig:datasheet}
+\end{figure}
 
 \bibliography{mybib}
 \end{document}
