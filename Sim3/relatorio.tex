@@ -183,7 +183,7 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamo
 		\includegraphics[width=\linewidth]{matlab/buck/b_ir2}
 		\caption{Corrente no resistor}
 	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck com indutância \frac{$L_b$}{2}}
+	\caption{Curvas do resistor para conversor buck com indutância $\frac{L_b}{2}$}
 	\label{fig:br2}
 \end{figure}
 \begin{figure}[H]
@@ -197,7 +197,7 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamo
 		\includegraphics[width=\linewidth]{matlab/buck/b_il2}
 		\caption{Corrente no indutor}
 	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck com indutância \frac{$L_b$}{2}}
+	\caption{Curvas do indutor para conversor buck com indutância $\frac{L_b}{2}$}
 	\label{fig:bl2}
 \end{figure}
 \begin{figure}[H]
@@ -211,7 +211,7 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamo
 		\includegraphics[width=\linewidth]{matlab/buck/b_ic2}
 		\caption{Corrente no capacitor}
 	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck com indutância \frac{$L_b$}{2}}
+	\caption{Curvas do capacitor para conversor buck com indutância $\frac{L_b}{2}$}
 	\label{fig:bc2}
 \end{figure}
 \begin{figure}[H]
@@ -225,7 +225,7 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamo
 		\includegraphics[width=\linewidth]{matlab/buck/r_s1i2}
 		\caption{Corrente na chave S1}
 	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck com indutância \frac{$L_b$}{2}}
+	\caption{Curvas da chave S1 para conversor buck com indutância $\frac{L_b}{2}$}
 	\label{fig:bs12}
 \end{figure}
 \begin{figure}[H]
@@ -239,7 +239,7 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamo
 		\includegraphics[width=\linewidth]{matlab/buck/r_d2i2}
 		\caption{Corrente no diodo D2}
 	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck com indutância \frac{$L_b$}{2}}
+	\caption{Curvas do diodo D2 para conversor buck com indutância $\frac{L_b}{2}$}
 	\label{fig:bd22}
 \end{figure}
 
@@ -263,199 +263,234 @@ Através do Simulink implementamos o conversor step-up detalhado na figura \ref{
 	\caption{Esquema para simulação do conversor boost}
 	\label{fig:bosim}
 \end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cicle de 80\% na chave S1.
-Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
+Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $10kHz$ e duty-cicle de 80\% na chave S2.
+Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:bor}), no indutor (figura \ref{fig:bol}), no capacitor (figura \ref{fig:boc}), na chave S2 (figura \ref{fig:bos2}) e no diodo D1 (figura \ref{fig:bod1}).
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vr}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vr}
 		\caption{Tensão no resistor}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ir}
+		\includegraphics[width=\linewidth]{matlab/boost/b_ir}
 		\caption{Corrente no resistor}
 	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck}
-	\label{fig:br}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vrst}
+		\caption{Tensão no resistor após equilíbrio}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/boost/b_irst}
+		\caption{Corrente no resistor após equilíbrio}
+	\end{subfigure}
+	\caption{Curvas do resistor para conversor boost}
+	\label{fig:bor}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vl}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vl}
 		\caption{Tensão no indutor}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_il}
+		\includegraphics[width=\linewidth]{matlab/boost/b_il}
 		\caption{Corrente no indutor}
 	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck}
-	\label{fig:bl}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vlst}
+		\caption{Tensão no indutor após equilíbrio}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/boost/b_ilst}
+		\caption{Corrente no indutor após equilíbrio}
+	\end{subfigure}
+	\caption{Curvas do indutor para conversor boost}
+	\label{fig:bol}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vc}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vc}
 		\caption{Tensão no capacitor}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ic}
+		\includegraphics[width=\linewidth]{matlab/boost/b_ic}
 		\caption{Corrente no capacitor}
 	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck}
-	\label{fig:bc}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vcst}
+		\caption{Tensão no capacitor após equilíbrio}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/boost/b_icst}
+		\caption{Corrente no capacitor após equilíbrio}
+	\end{subfigure}
+	\caption{Curvas do capacitor para conversor boost}
+	\label{fig:boc}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1v}
-		\caption{Tensão na chave S1}
+		\includegraphics[width=\linewidth]{matlab/boost/r_s2v}
+		\caption{Tensão na chave S2}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1i}
-		\caption{Corrente na chave S1}
+		\includegraphics[width=\linewidth]{matlab/boost/r_s2i}
+		\caption{Corrente na chave S2}
 	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck}
-	\label{fig:bs1}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{matlab/boost/r_s2vst}
+		\caption{Tensão na chave S2 após equilíbrio}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/boost/r_s2ist}
+		\caption{Corrente na chave S2 após equilíbrio}
+	\end{subfigure}
+	\caption{Curvas da chave S2 para conversor boost}
+	\label{fig:bos2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2v}
-		\caption{Tensão no diodo D2}
+		\includegraphics[width=\linewidth]{matlab/boost/r_d1v}
+		\caption{Tensão no diodo D1}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2i}
-		\caption{Corrente no diodo D2}
+		\includegraphics[width=\linewidth]{matlab/boost/r_d1i}
+		\caption{Corrente no diodo D1}
 	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck}
-	\label{fig:bd2}
+		\begin{subfigure}[b]{0.4\linewidth}
+			\includegraphics[width=\linewidth]{matlab/boost/r_d1vst}
+			\caption{Tensão no diodo D1 após equilíbrio}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{matlab/boost/r_d1ist}
+			\caption{Corrente no diodo D1 após equilíbrio}
+		\end{subfigure}
+	\caption{Curvas do diodo D1 para conversor boost}
+	\label{fig:bod1}
 \end{figure}
 
 Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 \begin{equation}
-\overline{Vr} = 9.2111\ V
+\overline{Vr} = 29.6\ V
 \end{equation}
 \begin{equation}
-Vr_{rms} = 9.3240\ V
+Vr_{rms} = 29.65\ V
 \end{equation}
 
 Conforme podemos ver analisando as curvas, %TODO
 
-Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:bumean}
+Podemos calcular a tensão média teórica sobre a carga através da equação \ref{eq:bomean}
 %TODO
 \begin{equation}
 \overline{Vr} = 
-\label{eq:bumean}
+\label{eq:bomean}
 \end{equation}
 
-Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
+Variamos então o valor do duty-cicle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:bovrxd}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/buck/r_vrxd}
-	\caption{Tensão média no resistor para conversor buck}
-	\label{fig:buvrxd}
+	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxd}
+	\caption{Tensão média no resistor para conversor boost}
+	\label{fig:bovrxd}
 \end{figure}
 
 Como podemos ver os valores obtidos são %TODO esperados teoricamente, isso se deve às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, entre outros fatores.
 
 Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
 \begin{equation}
-L_b = \frac{(1 - D)R}{2f_s}
+L_b = \frac{(1 - D)^2 DR}{2f_s}
 \end{equation}
 Para um duty-cicle $D$ = $80\%$, temos:
 \begin{equation}
-L_b = 400\mu H
+L_b =  3.2\mu H
 \end{equation}
 
-Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:br2}, \ref{fig:bl2}, \ref{fig:bc2}, \ref{fig:bs12}, \ref{fig:bd22}.
+Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $1.6 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:bor2}, \ref{fig:bol2}, \ref{fig:boc2}, \ref{fig:bos22}, \ref{fig:bod12}.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vr2}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vr2}
 		\caption{Tensão no resistor}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ir2}
+		\includegraphics[width=\linewidth]{matlab/boost/b_ir2}
 		\caption{Corrente no resistor}
 	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck com indutância \frac{$L_b$}{2}}
-	\label{fig:br2}
+	\caption{Curvas do resistor para conversor boost com indutância $\frac{L_b}{2}$}
+	\label{fig:bor2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vl2}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vl2}
 		\caption{Tensão no indutor}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_il2}
+		\includegraphics[width=\linewidth]{matlab/boost/b_il2}
 		\caption{Corrente no indutor}
 	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck com indutância \frac{$L_b$}{2}}
-	\label{fig:bl2}
+	\caption{Curvas do indutor para conversor boost com indutância $\frac{L_b}{2}$}
+	\label{fig:bol2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vc2}
+		\includegraphics[width=\linewidth]{matlab/boost/b_vc2}
 		\caption{Tensão no capacitor}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ic2}
+		\includegraphics[width=\linewidth]{matlab/boost/b_ic2}
 		\caption{Corrente no capacitor}
 	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck com indutância \frac{$L_b$}{2}}
-	\label{fig:bc2}
+	\caption{Curvas do capacitor para conversor boost com indutância $\frac{L_b}{2}$}
+	\label{fig:boc2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1v2}
-		\caption{Tensão na chave S1}
+		\includegraphics[width=\linewidth]{matlab/boost/r_s2v2}
+		\caption{Tensão na chave S2}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1i2}
-		\caption{Corrente na chave S1}
+		\includegraphics[width=\linewidth]{matlab/boost/r_s2i2}
+		\caption{Corrente na chave S2}
 	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck com indutância \frac{$L_b$}{2}}
-	\label{fig:bs12}
+	\caption{Curvas da chave S2 para conversor boost com indutância $\frac{L_b}{2}$}
+	\label{fig:bos22}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2v2}
-		\caption{Tensão no diodo D2}
+		\includegraphics[width=\linewidth]{matlab/boost/r_d1v2}
+		\caption{Tensão no diodo D1}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.4\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2i2}
-		\caption{Corrente no diodo D2}
+		\includegraphics[width=\linewidth]{matlab/boost/r_d1i2}
+		\caption{Corrente no diodo D1}
 	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck com indutância \frac{$L_b$}{2}}
-	\label{fig:bd22}
+	\caption{Curvas do diodo D1 para conversor boost com indutância $\frac{L_b}{2}$}
+	\label{fig:bod12}
 \end{figure}
 
 %TODO ANALISAR
-
-Por fim voltamos a nossa indutância original porém retiramos o filtro capacitivo, encontramos então a curva de tensão sobre o resistor apresentada na figura \ref{fig:br3}.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/buck/b_vr3}
-	\caption{Tensão no resistor para conversor buck sem filtro capacitivo}
-	\label{fig:br3}
-\end{figure}
-
-%TODO Concluir
-\bibliography{mybib}
+%\bibliography{mybib}
 \end{document}
 

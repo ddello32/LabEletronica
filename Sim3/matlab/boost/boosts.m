@@ -60,6 +60,67 @@ figure,
 results.get('S2').get('MOSFET voltage').plot
 title('S2 - MOSFET Voltage')
 print('r_s2v', '-depsc')
+%% Small time
+figure,
+plot(results.get('Ir').time(end-100:end) ,results.get('Ir').Data(end-100:end))
+title('Ir')
+ylabel('Ir (A)')
+xlabel('time (s)')
+print('b_irst', '-depsc')
+figure,
+plot(results.get('Vr').time(end-100:end) ,results.get('Vr').Data(end-100:end))
+title('Vr')
+ylabel('Vr (V)')
+xlabel('time (s)')
+print('b_vrst', '-depsc')
+figure,
+plot(results.get('Il').time(end-100:end) ,results.get('Il').Data(end-100:end))
+title('Il')
+ylabel('Il (A)')
+xlabel('time (s)')
+print('b_ilst', '-depsc')
+figure,
+plot(results.get('Vl').time(end-100:end) ,results.get('Vl').Data(end-100:end))
+title('Vl')
+ylabel('Vl (V)')
+xlabel('time (s)')
+print('b_vlst', '-depsc')
+figure,
+plot(results.get('Ic').time(end-100:end) ,results.get('Ic').Data(end-100:end))
+title('Ic')
+ylabel('Ic (A)')
+xlabel('time (s)')
+print('b_icst', '-depsc')
+figure,
+plot(results.get('Vc').time(end-100:end) ,results.get('Vc').Data(end-100:end))
+title('Vc')
+ylabel('Vc (V)')
+xlabel('time (s)')
+print('b_vcst', '-depsc')
+figure,
+plot(results.get('D1').get('MOSFET current').time(end-100:end), results.get('D1').get('MOSFET current').Data(end-100:end))
+title('D1 - MOSFET Current')
+ylabel('MOSFET Current (A)')
+xlabel('time (s)')
+print('r_d1ist', '-depsc')
+figure,
+plot(results.get('D1').get('MOSFET voltage').time(end-100:end), results.get('D1').get('MOSFET voltage').Data(end-100:end))
+title('D1 - MOSFET voltage')
+ylabel('MOSFET voltage (V)')
+xlabel('time (s)')
+print('r_d1vst', '-depsc')
+figure,
+plot(results.get('S2').get('MOSFET current').time(end-100:end), results.get('S2').get('MOSFET current').Data(end-100:end))
+title('S2 - MOSFET Current')
+ylabel('MOSFET Current (A)')
+xlabel('time (s)')
+print('r_s2ist', '-depsc')
+figure,
+plot(results.get('S2').get('MOSFET voltage').time(end-100:end), results.get('S2').get('MOSFET voltage').Data(end-100:end))
+title('S2 - MOSFET voltage')
+ylabel('MOSFET voltage (V)')
+xlabel('time (s)')
+print('r_s2vst', '-depsc')
 %% Valores medidos
 Vr_mean = results.get('Vr_mean').Data(end)
 Vr_rms = results.get('Vr_rms').Data(end)
