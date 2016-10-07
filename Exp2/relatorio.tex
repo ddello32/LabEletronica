@@ -1,4 +1,4 @@
-\documentclass{report}
+\documentclass{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -243,7 +243,10 @@ Podemos calcular a tensão média teórica sobre a carga através da equação \
 \end{equation}
 Para calcular o valor efetivo da tensão sobre a carga utilizamos a equação \ref{eq:rlrms}.
 \begin{equation}
-Vr_{rms} = \sqrt{\frac{1}{\pi} \int_{\alpha}^{\pi + min(\alpha, \gamma)}{(Vs \sin(\theta))^2 d\theta}} = \frac{Vs \sqrt{\pi + min(\alpha, \gamma) + \frac{sin(2\alpha)}{2} - \frac{sin(2(\pi + min(\alpha, \gamma)))}{2} - \alpha }}{\sqrt{2 \pi}} 
+Vr_{rms} = \sqrt{\frac{1}{\pi} \int_{\alpha}^{\pi + min(\alpha, \gamma)}{(Vs \sin(\theta))^2 d\theta}}
+\end{equation}
+\begin{equation}
+Vr_{rms} = \frac{Vs \sqrt{\pi + min(\alpha, \gamma) + \frac{sin(2\alpha)}{2} - \frac{sin(2(\pi + min(\alpha, \gamma)))}{2} - \alpha }}{\sqrt{2 \pi}} 
 \label{eq:rlrms}
 \end{equation}
 
