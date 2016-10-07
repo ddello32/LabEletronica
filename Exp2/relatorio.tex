@@ -51,7 +51,7 @@
 
 \onehalfspacing
 \section{Objetivos}
-	Essa relatório tem como objetivo o estudo de retificadores controlados. Analisaremos o efeito do ângulo de disparo e de cargas indutivas na saída de um retificador monofásico controlado.
+	Esse relatório tem como objetivo o estudo de retificadores controlados. Analisaremos o efeito do ângulo de disparo e de cargas indutivas na saída de um retificador monofásico controlado.
 	 
 \section{Carga R}
 Implementamos o retificador monofásico totalmente controlado detalhado no roteiro conforme mostrado na figura \ref{fig:resq} com uma lâmpada de resistência $R$ = $9.42 \Omega$.
@@ -203,13 +203,13 @@ Calculamos o ângulo de extinção $\gamma$ teórico (para cada valor de resist�
 \begin{equation}
 \gamma_{t_{57}} = 50.57^\circ
 \end{equation}
-Podemos também estimar esse valor utilizando a tensão média medida e a equação \ref{eq:rlmean}.
+Podemos também estimar esse valor com a tensão média medida e a equação \ref{eq:rlmean}.
 \begin{equation}
 	\gamma = 66.12^\circ
 \end{equation}
 Como podemos ver esse valor se aproxima muito mais do valor esperado para uma resistência de $57 \Omega$ do que para o valor da resistência medido.
 
-Podemos encontrar o $alpha_c$ para que o circuito opere no limiar entre condução contínua e descontínua utilizando a equação \ref{eq:gamma} com a condição $\gamma = \alpha_c$. Encontramos então (para cada valor de resistência):
+Podemos encontrar o $\alpha_c$ para que o circuito opere no limiar entre condução contínua e descontínua utilizando a equação \ref{eq:gamma} com a condição $\gamma = \alpha_c$. Encontramos então (para cada valor de resistência):
 \begin{equation}
 \alpha_{ct} = 60.35^\circ
 \end{equation}
@@ -217,6 +217,10 @@ Podemos encontrar o $alpha_c$ para que o circuito opere no limiar entre conduç�
 \alpha_{{ct}_{57}} = 16.19^\circ
 \end{equation}
 %TODO FAZER SENTIDO DISSO
+
+De acordo com a nota de aplicação do AN1048/D da ON Semiconductor, os circuitos "snubber" montado em paralelo com os tiristores como no kit utilizado favorecem o acionamento do tiristor. No caso de subidas íngremes, ele atenua a descontinuidade e diminui a sensibilidade do disparo ao degrau, pois o capacitor absorve parte desta variação brusca. 
+
+Também possui outra funcionalidade, facilitando o disparo de sistemas com carga indutiva. Neste segundo caso, o capacitor se descarrega com o disparo. Entretanto, existe a recomendação de não utilizar uma carga capacitiva muito alta, pois acaba interferindo no circuito durante o disparo (oscilações provenientes do descarregamento do capacitor ficam significativas).
 
 %TODO responder d) e e)
 
