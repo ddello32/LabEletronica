@@ -143,7 +143,7 @@ Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 Vr_{rms} = 9.3240\ V
 \end{equation}
 
-Conforme podemos ver analisando as curvas, a chave S1 corta a tensão de entrada. Quando esta está ligada, a tensão de alimentação transfere energia para o indutor e para o capacitor. Uma vez que a chave é desligada o diodo D2 passa a conduzir e o indutor transfere esse energia para a carga enquanto capacitor faz o mesmo de maneira a garantir uma corrente quase constante na carga.
+Conforme podemos ver analisando as curvas, a chave S1 corta a tensão de entrada. Quando esta está ligada, a tensão de alimentação transfere energia para o indutor e para o capacitor. Uma vez que a chave é desligada o diodo D2 passa a conduzir e o indutor transfere esse energia para a carga enquanto capacitor faz o mesmo de maneira a garantir uma corrente quase constante na carga \cite{bb:dcdc}.
 
 
 Podemos calcular a tensão média teórica sobre a carga através considerando que:
@@ -433,7 +433,7 @@ Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
 Vr_{rms} = 29.65\ V
 \end{equation}
 
-Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S2 desligar.
+Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S2 desligar \cite{bb:dcdc}.
 
 Podemos calcular a tensão média teórica sobre a carga através considerando que:
 \begin{equation}
@@ -584,7 +584,8 @@ Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $1.6 \mu H$ e rodamo
 
 Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
 
+% Nao entendi se ele quer isso ou falar do buck-boost, buck-boost faria mais sentido para mim mas permutar a fonte e a carga tem pouco a ver com isso
 Podemos ver que ao permutar a carga e o capacitor do circuito apresentado na figura \ref{fig:bsim} com a fonte de tensão e trocar o gerador de pulso para que esse controle o outro mosfet, obtemos o circuito da figura \ref{fig:bosim}. Quando a fonte está próxima ao mosfet 1 e este está chaveando, nosso conversor opera em modo buck, quando a carga está próxima do mosfet 1 e o mosfet 2 está chaveando nosso conversor opera em modo boost.
-%\bibliography{mybib}
+\bibliography{mybib}
 \end{document}
 
