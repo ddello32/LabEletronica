@@ -1,8 +1,8 @@
 clc, clear all, close all
 %% Load data
-indutor = importdata('correntebuck.csv');
-t1k = importdata('tensaoresistor1khzvmed11_4V.csv');
-t3k = importdata('tensaoresistor.csv');
+indutor = importdata('corrente.csv');
+t1k = importdata('tensaoresistor1khz.csv');
+t3k = importdata('tensaoresistor3khz.csv');
 t10k = importdata('tensaoresistor10khz.csv');
 indutor(:,3) = (indutor(:,3)-2.5)/40e-3;    %Adjust current
 
