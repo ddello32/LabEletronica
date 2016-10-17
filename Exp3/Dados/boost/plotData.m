@@ -35,4 +35,19 @@ ylabel('Tensão [V]')
 xlabel('Tempo [s]')
 legend('Tensão de saída [V]', 'Forma de onda de entrada [Adimensional]')
 print('t3k', '-depsc')
+%% Fitting
+d = 0.2:0.1:0.7;	
+v = [5.55 6.43 7.58 9.17 11.4 14.8];
+fit = @(x) 4.623/(1.011 - (x/100));
+teor = @(x) 5/(1 - (x/100))
+figure,
+plot(d*100, v, 'bX')
+hold on,
+fplot(fit, [0 70], 'g')
+fplot(teor, [0 70], 'r')
+title('Tensão de saída')
+ylabel('Tensão [V]')
+xlabel('Duty-Cycle [%]')
+legend('Tensão de saída', 'Ajuste da Curva', 'Curva teórica')
+print('tvd', '-depsc')
 !epsfixer.sh
