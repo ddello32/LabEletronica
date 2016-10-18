@@ -46,6 +46,10 @@
 \newtheorem{coro}{Corolário}
 \newtheorem{defn}{Definição}[section]
 
+
+\DeclareCaptionType{capequ}[Equação][]
+\captionsetup[capequ]{labelformat=empty}
+
 \begin{document}
 \input{capa.tex}
 
@@ -54,540 +58,112 @@
 	Esse experimento tem como objetivo o estudo de um conversor DC-DC de topologia reversível (buck/boost) e o efeito do duty-cycle na sua tensão de saída.
 
 	% Resposta de uma das perguntas, depois ver onde colocar
-	Para medir a corrente no indutor, utilizamos o sensor ACS756 da Allegro MicroSystems, cujo funcionamento encontra-se detalhado em \ref{bb:allegro}, disponível na placa didática. Esse sensor funciona através de um pequeno trecho condutivo acoplado a um circuito de efeito Hall. Quando existe corrente passando pelo condutor, o circuito Hall converte o campo magnético gerado em uma tensão de saída. Para converter essa tensão em corrente, devemos subtraí-la da metade do valor da tensão de alimentação fornecida ao IC (nominalmente $5\ V$ e supomos que essa é a maneira que o aparelho está montado no kit didático) e dividir ela pela sensibilidade do aparelho (podendo ser 20 ou 40 mV/A dependendo do tipo do IC, supomos que o utilizado tenha sensibilidade de 40 mV/A por falta de mais informações). Esse tipo de sensor é mais eficiente energeticamente e interfere menos no circuito medido do que uma resistência de medição interferiria.
+	Para medir a corrente no indutor, utilizamos o sensor ACS756 da Allegro MicroSystems, cujo funcionamento encontra-se detalhado em \cite{bb:allegro}, disponível na placa didática. Esse sensor funciona através de um pequeno trecho condutivo acoplado a um circuito de efeito Hall. Quando existe corrente passando pelo condutor, o circuito Hall converte o campo magnético gerado em uma tensão de saída. Para converter essa tensão em corrente, devemos subtraí-la da metade do valor da tensão de alimentação fornecida ao IC (nominalmente $5\ V$ e supomos que essa é a maneira que o aparelho está montado no kit didático) e dividir ela pela sensibilidade do aparelho (podendo ser 20 ou 40 mV/A dependendo do tipo do IC, supomos que o utilizado tenha sensibilidade de 40 mV/A por falta de mais informações). Esse tipo de sensor é mais eficiente energeticamente e interfere menos no circuito medido do que uma resistência de medição interferiria.
 \section{Conversor Buck}
-Através do Simulink implementamos o conversor step-down detalhado na figura \ref{fig:bsim}.
+Conectamos o kit didático para trabalhar e modo step-down conforme detalhado na figura \ref{fig:buesq}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{matlab/buck/bsim}
-	\caption{Esquema para simulação do conversor buck}
-	\label{fig:bsim}
+	\includegraphics[width=0.5\linewidth]{Dados/buck/esq}
+	\caption{Conexões do chopper reversível em modo step-down \cite{bb:paiva}}
+	\label{fig:buesq}
 \end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cycle de 80\% na chave S1.
+Com $V_s = 12V$ e o sinal $TTL$ um trem de pulsos de $0$ a $5V$ DC com frequência de $3kHz$ e duty-cycle de $50\%$.
 
-Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
+Medimos então a curva de corrente no indutor através do sensor ACS756 que pode ser visualizada na figura \ref{fig:buil}
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vr}
-		\caption{Tensão no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ir}
-		\caption{Corrente no resistor}
-	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck}
-	\label{fig:br}
+	\includegraphics[width=0.5\linewidth]{Dados/buck/il}
+	\caption{Curvas de corrente no indutor para conversor buck}
+	\label{fig:buil}
 \end{figure}
+Como podemos ver estamos operando em modo de condução descontínua (a corrente no indutor chega a 0). O valor médio assumido pela corrente no indutor foi de aproximadamente $0.25 A$
+
+Medimos também a tensão de saída do conversor, apresentada na figura \ref{fig:but3k}
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vl}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_il}
-		\caption{Corrente no indutor}
-	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck}
-	\label{fig:bl}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vc}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ic}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck}
-	\label{fig:bc}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1v}
-		\caption{Tensão na chave S1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1i}
-		\caption{Corrente na chave S1}
-	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck}
-	\label{fig:bs1}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2v}
-		\caption{Tensão no diodo D2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2i}
-		\caption{Corrente no diodo D2}
-	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck}
-	\label{fig:bd2}
+	\includegraphics[width=0.5\linewidth]{Dados/buck/t3k}
+	\caption{Tensão de saída conversor buck (3 kHz)}
+	\label{fig:but3k}
 \end{figure}
 
-Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 9.2111\ V
-\end{equation}
-\begin{equation}
-Vr_{rms} = 9.3240\ V
-\end{equation}
+O valor médio da tensão de saída foi de $10.3 V$. Armados desses dados, do conhecimento de que o conversor estava trabalhando em modo de condução descontínua e da equação \ref{eq:bud} encontramos o valor da indutância de nosso kit didático: $L \approx 330.1 \mu H$
 
-Conforme podemos ver analisando as curvas, a chave S1 corta a tensão de entrada. Quando esta está ligada, a tensão de alimentação transfere energia para o indutor e para o capacitor. Uma vez que a chave é desligada o diodo D2 passa a conduzir e o indutor transfere esse energia para a carga enquanto capacitor faz o mesmo de maneira a garantir uma corrente quase constante na carga \cite{bb:dcdc}.
+\begin{capequ}
+	\begin{equation}
+	\overline{V_R} = V_s\frac{D^2}{D^2 + 2\frac{LI_l}{V_s}}
+	\end{equation}
+	\caption{Equação da tensão de saída para conversor buck em modo de condução descontínua}
+	\label{eq:bud}
+\end{capequ}
 
+Variamos o duty-cycle do sinal de controle entre $10$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal e que possuí a mesma forma da equação \ref{eq:bud} (equação \ref{eq:bulin}) e calculamos os valores teóricos que essa tensão deveria assumir (supondo modo de condução descontínua e que a corrente média no indutor se manteve aproximadamente $0.25 A$). Os resultados podem ser visualizados na figura \ref{fig:butvd}.
 
-Podemos calcular a tensão média teórica sobre a carga através considerando que:
-\begin{equation}
-\int_{0}^{T}Vl dt = \int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
-\end{equation}
-Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
-\begin{equation}
-\overline{Vl} = 0
-\end{equation}
-Para condução contínua, teremos que quando S1 está ligada:
-\begin{equation}
-Vl = V - Vr
-\end{equation}
-E quando está desligada (D2 está conduzindo):
-\begin{equation}
-Vl = - Vr
-\end{equation}
-Logo temos:
-\begin{equation}
-\int_{0}^{T}Vl dt = (V-Vr)DT - Vr(1 - D)T = 0
-\end{equation}
-\begin{equation}
-\overline{Vr} = VD
-\end{equation}
-Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S1 está ligada:
-\begin{equation}
-Vl = V - Vr
-\end{equation}
-E quando está desligada (D1 está conduzindo) e Il não nula:
-\begin{equation}
-Vl = Vr
-\end{equation}
-Quando Il é nula:
-\begin{equation}
-Vl = 0
-\end{equation}
-Logo temos:
-\begin{equation}
-\int_{0}^{T}Vl dt = (V - Vr)DT - Vr[(1 - D)T - t_x] = 0
-\end{equation}
-Encontramos então:
-\begin{equation}
-\overline{Vr} = V\frac{D^2}{D^2 + 2K}
-\end{equation}
-Com K:
-\begin{equation}
-K = \frac{LI_o}{VT}
-\end{equation}
-Onde $I_o$ é a corrente na saída do conversor.
-
-Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/buck/r_vrxd}
-	\caption{Tensão média no resistor para conversor buck}
-	\label{fig:buvrxd}
-\end{figure}
-
-Como podemos ver os valores obtidos são bem próximmos dos esperados teoricamente, as poucas discrepâncias podem ser atribuídas às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, aos componentes não ideais e a diversos outros fatores.
-
-Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
-\begin{equation}
-	L_b = \frac{(1 - D)R}{2f_s}
-\end{equation}
-Para um duty-cycle $D$ = $80\%$, temos:
-\begin{equation}
-	L_b = 400\mu H
-\end{equation}
-
-Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:br2}, \ref{fig:bl2}, \ref{fig:bc2}, \ref{fig:bs12}, \ref{fig:bd22}.
+\begin{capequ}
+	\begin{equation}
+	V_R = 11.36\frac{D^2}{D^2 +  0.02055}	
+	\end{equation}
+	\caption{Curva que aproxima a tensão medida de saída em função do duty-cycle}
+	\label{eq:bulin}
+\end{capequ}
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vr2}
-		\caption{Tensão no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ir2}
-		\caption{Corrente no resistor}
-	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:br2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vl2}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_il2}
-		\caption{Corrente no indutor}
-	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bl2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vc2}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ic2}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bc2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1v2}
-		\caption{Tensão na chave S1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1i2}
-		\caption{Corrente na chave S1}
-	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bs12}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2v2}
-		\caption{Tensão no diodo D2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2i2}
-		\caption{Corrente no diodo D2}
-	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bd22}
+	\includegraphics[width=0.7\linewidth]{Dados/buck/tvd}
+	\caption{Tensão de saída conversor buck em função do duty-cycle}
+	\label{fig:butvd}
 \end{figure}
 
-Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
-
-Por fim voltamos a nossa indutância original porém retiramos o filtro capacitivo, encontramos então a curva de tensão sobre o resistor apresentada na figura \ref{fig:br3}.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/buck/b_vr3}
-	\caption{Tensão no resistor para conversor buck sem filtro capacitivo}
-	\label{fig:br3}
-\end{figure}
-
-Podemos ver que sem o filtro capacitivo as variações de tensão sobre a carga são bem mais drásticas e a resposta do circuito fica mais longe de uma resposta constante.
+Como podemos ver os valores medidos estão bastante próximos dos esperados teoricamente porém levemente maiores. Isso acontece porque nos cálculos teóricos deixamos de levar em conta uma série de fatores, entre eles o fato dos componentes do circuíto não serem ideais (perdemos energia em vários pontos que não foram levados em conta), o fato da corrente média no indutor variar (fator que ignoramos para simplificar/possibilitar os cálculos), o fato de que a resposta dos componentes nem sempre é imediata entre outros. Também devemos lembrar que existem imprecisões de medida que afetam os resultados obtidos.
 
 \section{Conversor Boost}
-Através do Simulink implementamos o conversor step-up detalhado na figura \ref{fig:bosim}.
+
+Conectamos o kit didático para trabalhar e modo step-up conforme detalhado na figura \ref{fig:boesq}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{matlab/boost/bsim}
-	\caption{Esquema para simulação do conversor boost}
-	\label{fig:bosim}
+	\includegraphics[width=0.5\linewidth]{Dados/boost/esq}
+	\caption{Conexões do chopper reversível em modo step-up \cite{bb:paiva}}
+	\label{fig:boesq}
 \end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $10kHz$ e duty-cycle de 80\% na chave S2.
-Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:bor}), no indutor (figura \ref{fig:bol}), no capacitor (figura \ref{fig:boc}), na chave S2 (figura \ref{fig:bos2}) e no diodo D1 (figura \ref{fig:bod1}).
+Com $V_s = 5V$ e o sinal $TTL$ um trem de pulsos de $0$ a $5V$ DC com frequência de $3kHz$ e duty-cycle de $50\%$.
+
+Medimos então a curva de corrente no indutor através do sensor ACS756 que pode ser visualizada na figura \ref{fig:boil}
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vr}
-		\caption{Tensão no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ir}
-		\caption{Corrente no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vrst}
-		\caption{Tensão no resistor após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_irst}
-		\caption{Corrente no resistor após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas do resistor para conversor boost}
-	\label{fig:bor}
+	\includegraphics[width=0.5\linewidth]{Dados/boost/il}
+	\caption{Curvas de corrente no indutor para conversor boost}
+	\label{fig:boil}
 \end{figure}
+Como podemos ver estamos operando em modo de condução contínua (a corrente no indutor não chega a 0).
+
+Medimos também a tensão de saída do conversor, apresentada na figura \ref{fig:bot3k}
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vl}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_il}
-		\caption{Corrente no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vlst}
-		\caption{Tensão no indutor após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ilst}
-		\caption{Corrente no indutor após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas do indutor para conversor boost}
-	\label{fig:bol}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vc}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ic}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vcst}
-		\caption{Tensão no capacitor após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_icst}
-		\caption{Corrente no capacitor após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor boost}
-	\label{fig:boc}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2v}
-		\caption{Tensão na chave S2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2i}
-		\caption{Corrente na chave S2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2vst}
-		\caption{Tensão na chave S2 após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2ist}
-		\caption{Corrente na chave S2 após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas da chave S2 para conversor boost}
-	\label{fig:bos2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1v}
-		\caption{Tensão no diodo D1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1i}
-		\caption{Corrente no diodo D1}
-	\end{subfigure}
-		\begin{subfigure}[b]{0.4\linewidth}
-			\includegraphics[width=\linewidth]{matlab/boost/r_d1vst}
-			\caption{Tensão no diodo D1 após equilíbrio}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.4\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{matlab/boost/r_d1ist}
-			\caption{Corrente no diodo D1 após equilíbrio}
-		\end{subfigure}
-	\caption{Curvas do diodo D1 para conversor boost}
-	\label{fig:bod1}
+	\includegraphics[width=0.5\linewidth]{Dados/boost/t3k}
+	\caption{Tensão de saída conversor boost (3 kHz)}
+	\label{fig:bot3k}
 \end{figure}
 
-Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 29.6\ V
-\end{equation}
-\begin{equation}
-Vr_{rms} = 29.65\ V
-\end{equation}
+O valor médio da tensão de saída foi de $11.9 V$.
 
-Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S2 desligar \cite{bb:dcdc}.
+Variamos o duty-cycle do sinal de controle entre $20$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal (equação \ref{eq:bolin}) e calculamos os valores teóricos que essa tensão deveria assumir (supondo modo de condução contínua). Os resultados podem ser visualizados na figura \ref{fig:botvd}.
 
-Podemos calcular a tensão média teórica sobre a carga através considerando que:
-\begin{equation}
-\int_{0}^{T}Vl dt = \int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
-\end{equation}
-Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
-\begin{equation}
-\overline{Vl} = 0
-\end{equation}
-Para condução contínua, teremos que quando S2 está ligada:
-\begin{equation}
-	Vl = V
-\end{equation}
-E quando está desligada (D1 está conduzindo):
-\begin{equation}
-	Vl = -(Vr - V)
-\end{equation}
-Logo temos:
-\begin{equation}
-	\int_{0}^{T}Vl dt = VDT - (Vr - V)(1 - D)T = 0
-\end{equation}
-\begin{equation}
-\overline{Vr} = \frac{V}{1 - D}
-\end{equation}
-Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S2 está ligada:
-\begin{equation}
-Vl = V
-\end{equation}
-E quando está desligada (D1 está conduzindo) e Il não nula:
-\begin{equation}
-Vl = -(Vr - V)
-\end{equation}
-Quando Il é nula:
-\begin{equation}
-Vl = 0
-\end{equation}
-Logo temos:
-\begin{equation}
-\int_{0}^{T}Vl dt = VDT - (Vr - V)[(1 - D)T - t_x] = 0
-\end{equation}
-Encontramos então:
-\begin{equation}
-\overline{Vr} = V(1 + \frac{D^2}{2K})
-\end{equation}
-Com K:
-\begin{equation}
-	K = \frac{LI_o}{VT}
-\end{equation}
-Onde $I_o$ é a corrente na saída do conversor.
-
-Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:bovrxd}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxd}
-	\caption{Tensão média no resistor para conversor boost}
-	\label{fig:bovrxd}
-\end{figure}
-
-Como podemos ver os valores obtidos diferem dos esperados teoricamente, principalmente para duty-cycles altos, isso se notavelmente aos efeitos parasíticos introduzidos pelos componentes não ideais que evitam que toda a potência fornecida seja transferida ao resistor (Notamos que ao transformar nossas chaves em chaves ideais as duas curvas se aproximam mais conforme figura \ref{fig:borvxdi}).
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxdi}
-	\caption{Tensão média no resistor para conversor boost com compontentes ideais}
-	\label{fig:borvxdi}
-\end{figure}
-
-Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
-\begin{equation}
-L_b = \frac{(1 - D)^2 DR}{2f_s}
-\end{equation}
-Para um duty-cycle $D$ = $80\%$, temos:
-\begin{equation}
-L_b =  3.2\mu H
-\end{equation}
-
-Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $1.6 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:bor2}, \ref{fig:bol2}, \ref{fig:boc2}, \ref{fig:bos22}, \ref{fig:bod12}.
+\begin{capequ}
+	\begin{equation}
+	V_R = \frac{4.623}{1.011 - D}	
+	\end{equation}
+	\caption{Curva que aproxima a tensão medida de saída em função do duty-cycle}
+	\label{eq:bolin}
+\end{capequ}
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vr2}
-		\caption{Tensão no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ir2}
-		\caption{Corrente no resistor}
-	\end{subfigure}
-	\caption{Curvas do resistor para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bor2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vl2}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_il2}
-		\caption{Corrente no indutor}
-	\end{subfigure}
-	\caption{Curvas do indutor para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bol2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vc2}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ic2}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:boc2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2v2}
-		\caption{Tensão na chave S2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2i2}
-		\caption{Corrente na chave S2}
-	\end{subfigure}
-	\caption{Curvas da chave S2 para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bos22}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1v2}
-		\caption{Tensão no diodo D1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1i2}
-		\caption{Corrente no diodo D1}
-	\end{subfigure}
-	\caption{Curvas do diodo D1 para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bod12}
+	\includegraphics[width=0.7\linewidth]{Dados/boost/tvd}
+	\caption{Tensão de saída conversor boost em função do duty-cycle}
+	\label{fig:botvd}
 \end{figure}
 
-Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
+Como podemos ver os valores medidos estão bastante próximos dos esperados teoricamente porém levemente menores. Isso acontece porque nos cálculos teóricos deixamos de levar em conta uma série de fatores, entre eles o fato dos componentes do circuíto não serem ideais (perdemos energia em vários pontos que não foram levados em conta) e o fato de que a resposta dos componentes nem sempre é imediata. Também devemos lembrar que existem imprecisões de medida que afetam os resultados obtidos.
 
-% Nao entendi se ele quer isso ou falar do buck-boost, buck-boost faria mais sentido para mim mas permutar a fonte e a carga tem pouco a ver com isso
-Podemos ver que ao permutar a carga e o capacitor do circuito apresentado na figura \ref{fig:bsim} com a fonte de tensão e trocar o gerador de pulso para que esse controle o outro mosfet, obtemos o circuito da figura \ref{fig:bosim}. Quando a fonte está próxima ao mosfet 1 e este está chaveando, nosso conversor opera em modo buck, quando a carga está próxima do mosfet 1 e o mosfet 2 está chaveando nosso conversor opera em modo boost.
 \bibliography{mybib}
 \end{document}
 
