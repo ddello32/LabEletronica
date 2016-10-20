@@ -18,6 +18,7 @@
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage{xcolor} 
+\usepackage{multirow}
 
 \bibliographystyle{eric}
 \patchcmd{\thebibliography}{\section*}{\section}{}{}
@@ -57,8 +58,6 @@
 \section{Objetivos}
 	Esse experimento tem como objetivo o estudo de um conversor DC-DC de topologia reversível (buck/boost) e o efeito do duty-cycle na sua tensão de saída.
 
-	% Resposta de uma das perguntas, depois ver onde colocar
-	Para medir a corrente no indutor, utilizamos o sensor ACS756 da Allegro MicroSystems, cujo funcionamento encontra-se detalhado em \cite{bb:allegro}, disponível na placa didática. Esse sensor funciona através de um pequeno trecho condutivo acoplado a um circuito de efeito Hall. Quando existe corrente passando pelo condutor, o circuito Hall converte o campo magnético gerado em uma tensão de saída. Para converter essa tensão em corrente, devemos subtraí-la da metade do valor da tensão de alimentação fornecida ao IC (nominalmente $5\ V$ e supomos que essa é a maneira que o aparelho está montado no kit didático) e dividir ela pela sensibilidade do aparelho (podendo ser 20 ou 40 mV/A dependendo do tipo do IC, supomos que o utilizado tenha sensibilidade de 40 mV/A por falta de mais informações). Esse tipo de sensor é mais eficiente energeticamente e interfere menos no circuito medido do que uma resistência de medição interferiria.
 \section{Conversor Buck}
 Conectamos o kit didático para trabalhar e modo step-down conforme detalhado na figura \ref{fig:buesq}.
 \begin{figure}[H]
@@ -115,6 +114,7 @@ Variamos o duty-cycle do sinal de controle entre $10$ e $70\%$ e medimos a tens�
 
 Como podemos ver os valores medidos estão bastante próximos dos esperados teoricamente porém levemente maiores. Isso acontece porque nos cálculos teóricos deixamos de levar em conta uma série de fatores, entre eles o fato dos componentes do circuíto não serem ideais (perdemos energia em vários pontos que não foram levados em conta), o fato da corrente média no indutor variar (fator que ignoramos para simplificar/possibilitar os cálculos), o fato de que a resposta dos componentes nem sempre é imediata entre outros. Também devemos lembrar que existem imprecisões de medida que afetam os resultados obtidos.
 
+
 \section{Conversor Boost}
 
 Conectamos o kit didático para trabalhar e modo step-up conforme detalhado na figura \ref{fig:boesq}.
@@ -163,6 +163,85 @@ Variamos o duty-cycle do sinal de controle entre $20$ e $70\%$ e medimos a tens�
 \end{figure}
 
 Como podemos ver os valores medidos estão bastante próximos dos esperados teoricamente porém levemente menores. Isso acontece porque nos cálculos teóricos deixamos de levar em conta uma série de fatores, entre eles o fato dos componentes do circuíto não serem ideais (perdemos energia em vários pontos que não foram levados em conta) e o fato de que a resposta dos componentes nem sempre é imediata. Também devemos lembrar que existem imprecisões de medida que afetam os resultados obtidos.
+
+\section{MOSFET IRFZ44}
+
+O transistor utilizado para os conversores do kit é o IRFZ44. Estes MOSFETs possuem rápido chaveamento e baixa resistência em condução, o que viabiliza sua aplicação com os sinais de alta-frequência do gerador de sinais no gate. Conforme utilização no experimento, notamos que não há uma interferência tão significativa por causa do tempo de resposta mesmo chegando aos $10\ kHz$.
+De acordo com informativo técnico do dispositivo semicondutor da empresa Vishay, a tensão de ruptura reversa é de $60\ V$, e a tensão de "threshold" $V_{GS}$ é de no mínimo $2\ V$ e no máximo de $4\ V$. Logo, não temos problemas em utilizar a saída do gerador de sinal de amplitude $5\ V$ como entrada do Gate, nem a tensão da fonte na entrada do buck com amplitude de $15\ V$.
+
+\section{Sensor de corrente ACS756}
+% Resposta de uma das perguntas, depois ver onde colocar
+Para medir a corrente no indutor, utilizamos o sensor ACS756 da Allegro MicroSystems, cujo funcionamento encontra-se detalhado em \cite{bb:allegro}, disponível na placa didática. Esse sensor funciona através de um pequeno trecho condutivo acoplado a um circuito de efeito Hall. Quando existe corrente passando pelo condutor, o circuito Hall converte o campo magnético gerado em uma tensão de saída. Para converter essa tensão em corrente, devemos subtraí-la da metade do valor da tensão de alimentação fornecida ao IC (nominalmente $5\ V$ e supomos que essa é a maneira que o aparelho está montado no kit didático) e dividir ela pela sensibilidade do aparelho (podendo ser 20 ou 40 mV/A dependendo do tipo do IC, supomos que o utilizado tenha sensibilidade de 40 mV/A por falta de mais informações). Esse tipo de sensor é mais eficiente energeticamente e interfere menos no circuito medido do que uma resistência de medição interferiria.
+
+
+\section{Indutância Limite}
+
+Variamos as frequências de chaveamento conforme podemos observar nas figuras \ref{fig:but} e \ref{fig:bot}. nas menores frequências de chaveamento temos maiores tensões médias de saída ($v_R$), e maiores oscilação na sua amplitude.
+
+\begin{figure}[H]
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Dados/buck/t1k}
+		\caption{1 kHz}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Dados/buck/t3k}
+		\caption{3 kHz}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Dados/buck/t10k}
+		\caption{10 kHz}
+	\end{subfigure}
+	\caption{Tensão de saída conversor buck em diferentes frequências de chaveamento ($D=50\%$)}
+	\label{fig:but}
+\end{figure}
+\begin{figure}[H]
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Dados/boost/t1k}
+		\caption{1 kHz}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Dados/boost/t3k}
+		\caption{3 kHz}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Dados/boost/t10k}
+		\caption{10 kHz}
+	\end{subfigure}
+	\caption{Tensão de saída conversor boost em diferentes frequências de chaveamento ($D=50\%$)}
+	\label{fig:bot}
+\end{figure}
+
+Para o cálculo da indutância limite $L_b$ para operação em condução contínua recorremos à equação a seguir, obtendo os resultados da tabela \ref{tab:Lb} para $D=50\%$.
+\begin{equation}
+L_b = \frac{(1-D)R}{2f_s}	
+\end{equation}
+
+\begin{table}[]
+	\centering
+	\caption{My caption}
+	\label{tab:Lb}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\multirow{2}{*}{$f_s\ (kHz)$}} & 
+		\multicolumn{2}{c|}{$v_R\ (V)$} & 
+		\multicolumn{1}{c|}{\multirow{2}{*}{$L_b\ (H)$}} \\ \cline{2-3}
+		\multicolumn{1}{|c|}{} 	& Buck           & Boost          & 
+		\multicolumn{1}{c|}{}                          					  \\ \hline
+		1     					& 11.4           & 16.1           & 10.75 \\ \hline
+		3     					& 10.3           & 11.9           & 3.58  \\ \hline
+		10    					& 8.56           & 9.23           & 1.07  \\ \hline
+	\end{tabular}
+\end{table}	
+
+\section{Buck x Divisor de tensão}
+
+Embora tenha maior complexidade, custo e volume, utilizando o conversor controlado Buck para fazer uma diminuição de tensão conseguimos diminuir as perdas por dissipação. Isto acontece pois o circuito que cuida da queda de tensão é composto, em sua maior parte, por dispositivo semicondutor, indutor e capacitor. Estes componentes possuem resistência equivalente menor do que a resistência necessária para um divisor de tensões. Desta maneira, tratando-se de eletrônica de potência, é viável a utilização de um conversor Buck.
 
 \bibliography{mybib}
 \end{document}
