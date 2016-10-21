@@ -51,541 +51,216 @@
 
 \onehalfspacing
 \section{Objetivos}
-	Essa simulação tem como objetivo o estudo dos conversores step-down (buck), step-up (boost) e seus modos de condução contínua e descontínua.
+	Essa simulação tem como objetivo o estudo dos motores DC de ímãs permanentes e sua acionamento através de topologias baseadas em retificadores controlados.
 	 
-\section{Conversor Buck}
-Através do Simulink implementamos o conversor step-down detalhado na figura \ref{fig:bsim}.
+\section{Simualações}
+\subsection{Modelagem de um motor DC: diagrama de blocos}
+Através do Simulink implementamos a função de transferência de um motor DC através do diagrama de blocos apresentado na figura \ref{fig:sim1}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{matlab/buck/bsim}
-	\caption{Esquema para simulação do conversor buck}
-	\label{fig:bsim}
+	\includegraphics[width=\linewidth]{matlab/sim1}
+	\caption{Motor DC implementado através do diagrama de blocos}
+	\label{fig:sim1}
 \end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $1kHz$ e duty-cycle de 80\% na chave S1.
+Separamos a parte elétrica e mecânica da função de transferência do motor conforme pode ser visto na figura. Adotamos os valores apresentados no roteiro para os parâmetros do motor ($R_a = 1.6 \Omega$, $L_a = 667 \mu H$, $1.1 \times 10^{-4} kg\ m^2$, $B = 1.24 \times 10^{-4} J\ s/rad$, $k_e = 0.038 V\ s/rad$ e $k_t = 0.038 N\ m/A$).
 
-Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:br}), no indutor (figura \ref{fig:bl}), no capacitor (figura \ref{fig:bc}), na chave S1 (figura \ref{fig:bs1}) e no diodo D2 (figura \ref{fig:bd2}).
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vr}
-		\caption{Tensão no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ir}
-		\caption{Corrente no resistor}
-	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck}
-	\label{fig:br}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vl}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_il}
-		\caption{Corrente no indutor}
-	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck}
-	\label{fig:bl}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vc}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ic}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck}
-	\label{fig:bc}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1v}
-		\caption{Tensão na chave S1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1i}
-		\caption{Corrente na chave S1}
-	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck}
-	\label{fig:bs1}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2v}
-		\caption{Tensão no diodo D2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2i}
-		\caption{Corrente no diodo D2}
-	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck}
-	\label{fig:bd2}
-\end{figure}
-
-Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 9.2111\ V
-\end{equation}
-\begin{equation}
-Vr_{rms} = 9.3240\ V
-\end{equation}
-
-Conforme podemos ver analisando as curvas, a chave S1 corta a tensão de entrada. Quando esta está ligada, a tensão de alimentação transfere energia para o indutor e para o capacitor. Uma vez que a chave é desligada o diodo D2 passa a conduzir e o indutor transfere esse energia para a carga enquanto capacitor faz o mesmo de maneira a garantir uma corrente quase constante na carga \cite{bb:dcdc}.
-
-
-Podemos calcular a tensão média teórica sobre a carga através considerando que:
-\begin{equation}
-\int_{0}^{T}Vl dt = \int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
-\end{equation}
-Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
-\begin{equation}
-\overline{Vl} = 0
-\end{equation}
-Para condução contínua, teremos que quando S1 está ligada:
-\begin{equation}
-Vl = V - Vr
-\end{equation}
-E quando está desligada (D2 está conduzindo):
-\begin{equation}
-Vl = - Vr
-\end{equation}
-Logo temos:
-\begin{equation}
-\int_{0}^{T}Vl dt = (V-Vr)DT - Vr(1 - D)T = 0
-\end{equation}
-\begin{equation}
-\overline{Vr} = VD
-\end{equation}
-Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S1 está ligada:
-\begin{equation}
-Vl = V - Vr
-\end{equation}
-E quando está desligada (D1 está conduzindo) e Il não nula:
-\begin{equation}
-Vl = Vr
-\end{equation}
-Quando Il é nula:
-\begin{equation}
-Vl = 0
-\end{equation}
-Logo temos:
-\begin{equation}
-\int_{0}^{T}Vl dt = (V - Vr)DT - Vr[(1 - D)T - t_x] = 0
-\end{equation}
-Encontramos então:
-\begin{equation}
-\overline{Vr} = V\frac{D^2}{D^2 + 2K}
-\end{equation}
-Com K:
-\begin{equation}
-K = \frac{LI_o}{VT}
-\end{equation}
-Onde $I_o$ é a corrente na saída do conversor.
-
-Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:buvrxd}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/buck/r_vrxd}
-	\caption{Tensão média no resistor para conversor buck}
-	\label{fig:buvrxd}
-\end{figure}
-
-Como podemos ver os valores obtidos são bem próximmos dos esperados teoricamente, as poucas discrepâncias podem ser atribuídas às imprecisões numéricas da simulação, à queda de tensão introduzida pelos diodos, ao pequeno período de amostragem, aos componentes não ideais e a diversos outros fatores.
-
-Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
-\begin{equation}
-	L_b = \frac{(1 - D)R}{2f_s}
-\end{equation}
-Para um duty-cycle $D$ = $80\%$, temos:
-\begin{equation}
-	L_b = 400\mu H
-\end{equation}
-
-Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $200 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:br2}, \ref{fig:bl2}, \ref{fig:bc2}, \ref{fig:bs12}, \ref{fig:bd22}.
+Simulamos a resposta do motor sem carga a um degrau de 24V obtendo as curvas apresentadas na figura \ref{fig:res1}
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vr2}
-		\caption{Tensão no resistor}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm1}
+		\caption{Velocidade Angular}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
+	\begin{subfigure}[b]{0.49\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ir2}
-		\caption{Corrente no resistor}
+		\includegraphics[width=\linewidth]{matlab/ia1}
+		\caption{Corrente de armadura}
 	\end{subfigure}
-	\caption{Curvas do resistor para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:br2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vl2}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
+	\begin{subfigure}[b]{0.49\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_il2}
-		\caption{Corrente no indutor}
+		\includegraphics[width=\linewidth]{matlab/tm1}
+		\caption{Torque do motor}
 	\end{subfigure}
-	\caption{Curvas do indutor para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bl2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/b_vc2}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/b_ic2}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bc2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1v2}
-		\caption{Tensão na chave S1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_s1i2}
-		\caption{Corrente na chave S1}
-	\end{subfigure}
-	\caption{Curvas da chave S1 para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bs12}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2v2}
-		\caption{Tensão no diodo D2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/buck/r_d2i2}
-		\caption{Corrente no diodo D2}
-	\end{subfigure}
-	\caption{Curvas do diodo D2 para conversor buck com indutância $\frac{L_b}{2}$}
-	\label{fig:bd22}
+	\caption{Curvas de resposta do motor sem carga}
+	\label{fig:res1}
 \end{figure}
 
-Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
-
-Por fim voltamos a nossa indutância original porém retiramos o filtro capacitivo, encontramos então a curva de tensão sobre o resistor apresentada na figura \ref{fig:br3}.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/buck/b_vr3}
-	\caption{Tensão no resistor para conversor buck sem filtro capacitivo}
-	\label{fig:br3}
-\end{figure}
-
-Podemos ver que sem o filtro capacitivo as variações de tensão sobre a carga são bem mais drásticas e a resposta do circuito fica mais longe de uma resposta constante.
-
-\section{Conversor Boost}
-Através do Simulink implementamos o conversor step-up detalhado na figura \ref{fig:bosim}.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{matlab/boost/bsim}
-	\caption{Esquema para simulação do conversor boost}
-	\label{fig:bosim}
-\end{figure}
-Conforme detalhados no roteiro, setamos os parâmetros $R$ = $2\Omega$, $C$ = $220\mu F$, $L$ = $330\mu H$ e simulamos o sistema com uma frequência $f$ = $10kHz$ e duty-cycle de 80\% na chave S2.
-Extraímos dessa simulação as curvas de tensão e corrente na carga (figura \ref{fig:bor}), no indutor (figura \ref{fig:bol}), no capacitor (figura \ref{fig:boc}), na chave S2 (figura \ref{fig:bos2}) e no diodo D1 (figura \ref{fig:bod1}).
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vr}
-		\caption{Tensão no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ir}
-		\caption{Corrente no resistor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vrst}
-		\caption{Tensão no resistor após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_irst}
-		\caption{Corrente no resistor após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas do resistor para conversor boost}
-	\label{fig:bor}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vl}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_il}
-		\caption{Corrente no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vlst}
-		\caption{Tensão no indutor após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ilst}
-		\caption{Corrente no indutor após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas do indutor para conversor boost}
-	\label{fig:bol}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vc}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ic}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vcst}
-		\caption{Tensão no capacitor após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_icst}
-		\caption{Corrente no capacitor após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor boost}
-	\label{fig:boc}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2v}
-		\caption{Tensão na chave S2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2i}
-		\caption{Corrente na chave S2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2vst}
-		\caption{Tensão na chave S2 após equilíbrio}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2ist}
-		\caption{Corrente na chave S2 após equilíbrio}
-	\end{subfigure}
-	\caption{Curvas da chave S2 para conversor boost}
-	\label{fig:bos2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1v}
-		\caption{Tensão no diodo D1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1i}
-		\caption{Corrente no diodo D1}
-	\end{subfigure}
-		\begin{subfigure}[b]{0.4\linewidth}
-			\includegraphics[width=\linewidth]{matlab/boost/r_d1vst}
-			\caption{Tensão no diodo D1 após equilíbrio}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.4\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{matlab/boost/r_d1ist}
-			\caption{Corrente no diodo D1 após equilíbrio}
-		\end{subfigure}
-	\caption{Curvas do diodo D1 para conversor boost}
-	\label{fig:bod1}
-\end{figure}
-
-Medimos as tensões média e efetiva no resistor, obtendo os seguintes valores:
-\begin{equation}
-\overline{Vr} = 29.6\ V
-\end{equation}
-\begin{equation}
-Vr_{rms} = 29.65\ V
-\end{equation}
-
-Conforme podemos ver analisando as curvas, quando a chave S2 está ligada, a tensão de alimentação é aplicada sobre o indutor e o diodo D1 estará reversamente polarizado. O indutor acumulará energia e a transferirá ao capacitor e à carga quando a chave S2 desligar \cite{bb:dcdc}.
-
-Podemos calcular a tensão média teórica sobre a carga através considerando que:
-\begin{equation}
-\int_{0}^{T}Vl dt = \int_{0}^{T}\frac{LdI}{dt} dt = \frac{LI}{T}\bigg\rvert_0^T
-\end{equation}
-Como nossa resposta é periódica, sabemos que $I(0)\ =\ I(T)$ logo:
-\begin{equation}
-\overline{Vl} = 0
-\end{equation}
-Para condução contínua, teremos que quando S2 está ligada:
-\begin{equation}
-	Vl = V
-\end{equation}
-E quando está desligada (D1 está conduzindo):
-\begin{equation}
-	Vl = -(Vr - V)
-\end{equation}
-Logo temos:
-\begin{equation}
-	\int_{0}^{T}Vl dt = VDT - (Vr - V)(1 - D)T = 0
-\end{equation}
-\begin{equation}
-\overline{Vr} = \frac{V}{1 - D}
-\end{equation}
-Para condução descontínua ($L < L_b$), supondo que o período em que a corrente sobre o indutor é nula seja $t_x$, temos quando S2 está ligada:
-\begin{equation}
-Vl = V
-\end{equation}
-E quando está desligada (D1 está conduzindo) e Il não nula:
-\begin{equation}
-Vl = -(Vr - V)
-\end{equation}
-Quando Il é nula:
-\begin{equation}
-Vl = 0
-\end{equation}
-Logo temos:
-\begin{equation}
-\int_{0}^{T}Vl dt = VDT - (Vr - V)[(1 - D)T - t_x] = 0
-\end{equation}
-Encontramos então:
-\begin{equation}
-\overline{Vr} = V(1 + \frac{D^2}{2K})
-\end{equation}
-Com K:
-\begin{equation}
-	K = \frac{LI_o}{VT}
-\end{equation}
-Onde $I_o$ é a corrente na saída do conversor.
-
-Variamos então o valor do duty-cycle entre 0 e 100\% e encontramos a tensão média sobre a carga. Comparamos esse valor com o valor teórico esperado na figura \ref{fig:bovrxd}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxd}
-	\caption{Tensão média no resistor para conversor boost}
-	\label{fig:bovrxd}
-\end{figure}
-
-Como podemos ver os valores obtidos diferem dos esperados teoricamente, principalmente para duty-cycles altos, isso se notavelmente aos efeitos parasíticos introduzidos pelos componentes não ideais que evitam que toda a potência fornecida seja transferida ao resistor (Notamos que ao transformar nossas chaves em chaves ideais as duas curvas se aproximam mais conforme figura \ref{fig:borvxdi}).
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{matlab/boost/r_vrxdi}
-	\caption{Tensão média no resistor para conversor boost com compontentes ideais}
-	\label{fig:borvxdi}
-\end{figure}
-
-Podemos calcular o valor da indutância limite $L_b$ para que o conversor trabalhe em modo de condução contínua utilizando a equação:
-\begin{equation}
-L_b = \frac{(1 - D)^2 DR}{2f_s}
-\end{equation}
-Para um duty-cycle $D$ = $80\%$, temos:
-\begin{equation}
-L_b =  3.2\mu H
-\end{equation}
-
-Ajustamos então nosso indutor para $L$ = $\frac{L_b}{2}$ = $1.6 \mu H$ e rodamos a simulação novamente, obtendo os resultados apresentados nas figuras \ref{fig:bor2}, \ref{fig:bol2}, \ref{fig:boc2}, \ref{fig:bos22}, \ref{fig:bod12}.
+Colocamos então uma carga proporcional à velocidade no nosso motor (de função $Twl = - 5\times10^{-4}\omega_m$) e simulamos a resposta do motor ao mesmo degrau de entrada, obtendo as curvas da figura \ref{fig:res2}
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vr2}
-		\caption{Tensão no resistor}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm2}
+		\caption{Velocidade Angular}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
+	\begin{subfigure}[b]{0.49\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ir2}
-		\caption{Corrente no resistor}
+		\includegraphics[width=\linewidth]{matlab/ia2}
+		\caption{Corrente de armadura}
 	\end{subfigure}
-	\caption{Curvas do resistor para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bor2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vl2}
-		\caption{Tensão no indutor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
+	\begin{subfigure}[b]{0.49\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_il2}
-		\caption{Corrente no indutor}
+		\includegraphics[width=\linewidth]{matlab/tm2}
+		\caption{Torque do motor}
 	\end{subfigure}
-	\caption{Curvas do indutor para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bol2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/b_vc2}
-		\caption{Tensão no capacitor}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/b_ic2}
-		\caption{Corrente no capacitor}
-	\end{subfigure}
-	\caption{Curvas do capacitor para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:boc2}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2v2}
-		\caption{Tensão na chave S2}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_s2i2}
-		\caption{Corrente na chave S2}
-	\end{subfigure}
-	\caption{Curvas da chave S2 para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bos22}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.4\linewidth}
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1v2}
-		\caption{Tensão no diodo D1}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.4\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{matlab/boost/r_d1i2}
-		\caption{Corrente no diodo D1}
-	\end{subfigure}
-	\caption{Curvas do diodo D1 para conversor boost com indutância $\frac{L_b}{2}$}
-	\label{fig:bod12}
+	\caption{Curvas de resposta do motor com carga proporcional à velocidade}
+	\label{fig:res2}
 \end{figure}
 
-Vemos que no modo de condução descontínua a corrente sobre o indutor chega a zero, nesse caso a tensão sobre o indutor assume valor nulo durante parte do período. Isso causa uma mudança na resposta do circuito conforme detalhado nas equações teóricas acima.
+\subsection{Modelagem de um motor DC: SimPowerSystems}
+Utilizando a biblioteca SimPowerSystems do Simulink implementamos o mesmo motor DC, agora utilizando o modelo disponível na biblioteca, conforme apresentado na figura \ref{fig:sim2}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim2}
+	\caption{Motor DC implementado através da biblioteca SimPowerSystems}
+	\label{fig:sim2}
+\end{figure}
 
-% Nao entendi se ele quer isso ou falar do buck-boost, buck-boost faria mais sentido para mim mas permutar a fonte e a carga tem pouco a ver com isso
-Podemos ver que ao permutar a carga e o capacitor do circuito apresentado na figura \ref{fig:bsim} com a fonte de tensão e trocar o gerador de pulso para que esse controle o outro mosfet, obtemos o circuito da figura \ref{fig:bosim}. Quando a fonte está próxima ao mosfet 1 e este está chaveando, nosso conversor opera em modo buck, quando a carga está próxima do mosfet 1 e o mosfet 2 está chaveando nosso conversor opera em modo boost.
+Simulamos a resposta do motor sem carga a o mesmo degrau de 24V obtendo as curvas apresentadas na figura \ref{fig:res3}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm3}
+		\caption{Velocidade Angular}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ia3}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/tm3}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\caption{Curvas de resposta do motor sem carga}
+	\label{fig:res3}
+\end{figure}
+
+Como podemos ver os resultados são bastante semelhantes aos apresentados na figura \ref{fig:res1}, se não praticamente idênticos. Como podemos ver nosso modelo por blocos e o modelo utilizado internamente pela biblioteca são bastante semelhantes.
+
+\subsection{ Acionamento de motor DC com retificador controlado}
+Conectamos um retificador monofásico controlado de onda completa no nosso motor alimentado por uma fonte alternada (24 V rms@60 Hz), conforme pode ser visto na figura \ref{fig:sim3}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim3}
+	\caption{Acionamento de motor DC através de retificador monofásico controlado}
+	\label{fig:sim3}
+\end{figure}
+
+Simulamos a resposta do motor para ângulos de disparo de $0^\circ$ (figura \ref{fig:res4}) e $90^\circ$ (figura \ref{fig:res5}).
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm4}
+		\caption{Velocidade Angular}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ia4}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/tm4}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\caption{Curvas de resposta do motor ângulo de disparo $0^\circ$}
+	\label{fig:res4}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm5}
+		\caption{Velocidade Angular}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ia5}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/tm5}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\caption{Curvas de resposta do motor ângulo de disparo $90^\circ$}
+	\label{fig:res5}
+\end{figure}
+Como podemos ver a oscilação de tensão gerada pelo retificador não pode ser sentida na velocidade do motor, porém ela afeta fortemente a corrente de armadura e o torque de saída. Também notamos que o efeito da mudança do ângulo de disparo é muito pequeno, mudando somente o tempo de resposta do circuito. Acreditamos que isso ocorre pois o motor encontra-se já saturado em ambas as configurações. Mudamos a fonte de 24 V rms para tensão de pico 24 V e rodamos as simulações novamente, obtendo as curvas de velocidade apresentadas na figura \ref{fig:res9}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm9}
+		\caption{$0^\circ$}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm10}
+		\caption{$90^\circ$}
+	\end{subfigure}
+	\caption{Velocidade do motor para diferentes ângulos de disparo}
+	\label{fig:res9}
+\end{figure}
+
+Como podemos ver, agora o ângulo de disparo tem uma influência considerável na velocidade atingida pelo motor, conforme o esperado uma vez que ao alterar esse ângulo estamos alterando a tensão de armadura média aplicada.
+
+Para resolver o problema das oscilações na corrente de armadura e no torque, conectamos um filtro capacitivo em nosso sistema (através de um capacitor de $0.5 F$ conectado em paralelo ao motor), conforme apresentado na figura \ref{fig:sim4} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim4}
+	\caption{Acionamento de motor DC através de retificador monofásico controlado com filtro capacitivo}
+	\label{fig:sim4}
+\end{figure}
+
+Rodamos novamente as simulações para ângulos de disparo de (figura \ref{fig:res6}) e $90^\circ$ (figura \ref{fig:res7}) (com tensão 24 V rms).
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm6}
+		\caption{Velocidade Angular}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ia6}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/tm6}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\caption{Curvas de resposta do motor ângulo de disparo $0^\circ$}
+	\label{fig:res6}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm7}
+		\caption{Velocidade Angular}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ia7}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/tm7}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\caption{Curvas de resposta do motor ângulo de disparo $90^\circ$}
+	\label{fig:res7}
+\end{figure}
+Podemos ver que o filtro conseguiu cortar efetivamente as oscilações na corrente e no torque. Rodar essa simulação foi efetivamente 
+
 \bibliography{mybib}
 \end{document}
 

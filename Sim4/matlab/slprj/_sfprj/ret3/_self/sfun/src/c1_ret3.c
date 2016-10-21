@@ -188,17 +188,17 @@ static void sf_c1_ret3(SFc1_ret3InstanceStruct *chartInstance)
     c1_sf_marshallIn);
   CV_EML_FCN(0, 0);
   _SFD_EML_CALL(0U, chartInstance->c1_sfEvent, 2);
-  if (CV_EML_IF(0, 1, 0, c1_u < 2.0)) {
+  if (CV_EML_IF(0, 1, 0, c1_u < 1.0)) {
     _SFD_EML_CALL(0U, chartInstance->c1_sfEvent, 3);
     c1_alfa = 180.0;
   } else {
     _SFD_EML_CALL(0U, chartInstance->c1_sfEvent, 4);
-    if (CV_EML_IF(0, 1, 1, c1_u < 4.0)) {
+    if (CV_EML_IF(0, 1, 1, c1_u < 2.0)) {
       _SFD_EML_CALL(0U, chartInstance->c1_sfEvent, 5);
       c1_alfa = 0.0;
     } else {
       _SFD_EML_CALL(0U, chartInstance->c1_sfEvent, 6);
-      if (CV_EML_IF(0, 1, 2, c1_u < 6.0)) {
+      if (CV_EML_IF(0, 1, 2, c1_u < 3.0)) {
         _SFD_EML_CALL(0U, chartInstance->c1_sfEvent, 7);
         c1_alfa = 180.0;
       } else {
@@ -590,10 +590,10 @@ extern void utFree(void*);
 
 void sf_c1_ret3_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2727636779U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2537215887U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3730939441U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3115164481U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1994139091U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2541707346U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(357472540U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4229666321U);
 }
 
 mxArray *sf_c1_ret3_get_autoinheritance_info(void)
@@ -605,7 +605,7 @@ mxArray *sf_c1_ret3_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("DG4tc5KJlwQoHEEcFImVaG");
+    mxArray *mxChecksum = mxCreateString("aRvXrfsYCddaIZll6tgO3F");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -803,7 +803,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "R4ksqDlR0NkscG7xQhhQ2G";
+  return "JEVBJNNPeVozgUAstb7DqD";
 }
 
 static void sf_opaque_initialize_c1_ret3(void *chartInstanceVar)
@@ -967,10 +967,10 @@ static void mdlSetWorkWidths_c1_ret3(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2718508867U));
-  ssSetChecksum1(S,(2514071312U));
-  ssSetChecksum2(S,(1632595749U));
-  ssSetChecksum3(S,(733842639U));
+  ssSetChecksum0(S,(2193531590U));
+  ssSetChecksum1(S,(873897902U));
+  ssSetChecksum2(S,(936492145U));
+  ssSetChecksum3(S,(1454676921U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
