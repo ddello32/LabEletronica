@@ -87,9 +87,9 @@ Medimos também a tensão de saída do conversor, apresentada na figura \ref{fig
 
 O valor médio da tensão de saída foi de $10.3 V$. Armados desses dados, do conhecimento de que o conversor estava trabalhando em modo de condução descontínua e da equação \ref{eq:bud} encontramos o valor da indutância de nosso kit didático: $L \approx 330.1 \mu H$
 
-\begin{capequ}
+\begin{capequ}[H]
 	\begin{equation}
-	\overline{V_R} = V_s\frac{D^2}{D^2 + 2\frac{LI_l}{V_s}}
+	\overline{V_R} = V_s\frac{D^2}{D^2 + 2\frac{LI_lf_s}{V_s}}
 	\end{equation}
 	\caption{Equação da tensão de saída para conversor buck em modo de condução descontínua}
 	\label{eq:bud}
@@ -97,7 +97,7 @@ O valor médio da tensão de saída foi de $10.3 V$. Armados desses dados, do co
 
 Variamos o duty-cycle do sinal de controle entre $10$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal e que possui a mesma forma da equação \ref{eq:bud} (equação \ref{eq:bulin}) e calculamos os valores teóricos que essa tensão deveria assumir (supondo modo de condução descontínua e que a corrente média no indutor se manteve aproximadamente $0.25 A$). Os resultados podem ser visualizados na figura \ref{fig:butvd}.
 
-\begin{capequ}
+\begin{capequ}[H]
 	\begin{equation}
 	V_R = 11.36\frac{D^2}{D^2 +  0.02055}	
 	\end{equation}
@@ -145,15 +145,24 @@ Medimos também a tensão de saída do conversor, apresentada na figura \ref{fig
 
 O valor médio da tensão de saída foi de $11.9 V$.
 
-Variamos o duty-cycle do sinal de controle entre $20$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal (equação \ref{eq:bolin}) e calculamos os valores teóricos que essa tensão deveria assumir (supondo modo de condução contínua). Os resultados podem ser visualizados na figura \ref{fig:botvd}.
+Variamos o duty-cycle do sinal de controle entre $20$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal (equação \ref{eq:bolin}) e calculamos os valores teóricos que essa tensão deveria assumir usando a equação \ref{eq:bod} (supondo modo de condução contínua). Os resultados podem ser visualizados na figura \ref{fig:botvd}.
 
-\begin{capequ}
+\begin{capequ}[H]
 	\begin{equation}
 	V_R = \frac{4.623}{1.011 - D}	
 	\end{equation}
 	\caption{Curva que aproxima a tensão medida de saída em função do duty-cycle}
 	\label{eq:bolin}
 \end{capequ}
+
+\begin{capequ}[H]
+	\begin{equation}
+	\overline{V_R} = V_s\frac{1}{1 - D}
+	\end{equation}
+	\caption{Equação da tensão de saída para conversor boost em modo de condução contínua}
+	\label{eq:bod}
+\end{capequ}
+
 
 \begin{figure}[H]
 	\centering
