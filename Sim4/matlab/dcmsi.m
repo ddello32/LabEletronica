@@ -210,13 +210,31 @@ sim('ret3')
 figure,
 results.get('Motor').get('Speed wm (rad/s)').plot
 title('wm')
+hold on
+vline(0, 'r-.', 'a1=180 a2=180')
+vline(1, 'r-.', 'a1=0 a2=180')
+vline(2, 'r-.', 'a1=180 a2=0')
+vline(3, 'r-.', 'a1=90 a2=90')
+hold off
 print('wm8', '-depsc')
 figure,
 results.get('Motor').get('Armature current ia (A)').plot
 title('Ia')
+hold on
+vline(0, 'r-.', 'a1=180 a2=180')
+vline(1, 'r-.', 'a1=0 a2=180')
+vline(2, 'r-.', 'a1=180 a2=0')
+vline(3, 'r-.', 'a1=90 a2=90')
+hold off
 print('ia8', '-depsc')
 figure,
 results.get('Motor').get('Electrical torque Te (n m)').plot
 title('Tm')
+hold on
+vline(0, 'r-.', 'a1=180 a2=180')
+vline(1, 'r-.', 'a1=0 a2=180')
+vline(2, 'r-.', 'a1=180 a2=0')
+vline(3, 'r-.', 'a1=90 a2=90')
+hold off
 print('tm8', '-depsc')
 !epsfixer.sh

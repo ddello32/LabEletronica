@@ -112,7 +112,7 @@ Colocamos então uma carga proporcional à velocidade no nosso motor (de funçã
 Utilizando a biblioteca SimPowerSystems do Simulink implementamos o mesmo motor DC, agora utilizando o modelo disponível na biblioteca, conforme apresentado na figura \ref{fig:sim2}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{matlab/sim2}
+	\includegraphics[width=0.6\linewidth]{matlab/sim2}
 	\caption{Motor DC implementado através da biblioteca SimPowerSystems}
 	\label{fig:sim2}
 \end{figure}
@@ -259,8 +259,51 @@ Rodamos novamente as simulações para ângulos de disparo de (figura \ref{fig:r
 	\caption{Curvas de resposta do motor ângulo de disparo $90^\circ$}
 	\label{fig:res7}
 \end{figure}
-Podemos ver que o filtro conseguiu cortar efetivamente as oscilações na corrente e no torque. Rodar essa simulação foi efetivamente 
+Podemos ver que o filtro conseguiu cortar efetivamente as oscilações na corrente e no torque. Devemos lembrar que o motor é uma carga do tipo RLE, logo a tensão de saída do retificador só assume valores maiores que a tensão gerada pelo motor (E) quando a tensão da fonte é maior que E em valor absoluto. Como essa janela é muito pequena o ângulo de disparo tem pouco efeito no funcionamento do motor uma vez que sua velocidade está alta o suficiente.
 
+\subsection{Acionamento de motor DC com conversor dual}
+Colocamos um circuito de acionamento com conversor dual alimentado por uma fonte alternada (24 V rms@60 Hz) e com um capacitor de 1 F em paralelo, conforme pode ser visto nas figuras \ref{fig:sim5} e \ref{fig:sim6}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim5}
+	\caption{Acionamento de motor DC através de conversor dual}
+	\label{fig:sim5}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim6}
+	\caption{Detalhes do submódulo conversor}
+	\label{fig:sim6}
+\end{figure}
+
+Simulamos um ciclo completo de operação do motor variando a velocidade de rotação entre os valores máximos direto e reverso segundo o ciclo $\omega = [0,\omega_+,\omega_-, 0]$. Para isso controlamos o ângulo de disparo dos conversores (ativando eles no máximo com o ângulo de disparo $\alpha = 0^\circ$ e desativando com $\alpha = 180^\circ$). Para colocar o motor em rotação máxima positiva ativamos o conversor um com ângulo de disparo $\alpha_1 = 0^\circ$ e o conversor dois com $\alpha_2 = 180^\circ$. Para rotação máxima reversa $\alpha_1 = 180^\circ$ e $\alpha_2 = 0^\circ$ e para $\alpha_1 = 90^\circ$ e $\alpha_2 = 90^\circ$. Os resultados da simulação estão apresentados na figura \ref{fig:res8}.
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{matlab/wm8}
+		\caption{Velocidade Angular}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ia8}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/tm8}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\caption{Ciclo completo do motor acionado por conversor dual}
+	\label{fig:res8}
+\end{figure}
+%TODO Comentar algo tipo pq diabos tem tanto ruido
+\section{Questões}
+\subsection{Princípio de funcionamento de um motor DC}
+%TODO
+\subsection{Quadrantes dos conversores}
+%TODO
+\subsection{Controle em malha aberta}
+%TODO
 \bibliography{mybib}
 \end{document}
 
