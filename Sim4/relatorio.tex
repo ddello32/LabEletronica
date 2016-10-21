@@ -62,7 +62,7 @@ Através do Simulink implementamos a função de transferência de um motor DC a
 	\caption{Motor DC implementado através do diagrama de blocos}
 	\label{fig:sim1}
 \end{figure}
-Separamos a parte elétrica e mecânica da função de transferência do motor conforme pode ser visto na figura. Adotamos os valores apresentados no roteiro para os parâmetros do motor ($R_a = 1.6 \Omega$, $L_a = 667 \mu H$, $1.1 \times 10^{-4} kg\ m^2$, $B = 1.24 \times 10^{-4} J\ s/rad$, $k_e = 0.038 V\ s/rad$ e $k_t = 0.038 N\ m/A$).
+Separamos a parte elétrica e mecânica da função de transferência do motor conforme pode ser visto na figura. Adotamos os valores apresentados no roteiro para os parâmetros do motor ($R_a = 1.6 \Omega$, $L_a = 667 \mu H$, $J = 1.1 \times 10^{-4} kg\ m^2$, $B = 1.24 \times 10^{-4} J\ s/rad$, $k_e = 0.038 V\ s/rad$ e $k_t = 0.038 N\ m/A$).
 
 Simulamos a resposta do motor sem carga a um degrau de 24V obtendo as curvas apresentadas na figura \ref{fig:res1}
 
@@ -107,6 +107,8 @@ Colocamos então uma carga proporcional à velocidade no nosso motor (de funçã
 	\caption{Curvas de resposta do motor com carga proporcional à velocidade}
 	\label{fig:res2}
 \end{figure}
+
+Notamos que a corrente não aumentou, porém o torque de saída aumentou enquanto a velocidade diminuiu.
 
 \subsection{Modelagem de um motor DC: SimPowerSystems}
 Utilizando a biblioteca SimPowerSystems do Simulink implementamos o mesmo motor DC, agora utilizando o modelo disponível na biblioteca, conforme apresentado na figura \ref{fig:sim2}.
@@ -218,7 +220,7 @@ Para resolver o problema das oscilações na corrente de armadura e no torque, c
 	\label{fig:sim4}
 \end{figure}
 
-Rodamos novamente as simulações para ângulos de disparo de (figura \ref{fig:res6}) e $90^\circ$ (figura \ref{fig:res7}) (com tensão 24 V rms).
+Rodamos novamente as simulações para ângulos de disparo de $0^\circ$ (figura \ref{fig:res6}) e $90^\circ$ (figura \ref{fig:res7}) (com tensão 24 V rms).
 
 \begin{figure}[H]
 	\centering
@@ -259,10 +261,10 @@ Rodamos novamente as simulações para ângulos de disparo de (figura \ref{fig:r
 	\caption{Curvas de resposta do motor ângulo de disparo $90^\circ$}
 	\label{fig:res7}
 \end{figure}
-Podemos ver que o filtro conseguiu cortar efetivamente as oscilações na corrente e no torque. Devemos lembrar que o motor é uma carga do tipo RLE, logo a tensão de saída do retificador só assume valores maiores que a tensão gerada pelo motor (E) quando a tensão da fonte é maior que E em valor absoluto. Como essa janela é muito pequena o ângulo de disparo tem pouco efeito no funcionamento do motor uma vez que sua velocidade está alta o suficiente.
+Podemos ver que o filtro conseguiu cortar efetivamente as oscilações na corrente e no torque. Devemos lembrar que o motor é uma carga do tipo RLE, logo a tensão de saída do retificador só assume valores maiores que a tensão gerada pelo motor (E) quando a tensão da fonte é maior que E em valor absoluto. Como essa janela é muito pequena o ângulo de disparo tem pouco efeito no funcionamento do motor uma vez que sua velocidade está alta o suficiente. Uma das dificuldades que encontramos ao rodar essa simulação está relacionada a duração do pulso de disparo do conversor, que dever ser longa o suficiente para que caso a carga E ainda não tenha sido vencida no momento de acionamento, o sinal deve permanecer alto até que essa carga seja superada.
 
 \subsection{Acionamento de motor DC com conversor dual}
-Colocamos um circuito de acionamento com conversor dual alimentado por uma fonte alternada (24 V rms@60 Hz) e com um capacitor de 1 F em paralelo, conforme pode ser visto nas figuras \ref{fig:sim5} e \ref{fig:sim6}.
+Colocamos um circuito de acionamento com conversor dual alimentado por uma fonte alternada (24 V rms@60 Hz) e com um capacitor de 1 F em paralelo com nosso motor, conforme pode ser visto nas figuras \ref{fig:sim5} e \ref{fig:sim6}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{matlab/sim5}
@@ -296,7 +298,7 @@ Simulamos um ciclo completo de operação do motor variando a velocidade de rota
 	\caption{Ciclo completo do motor acionado por conversor dual}
 	\label{fig:res8}
 \end{figure}
-%TODO Comentar algo tipo pq diabos tem tanto ruido
+Podemos ver o motor operando nos quatro quadrantes nessas figuras.
 \section{Questões}
 \subsection{Princípio de funcionamento de um motor DC}
 Motores DC consistem de dois componentes principais, um rotor e um estator. No rotor existe um enrolamento que conduz a corrente fornecida por uma fonte DC externa, enquanto no estator a excitação de campo é feita por um campo magnético gerado ou através de eletro-ímãs ou através de ímãs permanentes. A corrente de armadura passa através do contato entre as escovas fixas e os anéis coletores e sua interação com o campo magnético gerado pelo estator cria uma força que faz o rotor girar até que as forças em cada lado do rotor se alinhem. Quando essa condição está para ser atingida o sentido da corrente nos enrolamentos é invertida através dos comutadores, que nada mais são do que uma segmentação nos anéis coletores. Ao se utilizar vários pólos conseguímos transformar nosso torque de rotação em algo aproximadamente constante.
@@ -348,7 +350,7 @@ Notamos então que no modo de torque constante, conseguimos controlar a velocida
 O conversor monofásico controlado de onda completa opera somente em dois quadrantes uma vez que ele não permite a inversão da corrente aplicada no motor. Já o conversor dual opera nos quatro quadrantes, conforme podemos ver no ciclo completo de operação mostrado na figura \ref{fig:res8} em que vemos aceleração direta, reversa e frenagem.
 
 \subsection{Controle em malha aberta}
-Uma estratégia para controle em malha aberta do motor utilizando o conversor dual seria dado o valor absoluto da velocidade de referência $\omega*$, ajustar o ângulo $\alpha$ de disparo entre $0^\circ$ e $180^\circ$ (sendo que quanto maior é $\omega*$ menor deve ser $\alpha$). Qual dos conversores que deve estar ativo seria selecionado através do sinal de $\omega*$ (desativar um conversor é equivalente a dispará-lo com um ângulo de $180^\circ$).
+Uma estratégia para controle em malha aberta do motor utilizando o conversor dual seria dado o valor absoluto da velocidade de referência $\omega*$, ajustar o ângulo $\alpha$ de disparo entre $0^\circ$ e $180^\circ$ (sendo que quanto maior é $\omega*$ menor deve ser $\alpha$). Utilizaríamos esse ângulo para disparar um dos conversores enquanto desativamos o outro (desativar um conversor é equivalente a dispará-lo com um ângulo de $180^\circ$), a escolha de qual conversor seria feita através do sinal de $\omega*$.
 \bibliography{mybib}
 \end{document}
 

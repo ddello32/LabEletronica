@@ -83,7 +83,7 @@ for n = 1:size(index,1)
       'TargetPoint',pos, 'UpdateFcn', {@myfunction, title(n), labels})
   set(hDatatip(n),'OrientationMode','auto');
 %   set(hDatatip(n),'Orientation','bottom-right');
-   set(hDatatip(n),'FontSize', 14);
+   set(hDatatip(n),'FontSize', 18);
   % Specify datatip properties
   set(hDatatip(n),'Position',pos)
   
