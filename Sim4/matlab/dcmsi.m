@@ -234,7 +234,7 @@ hold on
 vline(0, 'r-.', 'a1=180 a2=180')
 vline(1, 'r-.', 'a1=0 a2=180')
 vline(2, 'r-.', 'a1=180 a2=0')
-vline(3, 'r-.', 'a1=90 a2=90')
+vline(3, 'r-.', 'a1=0 a2=0')
 hold off
 print('tm8', '-depsc')
 !epsfixer.sh

@@ -198,7 +198,7 @@ static void sf_c4_ret3(SFc4_ret3InstanceStruct *chartInstance)
       c4_alfa = 180.0;
     } else {
       _SFD_EML_CALL(0U, chartInstance->c4_sfEvent, 7);
-      c4_alfa = 270.0;
+      c4_alfa = 180.0;
     }
   }
 
@@ -584,10 +584,10 @@ extern void utFree(void*);
 
 void sf_c4_ret3_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1960599001U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4261643918U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1417281737U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(870947399U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2859043448U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3114729176U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3625949040U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3857060918U);
 }
 
 mxArray *sf_c4_ret3_get_autoinheritance_info(void)
@@ -599,7 +599,7 @@ mxArray *sf_c4_ret3_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("yDtC3RN0gTSChpyq0LJkzB");
+    mxArray *mxChecksum = mxCreateString("TJpFSuft6kpr91erZn13oF");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -796,7 +796,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "CYrOIrmwNNCuTK2upJW0Q";
+  return "hJ60eA9m1atze39FJbwjE";
 }
 
 static void sf_opaque_initialize_c4_ret3(void *chartInstanceVar)
@@ -960,10 +960,10 @@ static void mdlSetWorkWidths_c4_ret3(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2166520623U));
-  ssSetChecksum1(S,(251923661U));
-  ssSetChecksum2(S,(1484363735U));
-  ssSetChecksum3(S,(2237600462U));
+  ssSetChecksum0(S,(1595197471U));
+  ssSetChecksum1(S,(2403135349U));
+  ssSetChecksum2(S,(1520156506U));
+  ssSetChecksum3(S,(1509493564U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

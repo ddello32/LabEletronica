@@ -198,7 +198,7 @@ static void sf_c3_ret3(SFc3_ret3InstanceStruct *chartInstance)
       c3_alfa = 0.0;
     } else {
       _SFD_EML_CALL(0U, chartInstance->c3_sfEvent, 7);
-      c3_alfa = 90.0;
+      c3_alfa = 0.0;
     }
   }
 
@@ -584,10 +584,10 @@ extern void utFree(void*);
 
 void sf_c3_ret3_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1511122832U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3982735303U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1869949063U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(805193814U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(298714663U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2246853883U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4077937846U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(406566176U);
 }
 
 mxArray *sf_c3_ret3_get_autoinheritance_info(void)
@@ -599,7 +599,7 @@ mxArray *sf_c3_ret3_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("iCZEZKgURTWEKpwMJu8oPE");
+    mxArray *mxChecksum = mxCreateString("ixAMgI3JoTVCFbou6fM6q");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -747,19 +747,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,3,0,0,0,0,0,2,1);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,245);
-        _SFD_CV_INIT_EML_IF(0,1,0,24,32,57,123);
-        _SFD_CV_INIT_EML_IF(0,1,1,57,69,92,123);
-        _SFD_CV_INIT_EML_IF(0,1,2,158,191,211,238);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,244);
+        _SFD_CV_INIT_EML_IF(0,1,0,24,32,57,122);
+        _SFD_CV_INIT_EML_IF(0,1,1,57,69,92,122);
+        _SFD_CV_INIT_EML_IF(0,1,2,157,190,210,237);
 
         {
-          static int condStart[] = { 161, 175 };
+          static int condStart[] = { 160, 174 };
 
-          static int condEnd[] = { 171, 191 };
+          static int condEnd[] = { 170, 190 };
 
           static int pfixExpr[] = { 0, 1, -3 };
 
-          _SFD_CV_INIT_EML_MCDC(0,1,0,161,191,2,0,&(condStart[0]),&(condEnd[0]),
+          _SFD_CV_INIT_EML_MCDC(0,1,0,160,190,2,0,&(condStart[0]),&(condEnd[0]),
                                 3,&(pfixExpr[0]));
         }
 
@@ -796,7 +796,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "YNx6keEDJOgBJzwG2PkbgC";
+  return "rFipv2qnlJaKOF5AXiGpF";
 }
 
 static void sf_opaque_initialize_c3_ret3(void *chartInstanceVar)
@@ -960,10 +960,10 @@ static void mdlSetWorkWidths_c3_ret3(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(4020536039U));
-  ssSetChecksum1(S,(1875950284U));
-  ssSetChecksum2(S,(4069085954U));
-  ssSetChecksum3(S,(1212309967U));
+  ssSetChecksum0(S,(668496772U));
+  ssSetChecksum1(S,(2516885862U));
+  ssSetChecksum2(S,(3051589724U));
+  ssSetChecksum3(S,(165150461U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

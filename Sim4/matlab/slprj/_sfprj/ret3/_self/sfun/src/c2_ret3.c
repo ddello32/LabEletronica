@@ -203,7 +203,7 @@ static void sf_c2_ret3(SFc2_ret3InstanceStruct *chartInstance)
         c2_alfa = 0.0;
       } else {
         _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 9);
-        c2_alfa = 270.0;
+        c2_alfa = 180.0;
       }
     }
   }
@@ -590,10 +590,10 @@ extern void utFree(void*);
 
 void sf_c2_ret3_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1388874656U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3134821214U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(126559347U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2869537189U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3347387578U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4114232443U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(582782837U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2618974289U);
 }
 
 mxArray *sf_c2_ret3_get_autoinheritance_info(void)
@@ -605,7 +605,7 @@ mxArray *sf_c2_ret3_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("cVF0nENdnrjMDLUmW8wVEG");
+    mxArray *mxChecksum = mxCreateString("8PTAF2gPaBbm15FMoQit9G");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -803,7 +803,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "PD595dpyZ6g53W3QEQFNiD";
+  return "IYrbejsqbQbPnx2k4NKfQD";
 }
 
 static void sf_opaque_initialize_c2_ret3(void *chartInstanceVar)
@@ -967,10 +967,10 @@ static void mdlSetWorkWidths_c2_ret3(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(1705473545U));
-  ssSetChecksum1(S,(3402283352U));
-  ssSetChecksum2(S,(4286223409U));
-  ssSetChecksum3(S,(2981793546U));
+  ssSetChecksum0(S,(2067836694U));
+  ssSetChecksum1(S,(2629616891U));
+  ssSetChecksum2(S,(486125265U));
+  ssSetChecksum3(S,(3228923472U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
