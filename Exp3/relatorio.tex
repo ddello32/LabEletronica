@@ -95,7 +95,7 @@ O valor médio da tensão de saída foi de $10.3 V$. Armados desses dados, do co
 	\label{eq:bud}
 \end{capequ}
 
-Variamos o duty-cycle do sinal de controle entre $10$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal e que possuí a mesma forma da equação \ref{eq:bud} (equação \ref{eq:bulin}) e calculamos os valores teóricos que essa tensão deveria assumir (supondo modo de condução descontínua e que a corrente média no indutor se manteve aproximadamente $0.25 A$). Os resultados podem ser visualizados na figura \ref{fig:butvd}.
+Variamos o duty-cycle do sinal de controle entre $10$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal e que possui a mesma forma da equação \ref{eq:bud} (equação \ref{eq:bulin}) e calculamos os valores teóricos que essa tensão deveria assumir (supondo modo de condução descontínua e que a corrente média no indutor se manteve aproximadamente $0.25 A$). Os resultados podem ser visualizados na figura \ref{fig:butvd}.
 
 \begin{capequ}
 	\begin{equation}
@@ -167,11 +167,14 @@ Como podemos ver os valores medidos estão bastante próximos dos esperados teor
 \section{MOSFET IRFZ44}
 
 O transistor utilizado para os conversores do kit é o IRFZ44. Estes MOSFETs possuem rápido chaveamento e baixa resistência em condução, o que viabiliza sua aplicação com os sinais de alta-frequência do gerador de sinais no gate. Conforme utilização no experimento, notamos que não há uma interferência tão significativa por causa do tempo de resposta mesmo chegando aos $10\ kHz$.
+
 De acordo com informativo técnico do dispositivo semicondutor da empresa Vishay, a tensão de ruptura reversa é de $60\ V$, e a tensão de "threshold" $V_{GS}$ é de no mínimo $2\ V$ e no máximo de $4\ V$. Logo, não temos problemas em utilizar a saída do gerador de sinal de amplitude $5\ V$ como entrada do Gate, nem a tensão da fonte na entrada do buck com amplitude de $15\ V$.
 
 \section{Sensor de corrente ACS756}
 % Resposta de uma das perguntas, depois ver onde colocar
-Para medir a corrente no indutor, utilizamos o sensor ACS756 da Allegro MicroSystems, cujo funcionamento encontra-se detalhado em \cite{bb:allegro}, disponível na placa didática. Esse sensor funciona através de um pequeno trecho condutivo acoplado a um circuito de efeito Hall. Quando existe corrente passando pelo condutor, o circuito Hall converte o campo magnético gerado em uma tensão de saída. Para converter essa tensão em corrente, devemos subtraí-la da metade do valor da tensão de alimentação fornecida ao IC (nominalmente $5\ V$ e supomos que essa é a maneira que o aparelho está montado no kit didático) e dividir ela pela sensibilidade do aparelho (podendo ser 20 ou 40 mV/A dependendo do tipo do IC, supomos que o utilizado tenha sensibilidade de 40 mV/A por falta de mais informações). Esse tipo de sensor é mais eficiente energeticamente e interfere menos no circuito medido do que uma resistência de medição interferiria.
+Para medir a corrente no indutor, utilizamos o sensor ACS756 da Allegro MicroSystems, cujo funcionamento encontra-se detalhado em \cite{bb:allegro}, disponível na placa didática. Esse sensor funciona através de um pequeno trecho condutivo acoplado a um circuito de efeito Hall. Quando existe corrente passando pelo condutor, o circuito Hall converte o campo magnético gerado em uma tensão de saída. 
+
+Para converter essa tensão em corrente, devemos subtraí-la da metade do valor da tensão de alimentação fornecida ao IC (nominalmente $5\ V$ e supomos que essa é a maneira que o aparelho está montado no kit didático) e dividir ela pela sensibilidade do aparelho (podendo ser 20 ou 40 mV/A dependendo do tipo do IC, supomos que o utilizado tenha sensibilidade de 40 mV/A por falta de mais informações). Esse tipo de sensor é mais eficiente energeticamente e interfere menos no circuito medido do que uma resistência de medição interferiria.
 
 
 \section{Indutância Limite}
@@ -217,14 +220,15 @@ Variamos as frequências de chaveamento conforme podemos observar nas figuras \r
 	\label{fig:bot}
 \end{figure}
 
-Para o cálculo da indutância limite $L_b$ para operação em condução contínua recorremos à equação a seguir, obtendo os resultados da tabela \ref{tab:Lb} para $D=50\%$.
+Para o cálculo da indutância limite $L_b$ para operação em condução contínua recorremos à equação a seguir, obtendo os resultados da tabela \ref{tab:Lb} para $D=50\%$, e $R=43\Omega$. Utilizamos os valores de frequência de chaveamento utilizados para adquirir os dados das figuras \ref{fig:but} e \ref{fig:bot}: $1kHz$, $3kHz$ e $10kHz$.
+
 \begin{equation}
 L_b = \frac{(1-D)R}{2f_s}	
 \end{equation}
 
-\begin{table}[]
+\begin{table}[H]
 	\centering
-	\caption{My caption}
+	\caption{Indutância limite $L_b$ calculada para diferentes frequências de chaveamento}
 	\label{tab:Lb}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
