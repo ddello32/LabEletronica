@@ -124,26 +124,26 @@ Conectamos o kit didático para trabalhar e modo step-up conforme detalhado na f
 	\caption{Conexões do chopper reversível em modo step-up \cite{bb:paiva}}
 	\label{fig:boesq}
 \end{figure}
-Com $V_s = 5V$ e o sinal $TTL$ um trem de pulsos de $0$ a $5V$ DC com frequência de $3kHz$ e duty-cycle de $50\%$.
+Com $V_s = 5V$ e o sinal $TTL$ um trem de pulsos de $0$ a $5V$ DC com frequência de $10kHz$ e duty-cycle de $50\%$.
 
 Medimos então a curva de corrente no indutor através do sensor ACS756 que pode ser visualizada na figura \ref{fig:boil}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Dados/boost/il}
-	\caption{Curvas de corrente no indutor para conversor boost}
+	\caption{Curvas de corrente no indutor para conversor boost (10 kHz)}
 	\label{fig:boil}
 \end{figure}
 Como podemos ver estamos operando em modo de condução contínua (a corrente no indutor não chega a 0).
 
-Medimos também a tensão de saída do conversor, apresentada na figura \ref{fig:bot3k}
+Medimos também a tensão de saída do conversor, apresentada na figura \ref{fig:bot10k}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{Dados/boost/t3k}
-	\caption{Tensão de saída conversor boost (3 kHz)}
-	\label{fig:bot3k}
+	\includegraphics[width=0.5\linewidth]{Dados/boost/t10k}
+	\caption{Tensão de saída conversor boost (10 kHz)}
+	\label{fig:bot10k}
 \end{figure}
 
-O valor médio da tensão de saída foi de $11.9 V$.
+O valor médio da tensão de saída foi de $9.23 V$.
 
 Variamos o duty-cycle do sinal de controle entre $20$ e $70\%$ e medimos a tensão média sobre a carga. Encontramos uma curva que se aproxima desse sinal (equação \ref{eq:bolin}) e calculamos os valores teóricos que essa tensão deveria assumir usando a equação \ref{eq:bod} (supondo modo de condução contínua). Os resultados podem ser visualizados na figura \ref{fig:botvd}.
 
@@ -175,7 +175,7 @@ Como podemos ver os valores medidos estão bastante próximos dos esperados teor
 
 \section{MOSFET IRFZ44}
 
-O transistor utilizado para os conversores do kit é o IRFZ44. Estes MOSFETs possuem rápido chaveamento e baixa resistência em condução, o que viabiliza sua aplicação com os sinais de alta-frequência do gerador de sinais no gate. Conforme utilização no experimento, notamos que não há uma interferência tão significativa por causa do tempo de resposta mesmo chegando aos $10\ kHz$.
+O transistor utilizado para os conversores do kit é o IRFZ44. De acordo com \cite{bb:vishay}, estes MOSFETs possuem rápido chaveamento e baixa resistência em condução, o que viabiliza sua aplicação com os sinais de alta-frequência do gerador de sinais no gate. Conforme utilização no experimento, notamos que não há uma interferência tão significativa por causa do tempo de resposta mesmo chegando aos $10\ kHz$.
 
 De acordo com informativo técnico do dispositivo semicondutor da empresa Vishay, a tensão de ruptura reversa é de $60\ V$, e a tensão de "threshold" $V_{GS}$ é de no mínimo $2\ V$ e no máximo de $4\ V$. Logo, não temos problemas em utilizar a saída do gerador de sinal de amplitude $5\ V$ como entrada do Gate, nem a tensão da fonte na entrada do buck com amplitude de $15\ V$.
 
@@ -229,28 +229,40 @@ Variamos as frequências de chaveamento conforme podemos observar nas figuras \r
 	\label{fig:bot}
 \end{figure}
 
-Para o cálculo da indutância limite $L_b$ para operação em condução contínua recorremos à equação a seguir, obtendo os resultados da tabela \ref{tab:Lb} para $D=50\%$, e $R=43\Omega$. Utilizamos os valores de frequência de chaveamento utilizados para adquirir os dados das figuras \ref{fig:but} e \ref{fig:bot}: $1kHz$, $3kHz$ e $10kHz$.
+Para o cálculo da indutância limite $L_b$ para operação em condução contínua no conversor buck, recorremos à equação \ref{eq:bulb}. Para o cálculo no conversor boost, equação \ref{eq:bolb}. Obtemos os resultados da tabela \ref{tab:Lb} para $D=50\%$, e $R=43\Omega$. Utilizamos os valores de frequência de chaveamento utilizados para adquirir os dados das figuras \ref{fig:but} e \ref{fig:bot}: $1kHz$, $3kHz$ e $10kHz$.
 
-\begin{equation}
-L_b = \frac{(1-D)R}{2f_s}	
-\end{equation}
+\begin{capequ}[H]
+	\begin{equation}
+	L_b = \frac{(1-D)R}{2f_s}	
+	\end{equation}
+	\caption{Indutância limite para conversor buck}
+	\label{eq:bulb}
+\end{capequ}
+
+\begin{capequ}[H]
+	\begin{equation}
+	L_b = \frac{(1-D)^2DR}{2f_s}	
+	\end{equation}
+	\caption{Indutância limite para conversor boost}
+	\label{eq:bolb}
+\end{capequ}
+
 
 \begin{table}[H]
 	\centering
 	\caption{Indutância limite $L_b$ calculada para diferentes frequências de chaveamento}
 	\label{tab:Lb}
-	\begin{tabular}{|l|l|l|l|}
-		\hline
-		\multicolumn{1}{|c|}{\multirow{2}{*}{$f_s\ (kHz)$}} & 
-		\multicolumn{2}{c|}{$v_R\ (V)$} & 
-		\multicolumn{1}{c|}{\multirow{2}{*}{$L_b\ (H)$}} \\ \cline{2-3}
-		\multicolumn{1}{|c|}{} 	& Buck           & Boost          & 
-		\multicolumn{1}{c|}{}                          					  \\ \hline
-		1     					& 11.4           & 16.1           & 10.75 \\ \hline
-		3     					& 10.3           & 11.9           & 3.58  \\ \hline
-		10    					& 8.56           & 9.23           & 1.07  \\ \hline
+	\begin{tabular}{l|l|l|l|l|}
+		\cline{2-5}
+		& \multicolumn{2}{l|}{Buck} & \multicolumn{2}{l|}{Boost} \\ \hline
+		\multicolumn{1}{|l|}{$f_s (kHz)$} & $v_r (V)$      & $L_b (mH)$        & $v_r (V)$      & $L_b (mH)$         \\ \hline
+		\multicolumn{1}{|l|}{1}  & 11.4       & 10.75      & 16.1       & 2.688      \\ \hline
+		\multicolumn{1}{|l|}{3}  & 10.3       & 3.583     & 11.9       & 0.896      \\ \hline
+		\multicolumn{1}{|l|}{10} & 8.56       & 1.075     & 9.23       & 0.269      \\ \hline
 	\end{tabular}
 \end{table}	
+
+Como podemos ver, nossa indutância de $330mH$ é maior que a indutância limite para o boost e menor para o buck, comprovando nossas suposições.
 
 \section{Buck x Divisor de tensão}
 
