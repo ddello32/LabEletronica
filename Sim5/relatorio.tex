@@ -62,8 +62,7 @@ Utilizamos o bloco AC2 do Simulink para simular a estratégia de controle V-Hz p
 	\label{fig:sim1}
 \end{figure}
 
-%TODO citar alguem \cite{bb:mohan} ?
-Para o cálculo do slip do motor sabemos que:
+Para o cálculo do slip do motor, conforme apresentado em \cite{bb:learneng}, temos que:
 \begin{equation}
 	s = \frac{n_s - n_r}{ns}
 \end{equation}
@@ -159,7 +158,11 @@ Podemos ver que nosso controlador seguiu perfeitamente a rampa de velocidade. Du
 Conforme detalhado em \cite{bb:learneng}, a corrente passando pelas bobinas do estator gera um campo magnético, cada fase do nosso sistema trifásico gera então um campo magnético que varia com o tempo. O campo magnético resultante da soma de todas as fases é um campo de intensidade constante mas orientação variável (cuja velocidade de rotação é chamada de frequência síncrona), o chamado campo girante. O campo girante provoca por sua vez o surgimento de uma corrente no rotor.
 Essa corrente induzida no rotor gera um fluxo no entreferro, que gira com a mesma velocidade do rotor, e a interação entre os fluxos causa o torque no sistema. Caso a velocidade do rotor e o fluxo gerado pelo estator possuíssem a mesma frequência, não existiria corrente induzida, logo a velocidade do rotor sempre seria menor do que a frequência síncrona. A diferença entre as velocidades do fluxo gerado no estator e a velocidade do rotor é chamada de escorregamento.
 \subsection{Diagrama de blocos da estratégia de controle V-Hz}
-% TODO explicar como funciona
+No controle Volt-Hertz de um motor de indução, nós  regulamos a velocidade do rotor $\omega_r$ variando a magnitude ($V_s$) e a frequência ($f$) da alimentação trifásica do motor.
+
+Se o fluxo no entreferro for mantido constante, ou seja, variando linearmente $V_s$ e $f$, teremos que o torque eletro mecânico ($T_{em}$) será uma função linear do escorregamento. Assim, para um par $T_{em}$ e $\omega_r$ podemos encontrar $V_s$ e $f$ que colocam nosso motor nas condições de operação desejadas.
+
+Para controlar a intensidade e frequência da tensão aplicada no sistema utilizamos um conversor AC-AC, que consiste em um retificador trifásico, ligado a um chopper de frenagem seguido por um inversor trifásico. O controle do inversor é feita por um modulador (SVM) que por sua vez recebe a tensão e velocidade de referência do controlador de velocidade. Podemos ver o diagrama geral do sistema na figura \ref{fig:esqG}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{esqG}
@@ -167,7 +170,8 @@ Essa corrente induzida no rotor gera um fluxo no entreferro, que gira com a mesm
 	\label{fig:esqG}
 \end{figure}
 
-
+O chopper de frenagem serve para proteger a fonte quando o motor está operando em modo de geração (dissipando a energia de frenagem em um resistor) e o módulo SVM recebe tensão, direção e frequência como entrada e gera os sinais de PWM para o controle do inversor trifásico.
+Detalhes da implementação do controlador de velocidade e do modulador (SVM) pode ser vista na figura \ref{fig:esqC}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{esqC}
@@ -176,11 +180,10 @@ Essa corrente induzida no rotor gera um fluxo no entreferro, que gira com a mesm
 \end{figure}
 
 % TODO https://en.wikipedia.org/wiki/Space_vector_modulation
-
 \subsection{Controle escalar vantagens e desvantagens}
-%TODO
+Algumas vantagens do controle escalar, conforme apresentado em \cite{bb:fodor}, são sua simplicidade de implementação e baixo custo. Já como desvantagens podemos apontar seu baixo desempenho dinâmico e precisão diminuída.
 \subsection{Controle vetorial}
-%TODO
+%TODO Nao quero, deixa para a tia!
 \bibliography{mybib}
 \end{document}
 
