@@ -146,7 +146,8 @@ Podemos ver que nosso controlador seguiu perfeitamente a rampa de velocidade, po
 
 \section{Questões}
 \subsection{Efeito do campo girante em máquinas de indução assíncronas trifásicas}
-%TODO http://www.learnengineering.org/2013/08/rotating-magnetic-field-synchronous-speed.html
+Conforme detalhado em \cite{bb:learneng}, a corrente passando pelas bobinas do estator gera um campo magnético, cada fase do nosso sistema trifásico gera então um campo magnético que varia com o tempo. O campo magnético resultante da soma de todas as fases é um campo de intensidade constante mas orientação variável (cuja velocidade de rotação é chamada de frequência síncrona), o chamado campo girante. O campo girante provoca por sua vez o surgimento de uma corrente no rotor.
+Essa corrente induzida no rotor gera um fluxo no entreferro, que gira com a mesma velocidade do rotor, e a interação entre os fluxos causa o torque no sistema. Caso a velocidade do rotor e o fluxo gerado pelo estator possuíssem a mesma frequência, não existiria corrente induzida, logo a velocidade do rotor sempre seria menor do que a frequência síncrona. A diferença entre as velocidades do fluxo gerado no estator e a velocidade do rotor é chamada de escorregamento.
 \subsection{Diagrama de blocos da estratégia de controle V-Hz}
 % TODO
 \subsection{Controle escalar vantagens e desvantagens}
