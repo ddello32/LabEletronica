@@ -54,7 +54,7 @@
 	Essa simulação tem como objetivo o estudo dos motores de indução assíncrono trifásico e seu acionamento através da estratégia de controle V-Hz.
 	 
 \section{Simualações}
-Utilizamos o bloco AC2 do Simulink para simular a estratégia de controle V-Hz para um motor AC. Ajustamos os parâmetros do motor de acordo com o roteiro e conectamos a saída de medição da corrente em uma fase do estator a um bloco PLL para medição de frequência, afim de determinar a frequência síncrona do motor e consequentemente o slip. A entrada do bloco AC2 foi uma velocidade de referência constante de $1500 rpm$ e um degrau no torque de referência que varia de $1$ para $5.5 N\cdot m$ no segundo 6. O esquema da simulação está apresentado na figura \ref{fig:sim1}.
+Utilizamos o bloco AC2 do Simulink para simular a estratégia de controle V-Hz para um motor AC. Ajustamos os parâmetros do motor de acordo com o roteiro e conectamos a saída de medição da corrente em uma fase do estator a um bloco PLL para medição de frequência, afim de determinar a frequência síncrona do motor e consequentemente o slip. A entrada do bloco AC2 foi uma velocidade de referência constante de $1500 rpm$ e um degrau no torque da carga que varia de $1$ para $5.5 N\cdot m$ no segundo 6. O esquema da simulação está apresentado na figura \ref{fig:sim1}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{matlab/sim1}
@@ -74,7 +74,7 @@ Sabemos também que:
 \end{equation}
 Onde $p$ é o número de pólos e $f$ é a frequência da corrente elétrica passando pelo estator (devemos lembrar que essa não é a mesma frequência de nossa fonte pois no controle V-Hz utilizamos um inversor de frequência). Encontramos então $f$ medindo a frequência da corrente de uma fase no estator através de um bloco PLL (ao comparar a curva de saída do PLL e a curva de referência em frequência do controlador vimos que as duas são praticamente idênticas então acreditamos que o bloco está configurado corretamente).
 
-Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator, torque eletromagnético e velocidade no rotor (comparando com o sinal de referência de entrada e do controlador) e a curva que relaciona o torque eletromagnético com o escorregamento, conforme pode ser visto na figura \ref{fig:s1}
+Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator, torque eletromagnético e velocidade no rotor (comparando com o sinal de referência de entrada e do controlador) escorregamento e a curva que relaciona o torque eletromagnético com o escorregamento, conforme pode ser visto na figura \ref{fig:s1}
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49\linewidth}
@@ -91,20 +91,25 @@ Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator
 		\includegraphics[width=\linewidth]{matlab/tem}
 		\caption{Torque eletromagnético}
 	\end{subfigure}
-		\begin{subfigure}[b]{0.49\linewidth}
-			\centering
-			\includegraphics[width=\linewidth]{matlab/ts}
-			\caption{Torque em função do slip}
-		\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/slip}
+		\caption{Escorregamento}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{matlab/ts}
+		\caption{Torque em função do slip}
+	\end{subfigure}
 	\caption{Curvas de resposta para primeira simulação}
 	\label{fig:s1}
 \end{figure}
 
-Podemos ver que o controle apresentou um resultado não muito agradável. Ao controlar isoladamente a velocidade do motor conseguimos atingir o valor desejado em aproximadamente 4 segundos, nessa marca também ajustamos o torque para que ele se aproxime do torque desejado. Porém ao mudar a referência de torque, nosso controlador não foi capaz de manter a curva de velocidade no valor desejado enquanto perseguia o degrau no torque. Devemos levar em consideração que o controlador apresentado não foi dimensionado para o motor simulado, fator que afeta sua performance, uma vez que alteramos os parâmetros do motor sem mexer no controlador.
+Podemos ver que o controle apresentou um resultado não muito agradável. Para um torque na carga baixo a velocidade do motor conseguimos atingir o valor desejado em aproximadamente 4 segundos, nessa marca vemos que o torque eletromagnético se aproxima do torque da carga e o motor para de acelerar. Porém ao mudar a referência de torque, nosso controlador não foi capaz de evitar que o motor desacelere, ele ainda estava ajustando o torque do motor para recuperar velocidade quando a simulação acabou. Devemos levar em consideração que o controlador apresentado não foi dimensionado para o motor simulado, fator que afeta sua performance, uma vez que alteramos os parâmetros do motor sem mexer no controlador.
 
 %TODO falar do slip, entender graficos
 
-Mudamos então os sinais de referência para uma rampa que se inicializa no segundo $1$ e vai de $0$ a $1500 rpm$ em 3 segundos para a velocidade e um degrau de vai de $0$ para $1 N \cdot m$ no segundo 6 para o torque, conforme apresentado na figura \ref{fig:sim2}.
+Mudamos então os sinais de referência para uma rampa que se inicializa no segundo $1$ e vai de $0$ a $1500 rpm$ em 3 segundos para a velocidade e um degrau de vai de $0$ para $1 N \cdot m$ no segundo 6 para o torque da carga, conforme apresentado na figura \ref{fig:sim2}.
 
 \begin{figure}[H]
 	\centering
@@ -113,7 +118,7 @@ Mudamos então os sinais de referência para uma rampa que se inicializa no segu
 	\label{fig:sim2}
 \end{figure}
 
-Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator, torque eletromagnético e velocidade no rotor (comparando com o sinal de referência de entrada e do controlador) e a curva que relaciona o torque eletromagnético com o escorregamento, conforme pode ser visto na figura \ref{fig:s2}
+Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator, torque eletromagnético e velocidade no rotor (comparando com o sinal de referência de entrada e do controlador), escorregamento e a curva que relaciona o torque eletromagnético com o escorregamento, conforme pode ser visto na figura \ref{fig:s2}
 
 \begin{figure}[H]
 	\centering
@@ -133,6 +138,11 @@ Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49\linewidth}
 		\centering
+		\includegraphics[width=\linewidth]{matlab/slip2}
+		\caption{Escorregamento}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
 		\includegraphics[width=\linewidth]{matlab/ts2}
 		\caption{Torque em função do slip}
 	\end{subfigure}
@@ -140,7 +150,7 @@ Simulamos nosso sistema e encontramos as curvas de corrente na fase A no estator
 	\label{fig:s2}
 \end{figure}
 
-Podemos ver que nosso controlador seguiu perfeitamente a rampa de velocidade, porém a curva de torque não foi muito respeitada. Durante o período de aceleração o torque está longe do desejado o controle só passa a fazer efeito quando a velocidade está estável, nesses momentos nosso controlador apresentou um erro estacionário de aproximadamente $1 N\cdot m$.
+Podemos ver que nosso controlador seguiu perfeitamente a rampa de velocidade. Durante o período de aceleração o torque está significativamente maior que o da carga, mas praticamente constante (como esperado para uma aceleração constante). O torque de saída no equilíbrio é relativamente maior do que o da carga pois devemos levar em conta os efeitos dissipativos no motor.
 
 %TODO falar do slip, entender graficos
 
@@ -149,7 +159,24 @@ Podemos ver que nosso controlador seguiu perfeitamente a rampa de velocidade, po
 Conforme detalhado em \cite{bb:learneng}, a corrente passando pelas bobinas do estator gera um campo magnético, cada fase do nosso sistema trifásico gera então um campo magnético que varia com o tempo. O campo magnético resultante da soma de todas as fases é um campo de intensidade constante mas orientação variável (cuja velocidade de rotação é chamada de frequência síncrona), o chamado campo girante. O campo girante provoca por sua vez o surgimento de uma corrente no rotor.
 Essa corrente induzida no rotor gera um fluxo no entreferro, que gira com a mesma velocidade do rotor, e a interação entre os fluxos causa o torque no sistema. Caso a velocidade do rotor e o fluxo gerado pelo estator possuíssem a mesma frequência, não existiria corrente induzida, logo a velocidade do rotor sempre seria menor do que a frequência síncrona. A diferença entre as velocidades do fluxo gerado no estator e a velocidade do rotor é chamada de escorregamento.
 \subsection{Diagrama de blocos da estratégia de controle V-Hz}
-% TODO
+% TODO explicar como funciona
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{esqG}
+	\caption{Diagrama de blocos do controle V-Hz \cite{bb:mathworks}}
+	\label{fig:esqG}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{esqC}
+	\caption{Diagrama de blocos do controlador e do módulo SVM para controle V-Hz. (Retirada da ajuda do bloco AC2)}
+	\label{fig:esqC}
+\end{figure}
+
+% TODO https://en.wikipedia.org/wiki/Space_vector_modulation
+
 \subsection{Controle escalar vantagens e desvantagens}
 %TODO
 \subsection{Controle vetorial}
