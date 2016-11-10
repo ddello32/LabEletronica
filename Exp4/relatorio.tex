@@ -55,9 +55,14 @@
 	 
 \section{Experimento}
 \subsection{Retificador Monofásico Controlado}
-Utilizamos um transformador para rebaixar a tensão de $220\ V$ para $24\ V$, fazendo a ligação da tensão de linha (protegida pelos fusíveis) no primário, obtendo como saída $25.54\ V$. No secundário, ligamos o circuito na entrada do conversor. Alimentamos e configuramos o cartão de disparos, permitindo configurar $\alpha$ por meio de um potenciômetro.
+Utilizamos um transformador para rebaixar a tensão de $220\ V$ para $24\ V$, fazendo a ligação da tensão de linha (protegida pelos fusíveis) no primário, obtendo como saída $25.54\ V$. No secundário, ligamos o circuito na entrada do conversor. Alimentamos e configuramos o cartão de disparos, permitindo configurar $\alpha$ por meio de um potenciômetro. O esquemático do sistema pode ser visto na figura \ref{fig:retesq}.
 
-% TODO: Colocar imagem do circuito
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{Dados/Retificador/esq}
+	\caption{Retificador monofásico controlado de onda completa utilizado para acionar motor DC. (roteiro)}
+	\label{fig:retesq}
+\end{figure}
 
 Prosseguimos o experimento com a medição da resistência de armadura do motor:
 \begin{equation}
@@ -69,12 +74,12 @@ R_R=3.8\ \Omega
 \end{equation}
 sendo este último valor diferente do sugerido no roteiro ($0.2\Omega$).
 
-Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $\alpha=90°$, conforme figura \ref{fig:varet}. Variando os valores de $\alpha$, obtivemos os valores da tabela \ref{tab:varet}.
+Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $\alpha=90^\circ$, conforme figura \ref{fig:varet}. Variando os valores de $\alpha$, obtivemos os valores da tabela \ref{tab:varet}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{Dados/Retificador/1.bmp}
-	\caption{Tensão de armadura do motor DC com retificador controlado para $\alpha=90°$}
+	\includegraphics[width=\linewidth]{Dados/Retificador/1}
+	\caption{Tensão de armadura do motor DC com retificador controlado para $\alpha=90^\circ$}
 	\label{fig:varet}
 \end{figure}
 
@@ -85,25 +90,25 @@ Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ par
 	\begin{tabular}{|l|l|l|}
 		\hline
 		$\alpha$ & $v_a$ & $\omega_m$ \\ \hline
-		$60°$    & 4.81  & 340        \\ \hline
-		$70°$    & 5.9   & 470        \\ \hline
-		$80°$    & 7.12  & 650        \\ \hline
-		$90°$    & 8.5   & 900        \\ \hline
-		$100°$   & 9.8   & 1150       \\ \hline
-		$110°$   & 10.6  & 1350       \\ \hline
-		$120°$   & 11.6  & 1510       \\ \hline
+		$60^\circ$    & 4.81  & 340        \\ \hline
+		$70^\circ$    & 5.9   & 470        \\ \hline
+		$80^\circ$    & 7.12  & 650        \\ \hline
+		$90^\circ$    & 8.5   & 900        \\ \hline
+		$100^\circ$   & 9.8   & 1150       \\ \hline
+		$110^\circ$   & 10.6  & 1350       \\ \hline
+		$120^\circ$   & 11.6  & 1510       \\ \hline
 	\end{tabular}
 \end{table}
 
 Medimos também a tensão no resistor de medição $R_R$, para cálculo da corrente de armadura, conforme figura \ref{fig:iaret}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{Dados/Retificador/corrente.bmp}
-	\caption{Tensão do resistor de medição para $\alpha=90°$}
+	\includegraphics[width=\linewidth]{Dados/Retificador/corrente}
+	\caption{Corrente no resistor de medição para $\alpha=90^\circ$}
 	\label{fig:iaret}
 \end{figure}
 
-Como tivemos problemas na ligação do circuito, descontinuamos o experimento sem fazer a medição da corrente para outros valores de $\alpha$.
+Como tivemos problemas na ligação do circuito, descontinuamos o experimento sem fazer a medição da corrente para outros valores de $\alpha$, conforme orientado pelo professor.
 
 \subsection{Conversor Step-Down}
 Para o experimento com o conversor step-down, configuramos as tensões da fonte DC e pulsos do gerador de sinal. Ligamos o lado alto do conversor em $12\ V$, e o lado baixo na armadura do motor em série com o resistor de medição. Alimentamos o circuito de acionamento do conversor com $15\ V$ e ligamos o gerador de sinal nos cabos indicados por "BUCK" e "GND".
@@ -155,7 +160,7 @@ i_a=\frac{v_R}{R_S}\ A
 	\centering
 	\caption{Tensão no resistor de medição $v_R$ e corrente de armadura $i_a$ do motor DC para diferentes duty-cycles $D$}
 	\label{tab:iabuck}
-	\begin{tabular}{|l|l}
+	\begin{tabular}{|l|l|l|}
 		\hline
 		$D$    & $v_R$ & $i_a$ \\ \hline
 		$20\%$ & -     & -     \\ \hline
