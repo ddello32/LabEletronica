@@ -183,7 +183,7 @@ Detalhes da implementação do controlador de velocidade e do modulador (SVM) po
 \subsection{Controle escalar vantagens e desvantagens}
 Algumas vantagens do controle escalar, conforme apresentado em \cite{bb:fodor}, são sua simplicidade de implementação e baixo custo. Já como desvantagens podemos apontar seu baixo desempenho dinâmico e precisão diminuída.
 \subsection{Controle vetorial}
-%TODO Nao quero, deixa para a tia!
+Em motores DC o fluxo e a força magneto motriz da armadura são desacoplados, nos permitindo um controle mais fácil do torque e da velocidade. O controle vetorial nada mais é do que uma maneira de desacoplar o fluxo e a corrente do rotor em máquinas de indução para que possamos aplicar os mesmos métodos que aplicamos em máquinas DC. Ao impor uma força magneto motriz que gera um fluxo desacoplado da corrente no rotor mesmo em regime transitório obtemos um controle muito mais preciso. Um resumo da modelagem e teoria por trás do controle vetorial pode ser encontrada no capítulo 2 de \cite{bb:asley}. No controle V-Hz nós trabalhamos somente levando em conta o regime permanente, condição na qual a máquina de indução já se encontra desacoplada, já no controle vetorial nós controlamos nosso sistema para que exista desacoplamento mesmo durante os transitórios e portanto conseguimos uma resposta dinâmica melhor, ao custo de uma implementação significativamente mais complexa.
 \bibliography{mybib}
 \end{document}
 
