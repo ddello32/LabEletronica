@@ -159,7 +159,7 @@ Encontramos então que (para $\alpha = 70^\circ$)
 \begin{equation}
 	B + B_{wl} = 0.0003 N\cdot m\cdot s/rad
 \end{equation}
-Simulamos então um sistema com $R_a = R_a + R_R$ e $B = B + B_{wl}$ e $k_t = k_e = 0,0536$ (considerando valores de indutância de armadura e inércia do motor bem baixos pois só nos interessamos no regime permanente) e encontramos a velocidade do motor em função do ângulo de disparo para simulação. Comparamos esse resultado com a curva que aproxima a velocidade do motor em função do ângulo de disparo calculada a partir dos dados apresentados na tabela \ref{tab:varet} e representada na equação \ref{eq:retdisp}. Os resultados são apresentados na figura \ref{fig:retalfa}.
+Simulamos então um sistema com $R_a = R_a + R_R$, $B = B + B_{wl}$ e $k_t = k_e = 0,0536$ (considerando valores de indutância de armadura e inércia do motor bem baixos pois só nos interessamos no regime permanente) e encontramos a velocidade do motor em função do ângulo de disparo para simulação. Comparamos esse resultado com a curva que aproxima a velocidade do motor em função do ângulo de disparo calculada a partir dos dados apresentados na tabela \ref{tab:varet} e representada na equação \ref{eq:retdisp}. Os resultados são apresentados na figura \ref{fig:retalfa}.
 \begin{equation}
 	\omega_m [rad/s] = 289,5 - 2,158 \alpha [^\circ]
 	\label{eq:retdisp}
@@ -172,7 +172,7 @@ Simulamos então um sistema com $R_a = R_a + R_R$ e $B = B + B_{wl}$ e $k_t = k_
 	\label{fig:retalfa}
 \end{figure}
 
-Como podemos ver, nosso modelo medido e simulado difere razoavelmente. Acreditamos que isso acontece pois adotamos uma série de simplificações no cálculo dos parâmetros do motor, além das imprecisões de medidas e diversos outros fatores. A curva linearizada da velocidade em função do ângulo de disparo ainda assim parece ser uma aproximação boa o suficiente dado que nos mantenhamos em um intervalo de valores para $\alpha$ apropriado.
+Como podemos ver, nosso modelo medido e simulado difere razoavelmente. Acreditamos que isso acontece pois adotamos uma série de simplificações no cálculo dos parâmetros do motor (por exemplo no calculo do coeficiente de atrito), além das imprecisões de medidas e diversos outros fatores. A curva linearizada da velocidade em função do ângulo de disparo ainda assim parece ser uma aproximação boa o suficiente dado que nos mantenhamos em um intervalo de valores para $\alpha$ apropriado.
 \subsection{Conversor Step-Down}
 Para o experimento com o conversor step-down, configuramos as tensões da fonte DC e pulsos do gerador de sinal. Ligamos o lado alto do conversor em $12\ V$, e o lado baixo na armadura do motor em série com o resistor de medição. Alimentamos o circuito de acionamento do conversor com $15\ V$ e ligamos o gerador de sinal nos cabos indicados por "BUCK" e "GND".
 
@@ -220,8 +220,22 @@ Para cálculo do torque, utilizamos a equação \ref{eq:conserv}, levando em con
 \end{table}
 
 Como podemos ver a tensão e a corrente aplicada sobre o motor se mantém praticamente constantes, fator altamente desejável no controle desses dispositivos pois assim nossa velocidade e torque apresentarão menos variações.
+
+Usando o mesmo raciocínio que utilizamos para o retificador, calculamos os valores de $k_t$ e $B + B_{wl}$. Notamos uma variação significativa em ambos os parâmetros, provando que nossas hipóteses simplificadoras só podem ser aplicadas quando não nos afastamos muito da nossa condição de operação em que elas foram feitas (no caso do retificador e do buck estamos operando em duas regiões bastante distintas), e simulamos o sistema para um motor com os parâmetros encontrados $R_a = R_a + R_s$, $B = B + B_{wl} = 0,00046$ e $k_t = k_e = 0,07$.  Comparamos esse resultado com a curva que aproxima a velocidade do motor em função do ângulo de disparo calculada a partir dos dados apresentados na tabela \ref{tab:vabuck} e representada na equação \ref{eq:buckdisp}. Os resultados são apresentados na figura \ref{fig:buckwd}.
+\begin{equation}
+\omega_m [rad/s] = 40,05 + 1,65 D [\%]
+\label{eq:buckdisp}
+\end{equation}
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=\linewidth]{Dados/Buck/wd}
+	\caption{Velocidade em função do duty-cycle para conversor buck medido e simulado}
+	\label{fig:buckwd}
+\end{figure}
+
+Como podemos ver, nosso modelo medido e simulado difere razoavelmente. Acreditamos que isso acontece pois adotamos uma série de simplificações no cálculo dos parâmetros do motor (por exemplo no calculo do coeficiente de atrito), além das imprecisões de medidas e diversos outros fatores. A curva linearizada da velocidade em função do ângulo de disparo ainda assim parece ser uma aproximação boa o suficiente dado que nos mantenhamos em um intervalo de valores para $D$ apropriado.
 % TODO: comentar tudo buck
-% TODO:d
 % TODO:e
 % TODO:f
 \end{document}
