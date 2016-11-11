@@ -84,6 +84,7 @@ i_a=\frac{v_R}{R_R}
 Calculamos o torque no motor a fazendo a substituição nos valores da equação abaixo, em que igualamos a potência mecânica com a potência elétrica (descontando a potência dissipada na armadura), e isolamos a variável de torque.
 \begin{equation}
 T_m=\frac{v_a*i_a - R_a i_a^2}{\omega_m}
+\label{eq:conserv}
 \end{equation}
 Sabemos que: 
 \begin{equation}
@@ -105,7 +106,7 @@ T_m = k_t i_a
 \label{eq:rettm}
 \end{equation}
 Encontramos, para $\alpha = 90^\circ$, $k_t = 0,0536 N m/A$ e $k_e = 0,0536 V s/rad$. Sabemos que $k_t$ e $k_e$ deveriam apresentar o mesmo valor quando escritos no SI então nossos valores fazem sentido.
-Utilizando as equações \ref{eq:retia} e \ref{eq:rettm} e os valores de $k_t$ e $k_e$ calculados encontramos a corrente e o torque para cada ângulo de disparo, apresentados na tabela \ref{tab:varet}.
+Utilizando as equações \ref{eq:retia} e \ref{eq:rettm} e os valores de $k_t$ e $k_e$ calculados (supondo que eles não variam) encontramos a corrente e o torque para cada ângulo de disparo, apresentados na tabela \ref{tab:varet}.
 
 \begin{figure}[H]
 	\centering
@@ -158,7 +159,7 @@ Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ par
 i_a=\frac{v_R}{R_S}
 \end{equation}
 
-Para cálculo do torque, fizemos igual ao calculado para $\alpha=90^\circ$ no retificador controlado.
+Para cálculo do torque, utilizamos a equação \ref{eq:conserv}, levando em consideração apenas a conservação de energia e que os termos indutivos da carga seriam anulados uma vez que estamos trabalhando com valores médios e em regime permanente.
 
 \begin{figure}[H]
 	\centering
@@ -180,14 +181,16 @@ Para cálculo do torque, fizemos igual ao calculado para $\alpha=90^\circ$ no re
 	\label{tab:vabuck}
 	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		$D$    & $v_a$ & $\omega_m$ & $i_a (A)$ & $T_m (N/m)$ \\ \hline
+		$D$    & $v_a (V)$ & $\omega_m (rpm)$ & $i_a (A)$ & $T_m (N\cdot m)$ \\ \hline
 		$20\%$ & -     & -          & -         & -           \\ \hline
-		$30\%$ & 2.18  & 102        & 0.117     & 0.255       \\ \hline
-		$40\%$ & 3.08  & 234        & 0.143     & 0.442       \\ \hline
-		$50\%$ & 4.32  & 390        & 0.170     & 0.734       \\ \hline
-		$60\%$ & 5.4   & 574        & 0.192     & 1.039       \\ \hline
+		$30\%$ & 2.18  & 102        & 0.117     & 0.0137      \\ \hline
+		$40\%$ & 3.08  & 234        & 0.143     & 0.0114       \\ \hline
+		$50\%$ & 4.32  & 390        & 0.170     & 0.0124       \\ \hline
+		$60\%$ & 5.4   & 574        & 0.192     & 0.0124       \\ \hline
 	\end{tabular}
 \end{table}
+
+Como podemos ver a tensão e a corrente aplicada sobre o motor se mantém praticamente constantes, fator altamente desejável no controle desses dispositivos pois assim nossa velocidade e torque apresentarão menos variações.
 % TODO: comentar tudo buck
 % TODO:c
 % TODO:d
