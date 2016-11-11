@@ -143,7 +143,36 @@ Notamos que a variação da tensão na armadura é abrupta, e que chega a ficar 
 
 Variando o valor de $\alpha$, podemos observar que ocorre um aumento na tensão de armadura, e consequentemente, aumento na velocidade angular $\omega_m$. 
 
+Se desconsiderarmos o atrito de coulomb, temos que:
+\begin{equation}
+	T_m = J\frac{d\omega_m}{dt} + B\omega_m + T_{wl}
+\end{equation}
+Sabemos que a carga acoplada também é da forma:
+\begin{equation}
+	T_{wl} = J_{wl}\frac{d\omega_m}{dt} + B_{wl}\omega_m
+\end{equation}
+Considerando que estamos trabalhando em regime permanente, podemos escrever:
+\begin{equation}
+T_m = (B + B_{wl})\omega_m
+\end{equation}
+Encontramos então que (para $\alpha = 70^\circ$)
+\begin{equation}
+	B + B_{wl} = 0.0003 N\cdot m\cdot s/rad
+\end{equation}
+Simulamos então um sistema com $R_a = R_a + R_R$ e $B = B + B_{wl}$ e $k_t = k_e = 0,0536$ (considerando valores de indutância de armadura e inércia do motor bem baixos pois só nos interessamos no regime permanente) e encontramos a velocidade do motor em função do ângulo de disparo para simulação. Comparamos esse resultado com a curva que aproxima a velocidade do motor em função do ângulo de disparo calculada a partir dos dados apresentados na tabela \ref{tab:varet} e representada na equação \ref{eq:retdisp}. Os resultados são apresentados na figura \ref{fig:retalfa}.
+\begin{equation}
+	\omega_m [rad/s] = 289,5 - 2,158 \alpha [^\circ]
+	\label{eq:retdisp}
+\end{equation}
 
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=\linewidth]{Dados/Retificador/walfa}
+	\caption{Velocidade em função de $\alpha$ para retificador medido e simulado}
+	\label{fig:retalfa}
+\end{figure}
+
+Como podemos ver, nosso modelo medido e simulado difere razoavelmente. Acreditamos que isso acontece pois adotamos uma série de simplificações no cálculo dos parâmetros do motor, além das imprecisões de medidas e diversos outros fatores. A curva linearizada da velocidade em função do ângulo de disparo ainda assim parece ser uma aproximação boa o suficiente dado que nos mantenhamos em um intervalo de valores para $\alpha$ apropriado.
 \subsection{Conversor Step-Down}
 Para o experimento com o conversor step-down, configuramos as tensões da fonte DC e pulsos do gerador de sinal. Ligamos o lado alto do conversor em $12\ V$, e o lado baixo na armadura do motor em série com o resistor de medição. Alimentamos o circuito de acionamento do conversor com $15\ V$ e ligamos o gerador de sinal nos cabos indicados por "BUCK" e "GND".
 
@@ -192,7 +221,6 @@ Para cálculo do torque, utilizamos a equação \ref{eq:conserv}, levando em con
 
 Como podemos ver a tensão e a corrente aplicada sobre o motor se mantém praticamente constantes, fator altamente desejável no controle desses dispositivos pois assim nossa velocidade e torque apresentarão menos variações.
 % TODO: comentar tudo buck
-% TODO:c
 % TODO:d
 % TODO:e
 % TODO:f
