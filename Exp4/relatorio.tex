@@ -235,8 +235,10 @@ Usando o mesmo raciocínio que utilizamos para o retificador, calculamos os valo
 \end{figure}
 
 Como podemos ver, nosso modelo medido e simulado difere razoavelmente. Acreditamos que isso acontece pois adotamos uma série de simplificações no cálculo dos parâmetros do motor (por exemplo no calculo do coeficiente de atrito), além das imprecisões de medidas e diversos outros fatores. A curva linearizada da velocidade em função do ângulo de disparo ainda assim parece ser uma aproximação boa o suficiente dado que nos mantenhamos em um intervalo de valores para $D$ apropriado.
-% TODO: comentar tudo buck
-% TODO:e
-% TODO:f
+
+% e
+A carga acoplada ao motor DC (motor AC interligado pelo eixo) funciona para criar torque e aumentar a corrente de armadura. Também faz com que a velocidade de rotação seja diminuída.
+% f
+O conversor monofásico controlado de onda completa opera em dois quadrantes uma vez que ele não permite a inversão da corrente aplicada no motor. O chopper operando em step-down, por sua vez, opera só no primeiro quadrante, com tensão e corrente positivas.
 \end{document}
 
