@@ -76,6 +76,20 @@ sendo este último valor diferente do sugerido no roteiro ($0.2\Omega$).
 
 Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $\alpha=90^\circ$, conforme figura \ref{fig:varet}. Variando os valores de $\alpha$, obtivemos os valores da tabela \ref{tab:varet}.
 
+Medimos também a tensão no resistor de medição $R_R$, para cálculo da corrente de armadura, conforme figura \ref{fig:iaret} e equação abaixo. Conforme orientado pelo professor, descontinuamos o experimento sem fazer a medição da corrente para outros valores de $\alpha$. 
+\begin{equation}
+i_a=\frac{v_R}{R_R}
+\end{equation}
+
+Calculamos o torque no motor a fazendo a substituição nos valores da equação abaixo, em que igualamos a potência mecânica com a potência elétrica, e isolamos a variável de torque.
+\begin{equation}
+T_m=\frac{v_a*i_a}{\omega_m}
+\end{equation}
+Como não temos os valores de corrente para os diferentes valores de $\alpha$, fizemos uma aproximação de que a resistência de armadura do motor não se altera com as mudanças em sua tensão e em sua carga, e adotamos o cálculo a partir da equação abaixo para os valores de $\alpha$. Entretanto, ao comparar os resultados obtidos para $\alpha=90^\circ$, descartamos os valores obtidos, pois não eram uma boa aproximação.
+\begin{equation}
+T_m=\frac{v_a^2}{R_a*\omega_m}
+\end{equation}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{Dados/Retificador/1}
@@ -83,24 +97,6 @@ Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ par
 	\label{fig:varet}
 \end{figure}
 
-\begin{table}[H]
-	\centering
-	\caption{Tensão de armadura $v_a$ e velocidade angular $\omega_m$ do motor DC para diferentes ângulos de disparo $\alpha$}
-	\label{tab:varet}
-	\begin{tabular}{|l|l|l|}
-		\hline
-		$\alpha$ & $v_a$ & $\omega_m$ \\ \hline
-		$60^\circ$    & 4.81  & 340        \\ \hline
-		$70^\circ$    & 5.9   & 470        \\ \hline
-		$80^\circ$    & 7.12  & 650        \\ \hline
-		$90^\circ$    & 8.5   & 900        \\ \hline
-		$100^\circ$   & 9.8   & 1150       \\ \hline
-		$110^\circ$   & 10.6  & 1350       \\ \hline
-		$120^\circ$   & 11.6  & 1510       \\ \hline
-	\end{tabular}
-\end{table}
-
-Medimos também a tensão no resistor de medição $R_R$, para cálculo da corrente de armadura, conforme figura \ref{fig:iaret}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{Dados/Retificador/corrente}
@@ -108,7 +104,29 @@ Medimos também a tensão no resistor de medição $R_R$, para cálculo da corre
 	\label{fig:iaret}
 \end{figure}
 
-Como tivemos problemas na ligação do circuito, descontinuamos o experimento sem fazer a medição da corrente para outros valores de $\alpha$, conforme orientado pelo professor.
+\begin{table}[H]
+	\centering
+	\caption{Tensão de armadura $v_a$, velocidade angular $\omega_m$, corrente de armadura $i_a$ e torque $T_m$ do motor DC para diferentes ângulos de disparo $\alpha$}
+	\label{tab:varet}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		$\alpha$    & $v_a (V)$ & $\omega_m (rpm)$ & $i_a (A)$ & $T_m (N/m)$ \\ \hline
+		$60^\circ$  & 4.81      & 340              & -         & -           \\ \hline
+		$70^\circ$  & 5.9       & 470              & -         & -           \\ \hline
+		$80^\circ$  & 7.12      & 650              & -         & -           \\ \hline
+		$90^\circ$  & 8.5       & 900              & 0.295     & 0.00278     \\ \hline
+		$100^\circ$ & 9.8       & 1150             & -         & -           \\ \hline
+		$110^\circ$ & 10.6      & 1350             & -         & -           \\ \hline
+		$120^\circ$ & 11.6      & 1510             & -         & -           \\ \hline
+	\end{tabular}
+\end{table}
+
+Notamos que a variação da tensão na armadura é abrupta, e que chega a ficar abaixo dos $0\ V$ em alguns momentos, e possui picos de tensão. Isto não é o esperado para fazer o acionamento do motor DC.
+
+%TODO: comentar corrente de armadura
+
+Variando o valor de $\alpha$, podemos observar que ocorre um aumento na tensão de armadura, e consequentemente, aumento na velocidade angular $\omega_m$. 
+
 
 \subsection{Conversor Step-Down}
 Para o experimento com o conversor step-down, configuramos as tensões da fonte DC e pulsos do gerador de sinal. Ligamos o lado alto do conversor em $12\ V$, e o lado baixo na armadura do motor em série com o resistor de medição. Alimentamos o circuito de acionamento do conversor com $15\ V$ e ligamos o gerador de sinal nos cabos indicados por "BUCK" e "GND".
@@ -119,7 +137,13 @@ Utilizamos o mesmo motor do caso anterior, mas outra resistência de medição:
 R_S=5.3\ \Omega
 \end{equation}
 
-Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $D=50\%$, conforme figura \ref{fig:vabuck}. Variando os valores de $D$, obtivemos os valores da tabela \ref{tab:vabuck}.
+Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $D=50\%$, conforme figura \ref{fig:vabuck}. Variando os valores de $D$, obtivemos os valores da tabela \ref{tab:vabuck}. Prosseguimos o experimento registrando os valores de tensão na resistência de medição. A forma de onda para a corrente $i_a$ é mostrada na figura \ref{fig:iabuck}, para realizar o cálculo de $i_a$, utilizamos equação a seguir.
+
+\begin{equation}
+i_a=\frac{v_R}{R_S}
+\end{equation}
+
+Para cálculo do torque, fizemos igual ao calculado para $\alpha=90^\circ$ no retificador controlado.
 
 \begin{figure}[H]
 	\centering
@@ -128,23 +152,6 @@ Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ par
 	\label{fig:vabuck}
 \end{figure}
 
-\begin{table}[H]
-	\centering
-	\caption{Tensão de armadura $v_a$ e velocidade angular $\omega_m$ do motor DC para diferentes duty-cycles $D$}
-	\label{tab:vabuck}
-	\begin{tabular}{|l|l|l|}
-		\hline
-		$D$    & $v_a$ & $\omega_m$ \\ \hline
-		$20\%$ & -     & -          \\ \hline
-		$30\%$ & 2.18  & 102        \\ \hline
-		$40\%$ & 3.08  & 234        \\ \hline
-		$50\%$ & 4.32  & 390        \\ \hline
-		$60\%$ & 5.4   & 574        \\ \hline
-	\end{tabular}
-\end{table}
-
-Prosseguimos o experimento registrando os valores de tensão na resistência de medição. A forma de onda capturada para a tensão $v_R$ é mostrada na figura \ref{fig:iabuck}, para realizar o cálculo de $i_a$ da tabela \ref{tab:iabuck}, conforme equação a seguir.
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{Dados/Buck/ia}
@@ -152,24 +159,24 @@ Prosseguimos o experimento registrando os valores de tensão na resistência de 
 	\label{fig:iabuck}
 \end{figure}
 
-\begin{equation}
-i_a=\frac{v_R}{R_S}\ A
-\end{equation}
-
 \begin{table}[H]
 	\centering
-	\caption{Tensão no resistor de medição $v_R$ e corrente de armadura $i_a$ do motor DC para diferentes duty-cycles $D$}
-	\label{tab:iabuck}
-	\begin{tabular}{|l|l|l|}
+	\caption{Tensão de armadura $v_a$, velocidade angular $\omega_m$, corrente de armadura $i_a$ e torque $T_m$ do motor DC para diferentes duty-cycles $D$}
+	\label{tab:vabuck}
+	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		$D$    & $v_R$ & $i_a$ \\ \hline
-		$20\%$ & -     & -     \\ \hline
-		$30\%$ & 0.62  & 0.117 \\ \hline
-		$40\%$ & 0.76  & 0.143 \\ \hline
-		$50\%$ & 0.9   & 0.170 \\ \hline
-		$60\%$ & 1.02  & 0.192 \\ \hline
+		$D$    & $v_a$ & $\omega_m$ & $i_a (A)$ & $T_m (N/m)$ \\ \hline
+		$20\%$ & -     & -          & -         & -           \\ \hline
+		$30\%$ & 2.18  & 102        & 0.117     & 0.255       \\ \hline
+		$40\%$ & 3.08  & 234        & 0.143     & 0.442       \\ \hline
+		$50\%$ & 4.32  & 390        & 0.170     & 0.734       \\ \hline
+		$60\%$ & 5.4   & 574        & 0.192     & 1.039       \\ \hline
 	\end{tabular}
 \end{table}
-
+% TODO: comentar tudo buck
+% TODO:c
+% TODO:d
+% TODO:e
+% TODO:f
 \end{document}
 
