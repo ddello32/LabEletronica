@@ -74,21 +74,38 @@ R_R=3.8\ \Omega
 \end{equation}
 sendo este último valor diferente do sugerido no roteiro ($0.2\Omega$).
 
-Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $\alpha=90^\circ$, conforme figura \ref{fig:varet}. Variando os valores de $\alpha$, obtivemos os valores da tabela \ref{tab:varet}.
+Ligamos o circuito e capturamos a forma de onda da tensão de armadura $v_a$ para $\alpha=90^\circ$, conforme figura \ref{fig:varet}. Variando os valores de $\alpha$, obtivemos os valores da tabela \ref{tab:varet}. Por um erro de medição, essa tensão medida é na realidade a soma da tensão aplicada sobre a armadura do circuito e sobre o resistor de medição.
 
 Medimos também a tensão no resistor de medição $R_R$, para cálculo da corrente de armadura, conforme figura \ref{fig:iaret} e equação abaixo. Conforme orientado pelo professor, descontinuamos o experimento sem fazer a medição da corrente para outros valores de $\alpha$. 
 \begin{equation}
 i_a=\frac{v_R}{R_R}
 \end{equation}
 
-Calculamos o torque no motor a fazendo a substituição nos valores da equação abaixo, em que igualamos a potência mecânica com a potência elétrica, e isolamos a variável de torque.
+Calculamos o torque no motor a fazendo a substituição nos valores da equação abaixo, em que igualamos a potência mecânica com a potência elétrica (descontando a potência dissipada na armadura), e isolamos a variável de torque.
 \begin{equation}
-T_m=\frac{v_a*i_a}{\omega_m}
+T_m=\frac{v_a*i_a - R_a i_a^2}{\omega_m}
 \end{equation}
-Como não temos os valores de corrente para os diferentes valores de $\alpha$, fizemos uma aproximação de que a resistência de armadura do motor não se altera com as mudanças em sua tensão e em sua carga, e adotamos o cálculo a partir da equação abaixo para os valores de $\alpha$. Entretanto, ao comparar os resultados obtidos para $\alpha=90^\circ$, descartamos os valores obtidos, pois não eram uma boa aproximação.
+Sabemos que: 
 \begin{equation}
-T_m=\frac{v_a^2}{R_a*\omega_m}
+T_m = k_t i_a
 \end{equation}
+\begin{equation}
+V_e = k_e \omega_m
+\end{equation}
+\begin{equation}
+V_a = R_a i_a + L_a\frac{di_a}{dt} + V_e
+\end{equation}
+Considerando que estamos trabalhando com valores médios e em regime permanente e que a tensão medida incluí a tensão sobre o resistor de medição, podemos escrever as equações acima como:
+\begin{equation}
+i_a = \frac{V_a - k_e\omega_m}{R_a + R_R}
+\label{eq:retia}
+\end{equation}
+\begin{equation}
+T_m = k_t i_a
+\label{eq:rettm}
+\end{equation}
+Encontramos, para $\alpha = 90^\circ$, $k_t = 0,0536 N m/A$ e $k_e = 0,0536 V s/rad$. Sabemos que $k_t$ e $k_e$ deveriam apresentar o mesmo valor quando escritos no SI então nossos valores fazem sentido.
+Utilizando as equações \ref{eq:retia} e \ref{eq:rettm} e os valores de $k_t$ e $k_e$ calculados encontramos a corrente e o torque para cada ângulo de disparo, apresentados na tabela \ref{tab:varet}.
 
 \begin{figure}[H]
 	\centering
@@ -110,20 +127,18 @@ T_m=\frac{v_a^2}{R_a*\omega_m}
 	\label{tab:varet}
 	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		$\alpha$    & $v_a (V)$ & $\omega_m (rpm)$ & $i_a (A)$ & $T_m (N/m)$ \\ \hline
-		$60^\circ$  & 4.81      & 340              & -         & -           \\ \hline
-		$70^\circ$  & 5.9       & 470              & -         & -           \\ \hline
-		$80^\circ$  & 7.12      & 650              & -         & -           \\ \hline
-		$90^\circ$  & 8.5       & 900              & 0.295     & 0.00278     \\ \hline
-		$100^\circ$ & 9.8       & 1150             & -         & -           \\ \hline
-		$110^\circ$ & 10.6      & 1350             & -         & -           \\ \hline
-		$120^\circ$ & 11.6      & 1510             & -         & -           \\ \hline
+		$\alpha$    & $v_a (V)$ & $\omega_m (rpm)$ & $i_a  (A)$ & $T_m (N\cdot m)$ \\ \hline
+		$60^\circ$  & 4.81      & 340              & 0.248         & 0.0133           \\ \hline
+		$70^\circ$  & 5.9       & 470              & 0.279         & 0.0149           \\ \hline
+		$80^\circ$  & 7.12      & 650              & 0.297         & 0.0159           \\ \hline
+		$90^\circ$  & 8.5       & 900              & 0.295     & 0.0158     \\ \hline
+		$100^\circ$ & 9.8       & 1150             & 0.286         & 0.0153           \\ \hline
+		$110^\circ$ & 10.6      & 1350             & 0.258         & 0.0138           \\ \hline
+		$120^\circ$ & 11.6      & 1510             & 0.267         & 0.0143           \\ \hline
 	\end{tabular}
 \end{table}
 
-Notamos que a variação da tensão na armadura é abrupta, e que chega a ficar abaixo dos $0\ V$ em alguns momentos, e possui picos de tensão. Isto não é o esperado para fazer o acionamento do motor DC.
-
-%TODO: comentar corrente de armadura
+Notamos que a variação da tensão na armadura é abrupta, e que chega a ficar abaixo dos $0\ V$, efeito introduzido pelo fator indutivo da carga, em alguns momentos. A corrente aplicada no motor chega a zerar em alguns momentos, o que não é desejado no acionamento do motor DC.
 
 Variando o valor de $\alpha$, podemos observar que ocorre um aumento na tensão de armadura, e consequentemente, aumento na velocidade angular $\omega_m$. 
 
