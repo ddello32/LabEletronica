@@ -334,3 +334,114 @@ title('Va')
 ylabel('Va (V)')
 xlabel('Time (seconds)')
 print('va6', '-depsc')
+%% Sem reducao
+reduc = 1;
+T = 1;
+thetai = 0;
+thetaf = 90;
+sim('din')
+figure,
+plot(results.theta.time, results.theta.data*180./pi)
+title('Angular Position')
+ylabel('Angular Position (Deg)')
+xlabel('Time (seconds)')
+print('theta7', '-depsc')
+figure,
+plot(results.wref.time, results.wref.data, 'g')
+hold,
+plot(results.wm.time, results.wm.data./reduc)
+title('wm')
+legend('wref', 'wm')
+xlabel('Time (seconds)')
+ylabel('Speed (rad/s)')
+print('wm7', '-depsc')
+figure,
+plot(results.posx.time, results.posx.data)
+title('x')
+xlabel('Time (seconds)')
+ylabel('X pos (m)')
+print('x7', '-depsc')
+figure,
+plot(results.posy.time, results.posy.data)
+title('y')
+xlabel('Time (seconds)')
+ylabel('Y pos (m)')
+print('y7', '-depsc')
+fig = figure;
+results.get('Motor - HBridge').motor.get('Electrical torque Te (n m)').plot
+title('Tm')
+print('tm7', '-depsc')
+%%
+reduc = 1;
+T = 5;
+thetai = 0;
+thetaf = 90;
+sim('din')
+figure,
+plot(results.theta.time, results.theta.data*180./pi)
+title('Angular Position')
+ylabel('Angular Position (Deg)')
+xlabel('Time (seconds)')
+print('theta8', '-depsc')
+figure,
+plot(results.wref.time, results.wref.data, 'g')
+hold,
+plot(results.wm.time, results.wm.data./reduc)
+title('wm')
+legend('wref', 'wm')
+xlabel('Time (seconds)')
+ylabel('Speed (rad/s)')
+print('wm8', '-depsc')
+figure,
+plot(results.posx.time, results.posx.data)
+title('x')
+xlabel('Time (seconds)')
+ylabel('X pos (m)')
+print('x8', '-depsc')
+figure,
+plot(results.posy.time, results.posy.data)
+title('y')
+xlabel('Time (seconds)')
+ylabel('Y pos (m)')
+print('y8', '-depsc')
+fig = figure;
+results.get('Motor - HBridge').motor.get('Electrical torque Te (n m)').plot
+title('Tm')
+print('tm8', '-depsc')
+%%
+reduc = 1;
+T = 10;
+thetai = 0;
+thetaf = 90;
+sim('din')
+figure,
+plot(results.theta.time, results.theta.data*180./pi)
+title('Angular Position')
+ylabel('Angular Position (Deg)')
+xlabel('Time (seconds)')
+print('theta9', '-depsc')
+figure,
+plot(results.wref.time, results.wref.data, 'g')
+hold,
+plot(results.wm.time, results.wm.data./reduc)
+title('wm')
+legend('wref', 'wm')
+xlabel('Time (seconds)')
+ylabel('Speed (rad/s)')
+print('wm9', '-depsc')
+figure,
+plot(results.posx.time, results.posx.data)
+title('x')
+xlabel('Time (seconds)')
+ylabel('X pos (m)')
+print('x9', '-depsc')
+figure,
+plot(results.posy.time, results.posy.data)
+title('y')
+xlabel('Time (seconds)')
+ylabel('Y pos (m)')
+print('y9', '-depsc')
+fig = figure;
+results.get('Motor - HBridge').motor.get('Electrical torque Te (n m)').plot
+title('Tm')
+print('tm9', '-depsc')

@@ -217,8 +217,306 @@ Simulamos a resposta do controlador a um degrau de velocidade de $100\ rad/s$ pa
 O dimensionamento dos ganhos de ambos controladores seguiram o mesmo procedimento, nós primeiro encontramos um valor para o ganho proporcional que atendia os pré requisitos de tempo de resposta e depois ajustamos a constante integral para controlar o erro estacionário.
 
 \section{Modelagem do Manipulador}
-\section{Acoplamento Motor-Robô}
+Realizamos a modelagem mecânica do manipulador robótico simplificado, conforme especificado no roteiro. O sistema foi reduzido para uma junta rotacional cujo link tem massa $4\ kg$, comprimento $60\ cm$ e que atua em um range de $0$ à $90^\circ$, conforme apresentado na figura \ref{fig:robo}.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{robo}
+	\caption{Manipulador robótico de 1 grau de liberdade}
+	\label{fig:robo}
+\end{figure}
+
+Encontramos o modelo cinemático direto notando que a posição (X,Y) da garra do robô é dada por:
+\begin{equation}
+	X(\theta) = d\cdot cos(\theta)
+\end{equation}
+\begin{equation}
+	Y(\theta) = d\cdot sin(\theta)
+\end{equation}
+
+Podemos calcular o modelo cinemático inverso notando que:
+\begin{equation}
+	\theta(x,y) = atan(\frac{y}{x})
+\end{equation}
+
+Encontramos então o modelo dinâmico da junta, encontrando o torque nela dada uma posição e aceleração, para isso calculamos primeiramente o momento de inércia do link, obtendo:
+\begin{equation}
+	J_{link} = \frac{m\cdot d^2}{3}
+\end{equation}
+Calculamos então o torque gerado pela força peso, obtendo:
+\begin{equation}
+	\tau_{P}(\theta) = m\cdot g\cdot \frac{d\cdot cos(\theta)}{2}
+\end{equation}
+O modelo dinâmico pode então ser representado como:
+\begin{equation}
+	\tau(\theta, \ddot{\theta}) = m\cdot g\cdot \frac{d\cdot cos(\theta)}{2} + J_{link}\cdot \ddot{\theta}
+\end{equation}
+Para simplificar a simulação, consideramos que o torque da ferramenta é só causado pela força peso e somamos seu momento de inércia ao momento de inércia do motor. Simulamos a resposta do sistema para um perfil de velocidade trapezoidal com tempo de aceleração e desaceleração de $10\%$ do tempo do movimento que leva o robô da posição $\theta=0^\circ$ para $\theta=90^\circ$ em um, cinco e dez segundos. O esquema da simulação pode ser visto na figura \ref{fig:sim7} e os resultados na figuras \ref{fig:sim7res}, \ref{fig:sim8res} e \ref{fig:sim9res}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim7}
+	\caption{Esquemático da simulação do modelo dinâmico}
+	\label{fig:sim7}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/theta7}
+		\caption{Posição $\theta$}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/y7}
+		\caption{Posição Y}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/x7}
+		\caption{Posição X}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/tm7}
+		\caption{Torque}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/wm7}
+		\caption{Velocidade angular}
+	\end{subfigure}
+	\caption{Resposta à perfil de velocidade trapezoidal de 1 segundo}	
+	\label{fig:sim7res}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/theta8}
+		\caption{Posição $\theta$}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/y8}
+		\caption{Posição Y}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/x8}
+		\caption{Posição X}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/tm8}
+		\caption{Torque}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/wm8}
+		\caption{Velocidade angular}
+	\end{subfigure}
+	\caption{Resposta à perfil de velocidade trapezoidal de 5 segundos}	
+	\label{fig:sim8res}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/theta9}
+		\caption{Posição $\theta$}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/y9}
+		\caption{Posição Y}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/x9}
+		\caption{Posição X}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/tm9}
+		\caption{Torque}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{matlab/wm9}
+		\caption{Velocidade angular}
+	\end{subfigure}
+	\caption{Resposta à perfil de velocidade trapezoidal de 10 segundos}	
+	\label{fig:sim9res}
+\end{figure}
+
+Como podemos ver o erro estacionário de nosso controlador aumentou drasticamente, isso pois ele foi projetado na situação em que está sem carga. Notamos que embora o perfil de velocidade seja negativo, a posição $\theta$ não fica menor que $0$, isso acontece pois impomos um limite físico ao sistema. As curvas de velocidade requisitadas são muito menores do que a velocidade nominal do motor, explicando o desempenho pobre.
+
+\section{Acoplamento Motor-Robô e Integração do sistema}
+Para aumentar o perfil de velocidades requisitado do motor e trabalhar dentro da faixa ideal para nosso servo-controlador, acoplamos o motor e o robô com uma transmissão que reduz a velocidade angular por um fator de 20 vezes. Adicionamos também um controlador P para a posição do robô de ganho proporcional $k_p = 200$. O esquema final do sistema pode ser visto na figura \ref{fig:sim4}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{matlab/sim4}
+	\caption{Esquemático da simulação do sistema completo}
+	\label{fig:sim4}
+\end{figure}
+
+Requisitamos o mesmo perfil de velocidade trapezoidal para a ferramenta, indo de $0$ à $90^\circ$ em 10 segundos, os resultados da simulação são apresentados na figura \ref{fig:sim4res}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/theta4}
+		\caption{Posição $\theta$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/y4}
+		\caption{Posição Y}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/x4}
+		\caption{Posição X}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/tm4}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/t4}
+		\caption{Torque da ferramenta}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/wm4}
+		\caption{Velocidade angular do motor}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/w4}
+		\caption{Velocidade angular da ferramenta}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/va4}
+		\caption{Tensão de armadura}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ia4}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/d4}
+		\caption{Duty-Cycle}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ep4}
+		\caption{Erro de posição}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ew4}
+		\caption{Erro de velocidade}
+	\end{subfigure}
+	\caption{Resposta à perfil de velocidade trapezoidal de 10 segundos}	
+	\label{fig:sim4res}
+\end{figure}
+
+Como podemos ver o sistema segue satisfatoriamente a curva desejada. O efeito da carga acoplada distorceu nossa curva de velocidade de referência, uma vez que o torque da posição inicial faz com que o motor adquira uma velocidade negativa, mas o controle em posição foi suficiente para corrigir esse erro.
+
+Simulamos também a resposta do sistema à um perfil de velocidades trapezoidal que leva. o motor da posição $0$ à $70^\circ$ em 5 segundos e depois volta para posição $30^\circ$ em mais 5 e a passos de $10^\circ$ em $10^\circ$ que levam o robô da posição $0$ à $90^\circ$, pausando por dois segundos em cada posição intermediária. As respostas estão apresentadas nas figuras \ref{fig:sim5res} e \ref{fig:sim6res} respectivamente.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/theta5}
+		\caption{Posição $\theta$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/y5}
+		\caption{Posição Y}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/x5}
+		\caption{Posição X}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/tm5}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/t5}
+		\caption{Torque da ferramenta}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/wm5}
+		\caption{Velocidade angular do motor}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/w5}
+		\caption{Velocidade angular da ferramenta}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/va5}
+		\caption{Tensão de armadura}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ia5}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/d5}
+		\caption{Duty-Cycle}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ep5}
+		\caption{Erro de posição}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ew5}
+		\caption{Erro de velocidade}
+	\end{subfigure}
+	\caption{Resposta à perfil de velocidade trapezoidal com ida e volta em 5 segundos cada}	
+	\label{fig:sim5res}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/theta6}
+		\caption{Posição $\theta$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/y6}
+		\caption{Posição Y}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/x6}
+		\caption{Posição X}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/tm6}
+		\caption{Torque do motor}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/t6}
+		\caption{Torque da ferramenta}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/wm6}
+		\caption{Velocidade angular do motor}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/w6}
+		\caption{Velocidade angular da ferramenta}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/va6}
+		\caption{Tensão de armadura}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ia6}
+		\caption{Corrente de armadura}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/d6}
+		\caption{Duty-Cycle}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ep6}
+		\caption{Erro de posição}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\linewidth]{matlab/ew6}
+		\caption{Erro de velocidade}
+	\end{subfigure}
+	\caption{Resposta à degraus de posição}	
+	\label{fig:sim6res}
+\end{figure}
 
 \bibliography{mybib}
 \end{document}
