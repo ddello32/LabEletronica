@@ -54,7 +54,23 @@
 	Este projeto tem como objetivo realizar o acionamento de um motor DC utilizando conversor de potência, controlar a posição por meio de servo-acionamento, e integrar componentes elétricos e mecânicos por malha de controle. 
 
 \section{Motor e Conversor de Potência}
-Implementamos no Simulink o circuito apresentado na figura \ref{fig:sim1}. Configuramos o bloco do motor DC disponível para que atuasse como motor DC de ímãs permanentes. Definimos os parâmetros do motor conforme especificado na tabela \ref{tab:param}.
+Implementamos no Simulink o circuito apresentado na figura \ref{fig:sim1}. Configuramos o bloco do motor DC disponível para que atuasse como motor DC de ímãs permanentes. Definimos os parâmetros do motor conforme especificado na tabela \ref{tab:param}. Determinamos o torque nominal do motor utilizando a equação \ref{eq:torque} e a constante de torque/corrente de armadura nominal resolvendo as equações \ref{eq:m1} e \ref{eq:m2}. Existem duas combinações possíveis de constante de torque e corrente nominal que atingem os pré requisitos, escolhemos a menor corrente.
+
+\begin{equation}
+	\label{eq:torque}
+	T_{nom} = \frac{P_{nom}}{\omega_{nom}}
+\end{equation}
+
+\begin{equation}
+\label{eq:m1}
+	V_{nom} = R_a*I_{nom} + k_t*\omega_{nom}
+\end{equation}
+
+\begin{equation}
+	\label{eq:m2}
+	T_{nom} = k_t*I_{nom}
+\end{equation}
+
 
 \begin{figure}[H]
 	\centering
@@ -73,10 +89,13 @@ Implementamos no Simulink o circuito apresentado na figura \ref{fig:sim1}. Confi
 		Potência nominal                & $5\ HP$                        \\ \hline
 		Velocidade nominal              & $1750\ rpm$                    \\ \hline
 		Tensão nominal                  & $240\ V$                       \\ \hline
+		Torque nominal					& $20.3455\ Nm$ \\ \hline
+		Corrente nominal				& $19.7128\ A$ \\ \hline
 		Resistência de armadura ($R_a$) & $2,58\ \Omega$                 \\ \hline
 		Indutância de armadura ($L_a$)  & $28\ mH$                       \\ \hline
 		Inércia ($J$)                   & $2,22 \times 10^{-2}\ kg\ m^2$ \\ \hline
 		Atrito viscoso ($B$)            & $2,95 \times 10^{-3}\ N\ m\ s$ \\ \hline
+		Constante de Torque ($k_t$)		& $1.0321\ Nm/A$ \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -105,9 +124,7 @@ C_f=1000\ \mu F
 Fizemos a simulação da resposta do motor a um degrau com $V_{out}=240\ V$, sem cargas, apenas com os parâmetros físicos definidos nele mesmo.
 Obtivemos os resultados de tensão e correntes de armadura ($v_a$ e $i_a$), e também curvas de torque e velocidade angular ($T_{em}$ e $\omega_m$) conforme figura \ref{fig:sim1viwt}.
 
-%TODO: comentar sobre resposta ao degrau
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.45\textwidth}
 		\includegraphics[width=\linewidth]{matlab/va1}
@@ -128,6 +145,8 @@ Obtivemos os resultados de tensão e correntes de armadura ($v_a$ e $i_a$), e ta
 	\caption{Resposta ao degrau de $240\ V$ no motor DC}	
 	\label{fig:sim1viwt}
 \end{figure}
+
+Podemos ver que ainda existe uma oscilação significativa na tensão de armadura, porém julgamos inviável aumentar a capacitância de filtro. Notamos também que a velocidade atingida supera a velocidade nominal, fator esperado uma vez que estamos trabalhando sem carga. Existe um pico de corrente que ultrapassa significativamente o valor nominal e que pode vir a danificar o motor.
 
 \section{Servo-acionamento}
 Iniciamos o projeto do servo-acionamento pelo controle PI de corrente. Utilizando o Simulink, conforme figura \ref{fig:sim2}.
