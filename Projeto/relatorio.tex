@@ -153,9 +153,25 @@ Iniciamos o projeto do servo-acionamento pelo controle PI de corrente. Utilizand
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{matlab/sim1}
+	\includegraphics[width=\linewidth]{matlab/sim2}
 	\caption{Esquemático da simulação do controlador de corrente}
 	\label{fig:sim2}
+\end{figure}
+
+Para facilitar o controle somamos um offset de $50\%$ no duty-cycle de saída, assim se o esforço de controle for negativo a tensão sobre o motor será negativa e se este for positivo a tensão será positiva. Dimensionamos o controlador PI para que ele responda a um degrau unitário com erro estacionário de menos de $0,2\ A$ e com tempo de resposta menor do que $100\ ms$. Para isso escolhemos as constantes proporcional e integral de maneira iterativa, ajustando-as de para atingir nosso objetivo. As constantes escolhidas foram:
+\begin{equation}
+	k_p = 3
+\end{equation}
+\begin{equation}
+	k_i = 100
+\end{equation}
+
+A resposta do controlador ao degrau unitário está apresentada na figura \ref{fig:ia2}, podemos ver que ele tem uma resposta satisfatória considerando os requisitos de projeto.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{matlab/ia2}
+	\caption{Resposta do controlador de corrente ao degrau unitário}
+	\label{fig:ia2}
 \end{figure}
 
 \section{Modelagem do Manipulador}
