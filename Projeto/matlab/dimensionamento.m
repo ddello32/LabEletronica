@@ -88,6 +88,7 @@ T = 10;
 thetai = 0;
 thetaf = 90;
 sim('posctrl')
+%%
 figure,
 results.wref.plot('r')
 hold
@@ -115,8 +116,10 @@ title('y')
 xlabel('Time (seconds)')
 ylabel('Y pos (m)')
 print('y4', '-depsc')
+tm = results.get('Motor - HBridge').motor.get('Electrical torque Te (n m)');
+tool = results.twl.data + (tm.data - results.twl.data - B.*results.wm.data).*((Irob/reduc)/(Irob/reduc + J));
 figure,
-results.twl.plot
+plot(results.twl.time, tool)
 title('Tool Torque')
 xlabel('Time (seconds)')
 ylabel('Torque (N.m)')
@@ -200,8 +203,10 @@ title('y')
 xlabel('Time (seconds)')
 ylabel('Y pos (m)')
 print('y5', '-depsc')
+tm = results.get('Motor - HBridge').motor.get('Electrical torque Te (n m)');
+tool = results.twl.data + (tm.data - results.twl.data - B.*results.wm.data).*((Irob/reduc)/(Irob/reduc + J));
 figure,
-results.twl.plot
+plot(results.twl.time, tool)
 title('Tool Torque')
 xlabel('Time (seconds)')
 ylabel('Torque (N.m)')
@@ -252,9 +257,7 @@ title('Va')
 ylabel('Va (V)')
 xlabel('Time (seconds)')
 print('va5', '-depsc')
-%% Modelo robo 3
 sim('posctrl3')
-%% 
 figure,
 plot(results.wref.time(1:end-1), results.wref.data(1:end-1), 'r')
 hold
@@ -282,8 +285,10 @@ title('y')
 xlabel('Time (seconds)')
 ylabel('Y pos (m)')
 print('y6', '-depsc')
+tm = results.get('Motor - HBridge').motor.get('Electrical torque Te (n m)');
+tool = results.twl.data + (tm.data - results.twl.data - B.*results.wm.data).*((Irob/reduc)/(Irob/reduc + J));
 figure,
-plot(results.twl.time(1:end-1), results.twl.data(1:end-1))
+plot(results.twl.time(1:end-1), tool(1:end-1))
 title('Tool Torque')
 xlabel('Time (seconds)')
 ylabel('Torque (N.m)')

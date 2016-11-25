@@ -341,7 +341,7 @@ Para simplificar a simulação, consideramos que o torque da ferramenta é só c
 Como podemos ver o erro estacionário de nosso controlador aumentou drasticamente, isso pois ele foi projetado na situação em que está sem carga. Notamos que embora o perfil de velocidade seja negativo, a posição $\theta$ não fica menor que $0$, isso acontece pois impomos um limite físico ao sistema. As curvas de velocidade requisitadas são muito menores do que a velocidade nominal do motor, explicando o desempenho pobre.
 
 \section{Acoplamento Motor-Robô e Integração do sistema}
-Para aumentar o perfil de velocidades requisitado do motor e trabalhar dentro da faixa ideal para nosso servo-controlador, acoplamos o motor e o robô com uma transmissão que reduz a velocidade angular por um fator de 20 vezes. Adicionamos também um controlador P para a posição do robô de ganho proporcional $k_p = 200$. O esquema final do sistema pode ser visto na figura \ref{fig:sim4}.
+Para aumentar o perfil de velocidades requisitado do motor e trabalhar dentro da faixa ideal para nosso servo-controlador, acoplamos o motor e o robô com uma transmissão que reduz a velocidade angular por um fator de 20 vezes. Adicionamos também um controlador P para a posição do robô de ganho proporcional $k_p = 200$. O esquema final do sistema pode ser visto na figura \ref{fig:sim4}. Ajustamos o momento de inércia do motor para ser $J + J_{link}/20$, novamente afim de simplificar as simulações.
 
 \begin{figure}[H]
 	\centering
@@ -350,55 +350,55 @@ Para aumentar o perfil de velocidades requisitado do motor e trabalhar dentro da
 	\label{fig:sim4}
 \end{figure}
 
-Requisitamos o mesmo perfil de velocidade trapezoidal para a ferramenta, indo de $0$ à $90^\circ$ em 10 segundos, os resultados da simulação são apresentados na figura \ref{fig:sim4res}
+Requisitamos o mesmo perfil de velocidade trapezoidal para a ferramenta, indo de $0$ à $90^\circ$ em 10 segundos, os resultados da simulação são apresentados na figura \ref{fig:sim4res}.
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/theta4}
 		\caption{Posição $\theta$}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/y4}
 		\caption{Posição Y}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/x4}
 		\caption{Posição X}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/tm4}
 		\caption{Torque do motor}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/t4}
 		\caption{Torque da ferramenta}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/wm4}
 		\caption{Velocidade angular do motor}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/w4}
 		\caption{Velocidade angular da ferramenta}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/va4}
 		\caption{Tensão de armadura}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ia4}
 		\caption{Corrente de armadura}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/d4}
 		\caption{Duty-Cycle}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ep4}
 		\caption{Erro de posição}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ew4}
 		\caption{Erro de velocidade}
 	\end{subfigure}
@@ -406,57 +406,57 @@ Requisitamos o mesmo perfil de velocidade trapezoidal para a ferramenta, indo de
 	\label{fig:sim4res}
 \end{figure}
 
-Como podemos ver o sistema segue satisfatoriamente a curva desejada. O efeito da carga acoplada distorceu nossa curva de velocidade de referência, uma vez que o torque da posição inicial faz com que o motor adquira uma velocidade negativa, mas o controle em posição foi suficiente para corrigir esse erro.
+Como podemos ver o sistema segue satisfatoriamente a curva desejada. O efeito da carga acoplada distorceu nossa curva de velocidade de referência, uma vez que o torque da posição inicial faz com que o motor adquira uma velocidade negativa, mas o controle em posição foi suficiente para corrigir esse erro. 
 
-Simulamos também a resposta do sistema à um perfil de velocidades trapezoidal que leva. o motor da posição $0$ à $70^\circ$ em 5 segundos e depois volta para posição $30^\circ$ em mais 5 e a passos de $10^\circ$ em $10^\circ$ que levam o robô da posição $0$ à $90^\circ$, pausando por dois segundos em cada posição intermediária. As respostas estão apresentadas nas figuras \ref{fig:sim5res} e \ref{fig:sim6res} respectivamente.
+Simulamos também a resposta do sistema à um perfil de velocidades trapezoidal que leva o motor da posição $0$ à $70^\circ$ em 5 segundos e depois volta para posição $30^\circ$ em mais 5 e a passos de $10^\circ$ em $10^\circ$ que levam o robô da posição $0$ à $90^\circ$, pausando por dois segundos em cada posição intermediária. As respostas estão apresentadas nas figuras \ref{fig:sim5res} e \ref{fig:sim6res} respectivamente.
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/theta5}
 		\caption{Posição $\theta$}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/y5}
 		\caption{Posição Y}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/x5}
 		\caption{Posição X}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/tm5}
 		\caption{Torque do motor}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/t5}
 		\caption{Torque da ferramenta}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/wm5}
 		\caption{Velocidade angular do motor}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/w5}
 		\caption{Velocidade angular da ferramenta}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/va5}
 		\caption{Tensão de armadura}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ia5}
 		\caption{Corrente de armadura}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/d5}
 		\caption{Duty-Cycle}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ep5}
 		\caption{Erro de posição}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ew5}
 		\caption{Erro de velocidade}
 	\end{subfigure}
@@ -466,51 +466,51 @@ Simulamos também a resposta do sistema à um perfil de velocidades trapezoidal 
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/theta6}
 		\caption{Posição $\theta$}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/y6}
 		\caption{Posição Y}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/x6}
 		\caption{Posição X}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/tm6}
 		\caption{Torque do motor}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/t6}
 		\caption{Torque da ferramenta}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/wm6}
 		\caption{Velocidade angular do motor}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/w6}
 		\caption{Velocidade angular da ferramenta}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/va6}
 		\caption{Tensão de armadura}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ia6}
 		\caption{Corrente de armadura}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/d6}
 		\caption{Duty-Cycle}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ep6}
 		\caption{Erro de posição}
 	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{matlab/ew6}
 		\caption{Erro de velocidade}
 	\end{subfigure}
